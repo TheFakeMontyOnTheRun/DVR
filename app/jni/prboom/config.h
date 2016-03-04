@@ -12,7 +12,7 @@
 #define USE_ANDROID 1
 
 /* Define to be the path where Doom WADs are stored */
-#define DOOMWADDIR "/sdcard/doom"
+//#define DOOMWADDIR "/sdcard/doom"
 
 /* Define if you are building with OpenGL support */
 /* #undef GL_DOOM */

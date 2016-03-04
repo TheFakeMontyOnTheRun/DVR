@@ -37,7 +37,7 @@ public class Natives
 	 * @param argv
 	 * @return
 	 */
-	public static native int DoomInit(String[] argv);
+	public static native int DoomInit(String[] argv, String wadDir);
 
 	/**
 	 * Start frame rendering

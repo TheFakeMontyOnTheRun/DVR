@@ -13,7 +13,6 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
 import android.os.Bundle;
-import android.os.Message;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -291,6 +290,10 @@ public class MainActivity
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
+        //At the very least ensure we have a directory containing a config file
+        copy_asset("DVR.cfg", DoomTools.GetDVRFolder() + "/");
+        copy_asset("prboom.wad", DoomTools.GetDVRFolder() + "/");
+
         if (!DoomTools.wadsExist()) {
             MessageBox("Read this carefully",
                     "You must install a game file. Tap \"Install WADs\" for auto-install. "
@@ -425,9 +428,10 @@ public class MainActivity
             if (!mShowingSpashScreen) {
                 final String[] argv;
                 String args = new String();
-                args = "doom -width 640 -height 400 -iwad doom.wad";
+                args = "doom -iwad " + WADChooser.GetChosenWAD();
                 argv = args.split(" ");
-                Natives.DoomInit(argv);
+                String dvr= DoomTools.GetDVRFolder();
+                Natives.DoomInit(argv, dvr);
                 mDVRInitialised = true;
             }
         }

@@ -223,7 +223,8 @@ const char* I_GetVersionString(char* buf, size_t sz)
   snprintf(buf,sz,"LxDoom v%s (http://lxdoom.linuxgames.com/)",VERSION);
   return buf;
 }
-/*
+
+/*
  * I_Filelength
  *
  * Return length of an open file.
@@ -243,27 +244,10 @@ int I_Filelength(int handle)
 	return length;
 }
 
-// cph - V.Aguilar (5/30/99) suggested return ~/.lxdoom/, creating
-//  if non-existant
-static const char prboom_dir[] = {"/doom"}; // Mead rem extra slash 8/21/03
-
+extern char* doomWADDir;
 const char *I_DoomExeDir(void)
 {
-  static char *base;
-  if (!base)        // cache multiple requests
-    {
-      char *home = "/sdcard"; //getenv("HOME");
-      size_t len = strlen(home);
-
-      base = malloc(len + strlen(prboom_dir) + 1);
-      strcpy(base, home);
-      // I've had trouble with trailing slashes before...
-      if (base[len-1] == '/') base[len-1] = 0;
-      strcat(base, prboom_dir);
-      //mkdir(base, S_IRUSR | S_IWUSR | S_IXUSR); // Make sure it exists
-	printf("I_DoomExeDir: Create dir %s\n", base);
-    }
-  return base;
+    return doomWADDir;
 }
 
 /*
@@ -291,48 +275,12 @@ char* I_FindFile(const char* wfname, const char* ext)
 	//exit (1);
   }
 
-  // lookup table of directories to search
-  static const struct {
-    const char *dir; // directory
-    const char *sub; // subdirectory
-    const char *env; // environment variable
-    const char *(*func)(void); // for I_DoomExeDir
-  } search[] = {
-    {NULL}, // current working directory
-    {NULL, NULL, "DOOMWADDIR"}, // run-time $DOOMWADDIR
-    {DOOMWADDIR}, // build-time configured DOOMWADDIR
-    {NULL, "doom", "HOME"}, // ~/doom
-    {NULL, NULL, "HOME"}, // ~
-    {NULL, NULL, NULL, I_DoomExeDir}, // config directory
-    {"/data"},
-    {"/data/data"},
-    {"/sdcard/doom"},
-    {"/sdcard"},
-  };
-
-  int   i;
   /* Precalculate a length we will need in the loop */
   size_t  pl = strlen(wfname) + strlen(ext) + 4;
 
-  for (i = 0; i < sizeof(search)/sizeof(*search); i++) {
-    char  * p;
-    const char  * d = NULL;
-    const char  * s = NULL;
-    /* Each entry in the switch sets d to the directory to look in,
-     * and optionally s to a subdirectory of d */
-    // switch replaced with lookup table
-    if (search[i].env) {
-      if (!(d = getenv(search[i].env)))
-        continue;
-    } else if (search[i].func)
-      d = search[i].func();
-    else
-      d = search[i].dir;
-    s = search[i].sub;
-
-    p = malloc((d ? strlen(d) : 0) + (s ? strlen(s) : 0) + pl);
-    sprintf(p, "%s%s%s%s%s", d ? d : "", (d && !HasTrailingSlash(d)) ? "/" : "",
-                             s ? s : "", (s && !HasTrailingSlash(s)) ? "/" : "",
+    const char  * d = I_DoomExeDir();
+    char  * p = malloc((d ? strlen(d) : 0) + pl);
+    sprintf(p, "%s%s%s", d ? d : "", (d && !HasTrailingSlash(d)) ? "/" : "",
                              wfname);
 
     if (access(p,F_OK))
@@ -344,7 +292,7 @@ char* I_FindFile(const char* wfname, const char* ext)
     }
 
     free(p);
-  }
+
   return NULL;
 }
 

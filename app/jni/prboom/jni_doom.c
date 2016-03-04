@@ -117,7 +117,7 @@ int loadJNIMethods(JNIEnv * env)
 	return 0;
 }
 
-extern int doom_main(int argc, char **argv);
+extern int doom_main(int argc, char **argv, char *wadDir);
 
 /*
  * Class:     doom_util_Natives
@@ -125,7 +125,7 @@ extern int doom_main(int argc, char **argv);
  * Signature: ([Ljava/lang/String;)V
  */
 JNIEXPORT jint JNICALL Java_doom_util_Natives_DoomInit
-  (JNIEnv * env, jclass class, jobjectArray jargv)
+  (JNIEnv * env, jclass class, jobjectArray jargv, jstring jDoomWADDir)
 {
 	(*env)->GetJavaVM(env, &g_VM);
 
@@ -153,7 +153,17 @@ JNIEXPORT jint JNICALL Java_doom_util_Natives_DoomInit
 	    (*env)->ReleaseStringUTFChars(env, jrow, row);
 	}
 
-	doom_main (clen, args);
+	const char *row  = (*env)->GetStringUTFChars(env, jDoomWADDir, 0);
+
+	char *doomWADDir = malloc( strlen(row) + 1);
+	strcpy (doomWADDir, row);
+
+	jni_printf("Main argv[%d]=%s", i, args[i]);
+
+	// free java string jrow
+	(*env)->ReleaseStringUTFChars(env, jrow, row);
+
+	doom_main (clen, args, doomWADDir);
 
 	return 0;
 }

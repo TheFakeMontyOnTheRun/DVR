@@ -87,6 +87,8 @@ static boolean isExtraDDisplay = false;
 
 static void D_QuitNetGame (void);
 
+extern char *doomWADDir;
+
 #ifndef HAVE_NET
 doomcom_t*      doomcom;
 #endif
@@ -152,7 +154,7 @@ void D_InitNetGame (void)
       while (i--) {
 #ifdef USE_ANDROID
     	  char tmp[80];
-    	  strcpy(tmp, DOOMWADDIR);
+    	  strcpy(tmp, doomWADDir);
     	  strcat(tmp, "/");
     	  strcat(tmp, p);
   D_AddFile(tmp, source_net);

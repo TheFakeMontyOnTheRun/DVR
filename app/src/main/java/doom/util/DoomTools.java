@@ -11,36 +11,31 @@ import java.util.zip.ZipInputStream;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 
 
 public class DoomTools {
-	public static final String DOOM_FOLDER = "/sdcard/doom" + File.separator ;
 
-	// Soundtrack
-	public static final String DOOM_SOUND_FOLDER = "/sdcard/doom" + File.separator + "sound";
-	
-	// Base server URL
-	public static final String URL_BASE =  "http://prboom4android.googlecode.com/files/";
-	
-	// HowTo URL
-	public static final String URL_HOWTO = "http://code.google.com/p/prboom4android/wiki/HowTo";
-	
-	// Url prefix that has all Doom files: WADs, Sound + JNI lib
-	public static final String DOWNLOAD_BASE = URL_BASE + "" ;
-	
-	// Url prefix that has all Sounds
-	public static final String SOUND_BASE = DOWNLOAD_BASE + "" ;
-	
+	static public String GetSDCARD()
+	{
+		return Environment.getExternalStorageDirectory().getPath();
+	}
+
+	static public String GetWorkingFolder()
+	{
+		return "DVR";
+	}
+
+	static public String GetDVRFolder()
+	{
+		return GetSDCARD() + File.separator + GetWorkingFolder();
+	}
+
 	// Game files we can handle
-	public static final String[] DOOM_WADS = {"freedoom.wad", "freedm.wad"};
-
-	/**
-	 * Doom lib. To be downloaded into /data/data/APP_PKG/files
-	 */
-	//public static final String DOOM_LIB = "libdoom_jni.so";
-	public static final String DOOM_LIB = "prboom_jni";
+	public static final String[] DOOM_WADS =
+			{"freedoom.wad", "freedm.wad", "doom.wad", "doom2.wad"};
 
 	// These are required for the game to run
 	public static final String REQUIRED_DOOM_WAD = "prboom.wad";  
@@ -214,88 +209,20 @@ public class DoomTools {
 		}
 	}
 
-	
-	static public boolean installConfig(Context ctx) {
-		File f = new File(DoomTools.DOOM_FOLDER + File.separator);
-		if(!f.exists())
-			f.mkdir();
-        InputStream cfgIn;
-        try {
-                cfgIn = ctx.getAssets().open("prboom.cfg.zip");
-                unzip(cfgIn, new File(DOOM_FOLDER));
-                return true;
-        } catch (IOException e) {
-                e.printStackTrace();
-        }
-        return false;
-	}
-	
-	static public boolean installPrBoom(Context ctx) {
-		// check of /sdcard/doom exists, if not create it
-		File f = new File(DoomTools.DOOM_FOLDER + File.separator);
-		if(!f.exists())
-			f.mkdir();
-        InputStream prboomIn;
-        try {
-                prboomIn = ctx.getAssets().open("prboom.zip");
-                unzip(prboomIn, new File(DOOM_FOLDER));
-                return true;
-        } catch (IOException e) {
-                e.printStackTrace();
-        }
-        return false;
-	}
 
-	
-	/**
-	 * SDCARD?
-	 * @return
-	 */
-	static public boolean hasSDCard() {
-		try {
-			File f = new File(DOOM_FOLDER);
-			
-			// Does /sdcard/doom exist?
-			if ( f.exists()) return true;
-			
-			// Can we write into it?
-			return  f.mkdir();
-		} catch (Exception e) {
-			System.err.println(e.toString());
-			return false;
-		}
-	}
-	
-	/**
-	 * Ping the download server
-	 * @return
-	 */
-	static public boolean pingServer() {
-		try {
-			WebDownload wd = new WebDownload(URL_BASE);
-			wd.doGet();
-			int rc = wd.getResponseCode();
-			Log.d(TAG, "PingServer Response:" + rc);
-			return  rc == 200;
-		} catch (Exception e) {
-			Log.e(TAG, "PingServer: " + e.toString());
-			return false;
-		}
-	}
-	
 	static public boolean wadExists (int idx) {
-		final String path = DOOM_FOLDER + File.separator + DOOM_WADS[idx];
+		final String path = GetDVRFolder() + File.separator + DOOM_WADS[idx];
 		return new File(path).exists();
 	}
 	
 	static public boolean wadExists (String name) {
-		final String path = DOOM_FOLDER + File.separator + name;
+		final String path = GetDVRFolder() + File.separator + name;
 		return new File(path).exists();
 	}
 	
 	static public boolean wadsExist() {
 		for(int i = 0; i < DOOM_WADS.length; i++) {
-			File f = new File(DOOM_FOLDER + File.separator + DOOM_WADS[i]);
+			File f = new File(GetDVRFolder() + File.separator + DOOM_WADS[i]);
 			if(f.exists())
 				return true;
 		}
@@ -305,21 +232,20 @@ public class DoomTools {
 	static public void hardExit ( int code) {
 		System.exit(code);
 	}
-	
 
     /**
      * Sound present for a WAD?
      */
     public static boolean hasSound() { 
-    	Log.d(TAG, "Sound folder: " + DOOM_SOUND_FOLDER);
-    	return new File(DOOM_SOUND_FOLDER).exists(); 
+    	Log.d(TAG, "Sound folder: " + GetDVRFolder() + File.separator + "sound");
+    	return new File(GetDVRFolder() + File.separator + "sound").exists();
     }
     
     /**
      * Get the sound folder name for a game file 
      */
     public static File getSoundFolder() { 
-    	return new File(DOOM_SOUND_FOLDER);
+    	return new File(GetDVRFolder() + File.separator + "sound");
     }
     
     
@@ -358,36 +284,6 @@ public class DoomTools {
 
     static final String TAG = "DoomTools";
     
-	
-	/**
-	 * Ckech 4 sdcard
-	 * @return
-	 */
-	public static  boolean checkSDCard(Context ctx) {
-		boolean sdcard = DoomTools.hasSDCard();
-		
-		if ( ! sdcard) {
-			//DialogTool.MessageBox(ctx, "No SDCARD", "An SDCARD is required to store game files.");
-			return false;
-		}		
-		return true;
-	}
-
-	/**
-	 * Make sure you have a web cn
-	 * @param ctx
-	 * @return
-	 */
-	public static  boolean checkServer(Context ctx) {
-		boolean alive = DoomTools.pingServer();
-		
-		if ( ! alive) {
-			//DialogTool.MessageBox(ctx, "Sever Ping Failed", "Make sure you have a web connection.");
-			return false;
-		}		
-		return true;
-	}
-
 	/**
 	 * Clean sounds
 	 */
@@ -409,61 +305,5 @@ public class DoomTools {
 		}
 		if ( folder.exists() ) folder.delete();
 	}
-	
-	/**
-	 * Cleanup game files
-	 */
-	private static void deleteWads() {
-		File folder = new File(DoomTools.DOOM_FOLDER);
-		
-		if ( !folder.exists()) {
-			Log.e(TAG, "Error: Doom folder " + folder + " not found.");
-			return;
-		}
-		
-		File[] files = folder.listFiles();
-		
-		for (int i = 0; i < files.length; i++) {
-			
-			if (files[i].exists() )
-				files[i].delete();
-		}
-		if ( folder.exists() ) folder.delete();
-	}
 
-	/**
-	 * Add a default config to DOOM_FOLDER with default key bindings
-	 * @param ctx
-	 */
-//	static final String DEFAULT_CFG = "prboom.cfg";
-//	
-//	public static void createDefaultDoomConfig(Handler handler, Context ctx) {
-//		File dest = new File(DOOM_FOLDER + DEFAULT_CFG);
-//		
-//		// Skip if config exists
-//		if ( dest.exists()) {
-//			Log.w(TAG, "A default Doom config already exists in " + dest);
-//			return;
-//		}
-//		
-//		try {
-//			BufferedInputStream is = new BufferedInputStream( ctx.getAssets().open(DEFAULT_CFG));
-//			FileOutputStream fos = new FileOutputStream(dest);
-//			
-//			byte[] buf = new byte [1024];
-//			
-//			// let the user know
-//			Toast(handler, ctx, "Default movement keys: 1AQW");
-//			
-//			Log.d(TAG, "Writing a default DOOM config to " + dest);
-//			
-//            for (int read = is.read(buf); read != -1; read = is.read(buf)) {
-//                fos.write(buf,0, read);
-//            }
-//
-//		} catch (Exception e) {
-//			Log.e(TAG, "Error saving default DOOm config: " + e.toString());
-//		}
-//	}
-	
 }

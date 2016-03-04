@@ -70,7 +70,7 @@ void D_DoAdvanceDemo (void);
 void D_Display(int eye);
 void D_PageTicker(void);
 void D_StartTitle(void);
-void D_DoomMainSetup();
+void D_DoomMainSetup(char *wadDir);
 void D_DoomStartFrame(float, float, float);
 void D_DoomEndFrame(void);
 void D_AddFile (const char *file, wad_source_t source);

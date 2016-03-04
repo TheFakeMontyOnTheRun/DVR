@@ -19,7 +19,7 @@ extern "C" {
  * Signature: ([Ljava/lang/String;)I
  */
 JNIEXPORT jint JNICALL Java_doom_util_Natives_DoomInit
-  (JNIEnv *, jclass, jobjectArray);
+  (JNIEnv *, jclass, jobjectArray, jstring);
 
 /*
  * Class:     doom_util_Natives

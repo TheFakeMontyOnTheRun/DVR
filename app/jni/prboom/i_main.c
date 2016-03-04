@@ -351,7 +351,7 @@ uid_t stored_euid = -1;
 #endif
 
 //int main(int argc, const char * const * argv)
-int doom_main(int argc, char **argv)
+int doom_main(int argc, char **argv, char *wadDir)
 {
 #ifdef SECURE_UID
   /* First thing, revoke setuid status (if any) */
@@ -414,7 +414,7 @@ int doom_main(int argc, char **argv)
   /* cphipps - call to video specific startup code */
   I_PreInitGraphics();
 
-  D_DoomMainSetup();
+  D_DoomMainSetup(wadDir);
 
   return 0;
 }

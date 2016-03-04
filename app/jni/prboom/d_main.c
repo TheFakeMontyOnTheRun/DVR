@@ -107,6 +107,8 @@ float hmdYaw;
 float hmdRoll;
 float hmdPitch;
 
+char *doomWADDir;
+
 
 //jff 1/22/98 parms for disabling music and sound
 boolean nosfxparm;
@@ -1170,9 +1172,11 @@ static void L_SetupConsoleMasks(void) {
 // CPhipps - the old contents of D_DoomMain, but moved out of the main
 //  line of execution so its stack space can be freed
 
-void D_DoomMainSetup(void)
+void D_DoomMainSetup(char *wadDir)
 {
   int p,slot;
+
+  doomWADDir = wadDir;
 
   L_SetupConsoleMasks();
 
