@@ -27,8 +27,11 @@ import com.google.vrtoolkit.cardboard.Eye;
 import com.google.vrtoolkit.cardboard.HeadTransform;
 import com.google.vrtoolkit.cardboard.Viewport;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -51,23 +54,14 @@ public class MainActivity
 {
     private static final String TAG = "DVR";
 
-    private static final int GL_RGBA8 = 0x8058;
-
-    private int[] currentFBO = new int[1];
-
     //Head orientation
     private float[] eulerAngles = new float[3];
 
+    OpenGL openGL = null;
+
     // Audio Cache Manager
     private AudioManager mAudioMgr;
-
-    private int MONO = 0;
-    private int STEREO = 1;
-
-    private int mStereoMode = STEREO;
-    private int eyeID = 0;
-
-    static private Bitmap mDoomBitmap;
+    private Bitmap mDoomBitmap;
 
     // width of mBitmap
     private int mDoomWidth;
@@ -87,127 +81,11 @@ public class MainActivity
 
     private CardboardView cardboardView;
 
-    private FloatBuffer screenVertices;
-
-    private int positionParam;
-    private int texCoordParam;
-    private int samplerParam;
-    private int modelViewProjectionParam;
-
-    private float[] modelScreen;
-    private float[] camera;
-    private float[] view;
-    private float[] modelViewProjection;
-    private float[] modelView;
-
-    private float screenDistance = 8f;
-    private float screenScale = 4f;
-
-    public static final String vs_Image =
-            "uniform mat4 u_MVPMatrix;" +
-            "attribute vec4 a_Position;" +
-            "attribute vec2 a_texCoord;" +
-            "varying vec2 v_texCoord;" +
-            "void main() {" +
-            "  gl_Position = u_MVPMatrix * a_Position;" +
-            "  v_texCoord = a_texCoord;" +
-            "}";
-
-
-    public static final String fs_Image =
-            "precision mediump float;" +
-            "varying vec2 v_texCoord;" +
-            "uniform sampler2D s_texture;" +
-            "void main() {" +
-            "  gl_FragColor = texture2D( s_texture, v_texCoord );" +
-            "}";
-
-    public static int loadShader(int type, String shaderCode){
-        int shader = GLES20.glCreateShader(type);
-        GLES20.glShaderSource(shader, shaderCode);
-        GLES20.glCompileShader(shader);
-        return shader;
-    }
-
-    //FBO render eye buffer
-    private DVRFBO fbo;
-
-
-    static boolean CreateFBO( DVRFBO fbo, int width, int height)
-    {
-        Log.d(TAG, "CreateFBO");
-        // Create the color buffer texture.
-        GLES20.glGenTextures(1, fbo.ColorTexture, 0);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, fbo.ColorTexture[0]);
-        GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, null);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
-
-        // Create depth buffer.
-        GLES20.glGenRenderbuffers(1, fbo.DepthBuffer, 0);
-        GLES20.glBindRenderbuffer(GLES20.GL_RENDERBUFFER, fbo.DepthBuffer[0]);
-        GLES20.glRenderbufferStorage(GLES20.GL_RENDERBUFFER, GLES11Ext.GL_DEPTH_COMPONENT24_OES, width, height);
-        GLES20.glBindRenderbuffer(GLES20.GL_RENDERBUFFER, 0);
-
-        // Create the frame buffer.
-        GLES20.glGenFramebuffers(1, fbo.FrameBuffer, 0);
-        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fbo.FrameBuffer[0]);
-        GLES20.glFramebufferRenderbuffer(GLES20.GL_FRAMEBUFFER, GLES20.GL_DEPTH_ATTACHMENT, GLES20.GL_RENDERBUFFER, fbo.DepthBuffer[0]);
-        GLES20.glFramebufferTexture2D(GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0, GLES20.GL_TEXTURE_2D, fbo.ColorTexture[0], 0);
-        int renderFramebufferStatus = GLES20.glCheckFramebufferStatus(GLES20.GL_FRAMEBUFFER);
-        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
-        if ( renderFramebufferStatus != GLES20.GL_FRAMEBUFFER_COMPLETE )
-        {
-            Log.d(TAG, "Incomplete frame buffer object!!");
-            return false;
-        }
-
-        fbo.width = width;
-        fbo.height = height;
-
-        return true;
-    }
-
-    static void DestroyFBO( DVRFBO fbo )
-    {
-        GLES20.glDeleteFramebuffers( 1, fbo.FrameBuffer, 0 );
-        fbo.FrameBuffer[0] = 0;
-        GLES20.glDeleteRenderbuffers( 1, fbo.DepthBuffer, 0 );
-        fbo.DepthBuffer[0] = 0;
-        GLES20.glDeleteTextures( 1, fbo.ColorTexture, 0 );
-        fbo.ColorTexture[0] = 0;
-        fbo.width = 0;
-        fbo.height = 0;
-    }
-
-    // Geometric variables
-    public static float vertices[];
-    public static final short[] indices = new short[] {0, 1, 2, 0, 2, 3};
-    public static final float uvs[] =  new float[] {
-            0.0f, 1.0f,
-            0.0f, 0.0f,
-            1.0f, 0.0f,
-            1.0f, 1.0f
-    };
-
-    public static final float[] SCREEN_COORDS = new float[] {
-            -1.3f, -1.0f, 1.0f,
-            -1.3f, 1.0f, 1.0f,
-            1.3f, 1.0f, 1.0f,
-            1.3f, -1.0f, 1.0f
-    };
-
-    public FloatBuffer vertexBuffer;
-    public ShortBuffer listBuffer;
-    public FloatBuffer uvBuffer;
-
-    //Shader Program
-    public static int sp_Image;
+    private DownloadTask mDownloadTask = null;
+    private WADChooser  mWADChooser = null;
 
     public static boolean mDVRInitialised = false;
+
     //Can't rebuild eye buffers until surface changed flag recorded
     public static boolean mSurfaceChanged = false;
 
@@ -264,6 +142,13 @@ public class MainActivity
         }
     }
 
+    public void startDownload()
+    {
+        mDownloadTask = new DownloadTask();
+        mDownloadTask.set_context(MainActivity.this);
+        mDownloadTask.execute();
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -282,29 +167,65 @@ public class MainActivity
         cardboardView.setRenderer(this);
         setCardboardView(cardboardView);
 
-        modelScreen = new float[16];
-        camera = new float[16];
-        view = new float[16];
-        modelViewProjection = new float[16];
-        modelView = new float[16];
+        openGL = new OpenGL();
+        openGL.onCreate();
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         //At the very least ensure we have a directory containing a config file
-        copy_asset("DVR.cfg", DoomTools.GetDVRFolder() + "/");
-        copy_asset("prboom.wad", DoomTools.GetDVRFolder() + "/");
+        copy_asset("DVR.cfg", DoomTools.GetDVRFolder() + File.separator);
+        copy_asset("prboom.wad", DoomTools.GetDVRFolder() + File.separator);
+        copy_asset("extraparams.txt", DoomTools.GetDVRFolder() + File.separator);
 
-        if (!DoomTools.wadsExist()) {
-            MessageBox("Read this carefully",
-                    "You must install a game file. Tap \"Install WADs\" for auto-install. "
-                            + "Tap \"Help Me!\" for instructions on manual installation. "
-                            + "A fast WIFI network and SDCARD are required."
-                            + "If you experience game problems, try the Cleanup option.");
+        //See if user is trying to use command line params
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader(DoomTools.GetDVRFolder() + "extraparams.txt"));
+            String s;
+            StringBuilder sb=new StringBuilder(0);
+            while ((s=br.readLine())!=null)
+                sb.append(s + " ");
+            br.close();
+
+            commandLineParams = new String(sb.toString());
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
 
+        if (!DoomTools.wadsExist()) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
 
-        //Create the FBOs
-        fbo = new DVRFBO();
+            // set title
+            alertDialogBuilder.setTitle("No WAD files found");
+
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("Would you like to download the free FREEDOOM WAD (8MB)?\n\nIf you own or purchase the full game of Doom/Doom2 (or any other wad)you can click \'Cancel\' and copy the WAD file to the folder:\n\n{phonememory}/DVR")
+                    .setCancelable(false)
+                    .setPositiveButton("Download", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            MainActivity.this.startDownload();
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+        }
+
+        mWADChooser = new WADChooser(openGL);
 
         // Audio?
         mAudioMgr = AudioManager.getInstance(this);
@@ -325,64 +246,12 @@ public class MainActivity
         mSurfaceChanged = true;
     }
 
-    void CopyBitmapToTexture(Bitmap bmp, int textureUnit)
-    {
-        // Bind texture to texturename
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureUnit);
-
-        // Set filtering
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-
-        // Set wrapping mode
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
-
-        // Load the bitmap into the bound texture.
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
-
-        //unbind
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
-    }
 
     @Override
     public void onSurfaceCreated(EGLConfig config) {
          Log.i(TAG, "onSurfaceCreated");
 
-        ByteBuffer bbVertices = ByteBuffer.allocateDirect(SCREEN_COORDS.length * 4);
-        bbVertices.order(ByteOrder.nativeOrder());
-        screenVertices = bbVertices.asFloatBuffer();
-        screenVertices.put(SCREEN_COORDS);
-        screenVertices.position(0);
-
-        // initialize byte buffer for the draw list
-        ByteBuffer dlb = ByteBuffer.allocateDirect(indices.length * 2);
-        dlb.order(ByteOrder.nativeOrder());
-        listBuffer = dlb.asShortBuffer();
-        listBuffer.put(indices);
-        listBuffer.position(0);
-
-         // Create the shaders, images
-         int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vs_Image);
-         int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fs_Image);
-
-         sp_Image = GLES20.glCreateProgram();             // create empty OpenGL ES Program
-         GLES20.glAttachShader(sp_Image, vertexShader);   // add the vertex shader to program
-         GLES20.glAttachShader(sp_Image, fragmentShader); // add the fragment shader to program
-         GLES20.glLinkProgram(sp_Image);                  // creates OpenGL ES program executable
-
-        positionParam = GLES20.glGetAttribLocation(sp_Image, "a_Position");
-        texCoordParam = GLES20.glGetAttribLocation(sp_Image, "a_texCoord");
-        modelViewProjectionParam = GLES20.glGetUniformLocation(sp_Image, "u_MVPMatrix");
-        samplerParam = GLES20.glGetUniformLocation(sp_Image, "s_texture");
-
-
-        GLES20.glEnableVertexAttribArray(positionParam);
-        GLES20.glEnableVertexAttribArray(texCoordParam);
-
-        // Build the camera matrix
-        Matrix.setLookAtM(camera, 0, 0.0f, 0.0f, 0.01f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+        openGL.onSurfaceCreated(config);
 
         //Start intro music
         mPlayer = MediaPlayer.create(this, R.raw.m010912339);
@@ -405,22 +274,27 @@ public class MainActivity
         // Bind texture to texturename
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, splashTexture[0]);
-        CopyBitmapToTexture(bmp, splashTexture[0]);
-    }
-
-    public void SwitchStereoMode(int stereo_mode)
-    {
-        mStereoMode = stereo_mode;
+        openGL.CopyBitmapToTexture(bmp, splashTexture[0]);
     }
 
     @Override
     public void onNewFrame(HeadTransform headTransform) {
 
+        headTransform.getEulerAngles(eulerAngles, 0);
+        float yaw = eulerAngles[1] / (M_PI / 180.0f);
+        float pitch = -eulerAngles[0] / (M_PI / 180.0f);
+        float roll = -eulerAngles[2] / (M_PI / 180.0f);
+
+        if (!mShowingSpashScreen && mWADChooser.choosingWAD())
+        {
+            return;
+        }
+
         if (!mDVRInitialised) {
             if (!mSurfaceChanged)
                 return;
 
-            SetupUVCoords();
+            openGL.SetupUVCoords();
 
             //Reset our orientation
             cardboardView.resetHeadTracker();
@@ -428,7 +302,7 @@ public class MainActivity
             if (!mShowingSpashScreen) {
                 final String[] argv;
                 String args = new String();
-                args = "doom -iwad " + WADChooser.GetChosenWAD();
+                args = "doom -iwad " + mWADChooser.GetChosenWAD() + " " + commandLineParams;
                 argv = args.split(" ");
                 String dvr= DoomTools.GetDVRFolder();
                 Natives.DoomInit(argv, dvr);
@@ -437,11 +311,6 @@ public class MainActivity
         }
 
         if (mDVRInitialised) {
-            headTransform.getEulerAngles(eulerAngles, 0);
-
-            float yaw = eulerAngles[1] / (M_PI / 180.0f);
-            float pitch = -eulerAngles[0] / (M_PI / 180.0f);
-            float roll = -eulerAngles[2] / (M_PI / 180.0f);
             if (Natives.gameState() == 0)
                 Natives.DoomStartFrame(pitch, yaw, roll);
             else
@@ -451,7 +320,11 @@ public class MainActivity
 
     @Override
     public void onDrawEye(Eye eye) {
-        if (mDVRInitialised || mShowingSpashScreen) {
+        if (!mShowingSpashScreen && mWADChooser.choosingWAD())
+        {
+            mWADChooser.onDrawEye(eye);
+        }
+        else if (mDVRInitialised || mShowingSpashScreen) {
 
             if (mShowingSpashScreen) {
                 GLES20.glEnable(GLES20.GL_SCISSOR_TEST);
@@ -463,7 +336,7 @@ public class MainActivity
                 Natives.DoomDrawEye(eye.getType() - 1);
 
                 //Now we'll have a populated bitmap, copy to the fbo colour buffer
-                CopyBitmapToTexture(mDoomBitmap, fbo.ColorTexture[0]);
+                openGL.CopyBitmapToTexture(mDoomBitmap, openGL.fbo.ColorTexture[0]);
             }
 
             GLES20.glViewport(eye.getViewport().x,
@@ -480,27 +353,27 @@ public class MainActivity
                     eye.getViewport().height);
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-            GLES20.glUseProgram(sp_Image);
+            GLES20.glUseProgram(openGL.sp_Image);
 
-            if (Natives.gameState() != 0) {
+            if (Natives.gameState() != 0 || mShowingSpashScreen) {
                 // Apply the eye transformation to the camera.
-                Matrix.multiplyMM(view, 0, eye.getEyeView(), 0, camera, 0);
+                Matrix.multiplyMM(openGL.view, 0, eye.getEyeView(), 0, openGL.camera, 0);
 
                 // Build the ModelView and ModelViewProjection matrices
                 // for calculating screen position.
                 float[] perspective = eye.getPerspective(0.1f, 100.0f);
 
-                float scale = screenScale;
+                float scale = openGL.screenScale;
                 if (mShowingSpashScreen)
                     scale /= 2;
 
                 // Object first appears directly in front of user.
-                Matrix.setIdentityM(modelScreen, 0);
-                Matrix.translateM(modelScreen, 0, 0, 0, -screenDistance);
-                Matrix.scaleM(modelScreen, 0, scale, scale, 1.0f);
-                Matrix.multiplyMM(modelView, 0, view, 0, modelScreen, 0);
-                Matrix.multiplyMM(modelViewProjection, 0, perspective, 0, modelView, 0);
-                GLES20.glVertexAttribPointer(positionParam, 3, GLES20.GL_FLOAT, false, 0, screenVertices);
+                Matrix.setIdentityM(openGL.modelScreen, 0);
+                Matrix.translateM(openGL.modelScreen, 0, 0, 0, -openGL.screenDistance);
+                Matrix.scaleM(openGL.modelScreen, 0, scale, scale, 1.0f);
+                Matrix.multiplyMM(openGL.modelView, 0, openGL.view, 0, openGL.modelScreen, 0);
+                Matrix.multiplyMM(openGL.modelViewProjection, 0, perspective, 0, openGL.modelView, 0);
+                GLES20.glVertexAttribPointer(openGL.positionParam, 3, GLES20.GL_FLOAT, false, 0, openGL.screenVertices);
 
             } else {
 
@@ -512,35 +385,35 @@ public class MainActivity
 
                 int pitchOffset = (int)(-(eulerAngles[0]/M_PI)*(eye.getViewport().height));
 
-                SetupTriangle(x, y, w, h);
+                openGL.SetupTriangle(x, y, w, h);
 
                 // Calculate the projection and view transformation
-                Matrix.orthoM(view, 0, 0, eye.getViewport().width, 0, eye.getViewport().height, 0, 50);
+                Matrix.orthoM(openGL.view, 0, 0, eye.getViewport().width, 0, eye.getViewport().height, 0, 50);
                 //Translate so origin is centre of image
                 if (eye.getType() == Eye.Type.LEFT)
-                    Matrix.translateM(view, 0, w / 2, eye.getViewport().height / 2, 0);
+                    Matrix.translateM(openGL.view, 0, w / 2, eye.getViewport().height / 2, 0);
                 else
-                    Matrix.translateM(view, 0, eye.getViewport().width - w / 2, eye.getViewport().height / 2, 0);
+                    Matrix.translateM(openGL.view, 0, eye.getViewport().width - w / 2, eye.getViewport().height / 2, 0);
                 //rotate for head roll
-                Matrix.rotateM(view, 0, (int) (-(eulerAngles[2] / M_PI) * 180.f), 0, 0, 1);
+                Matrix.rotateM(openGL.view, 0, (int) (-(eulerAngles[2] / M_PI) * 180.f), 0, 0, 1);
                 //translate back to where it was before
                 if (eye.getType() == Eye.Type.LEFT)
-                    Matrix.translateM(view, 0, -w / 2, -eye.getViewport().height / 2, 0);
+                    Matrix.translateM(openGL.view, 0, -w / 2, -eye.getViewport().height / 2, 0);
                 else
-                    Matrix.translateM(view, 0, w / 2 - eye.getViewport().width, -eye.getViewport().height / 2, 0);
+                    Matrix.translateM(openGL.view, 0, w / 2 - eye.getViewport().width, -eye.getViewport().height / 2, 0);
                 //Now apply head pitch transformation
-                Matrix.translateM(view, 0, 0, pitchOffset, 0);
-                Matrix.multiplyMM(modelViewProjection, 0, view, 0, camera, 0);
+                Matrix.translateM(openGL.view, 0, 0, pitchOffset, 0);
+                Matrix.multiplyMM(openGL.modelViewProjection, 0, openGL.view, 0, openGL.camera, 0);
 
                 // Prepare the triangle coordinate data
-                GLES20.glVertexAttribPointer(positionParam, 3, GLES20.GL_FLOAT, false, 0, vertexBuffer);
+                GLES20.glVertexAttribPointer(openGL.positionParam, 3, GLES20.GL_FLOAT, false, 0, openGL.vertexBuffer);
             }
 
             // Prepare the texturecoordinates
-            GLES20.glVertexAttribPointer(texCoordParam, 2, GLES20.GL_FLOAT, false, 0, uvBuffer);
+            GLES20.glVertexAttribPointer(openGL.texCoordParam, 2, GLES20.GL_FLOAT, false, 0, openGL.uvBuffer);
 
             // Apply the projection and view transformation
-            GLES20.glUniformMatrix4fv(modelViewProjectionParam, 1, false, modelViewProjection, 0);
+            GLES20.glUniformMatrix4fv(openGL.modelViewProjectionParam, 1, false, openGL.modelViewProjection, 0);
 
             // Bind texture to fbo's color texture
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
@@ -551,14 +424,14 @@ public class MainActivity
                 GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, splashTexture[0]);
             }
             else  {
-                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, fbo.ColorTexture[0]);
+                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, openGL.fbo.ColorTexture[0]);
             }
 
             // Set the sampler texture unit to our fbo's color texture
-            GLES20.glUniform1i(samplerParam, 0);
+            GLES20.glUniform1i(openGL.samplerParam, 0);
 
             // Draw the triangles
-            GLES20.glDrawElements(GLES20.GL_TRIANGLES, 6, GLES20.GL_UNSIGNED_SHORT, listBuffer);
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, 6, GLES20.GL_UNSIGNED_SHORT, openGL.listBuffer);
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, activeTex0.get(0));
         }
     }
@@ -577,6 +450,18 @@ public class MainActivity
     public void onCardboardTrigger() {
         Log.i(TAG, "onCardboardTrigger");
 
+        if (!mShowingSpashScreen && mWADChooser.choosingWAD())
+        {
+            if (eulerAngles[1] / (M_PI / 180.0f) > 15.0f)
+                mWADChooser.MoveNext();
+            else if (eulerAngles[1] / (M_PI / 180.0f) < -15.0f)
+                mWADChooser.MovePrev();
+            else
+                mWADChooser.SelectWAD();
+
+            return;
+        }
+
         if (System.currentTimeMillis() - triggerTimeout > 200) {
 
             if (mDVRInitialised) {
@@ -592,13 +477,6 @@ public class MainActivity
         }
     }
 
-
-    public int getCharacter(int keyCode, KeyEvent event)
-    {
-        if (keyCode==KeyEvent.KEYCODE_DEL) return '\b';
-        return event.getUnicodeChar();
-    }
-
     private void dismissSplashScreen()
     {
         if (mShowingSpashScreen) {
@@ -612,6 +490,30 @@ public class MainActivity
     {
         int keyCode = event.getKeyCode();
         int action = event.getAction();
+
+        if (!mShowingSpashScreen &&
+                mWADChooser.choosingWAD())
+        {
+            if (action == KeyEvent.ACTION_UP &&
+                    keyCode == KeyEvent.KEYCODE_BUTTON_A) {
+                if (eulerAngles[1] / (M_PI / 180.0f) > 10.0f)
+                    mWADChooser.MoveNext();
+                else if (eulerAngles[1] / (M_PI / 180.0f) < -10.0f)
+                    mWADChooser.MovePrev();
+                else
+                    mWADChooser.SelectWAD();
+            }
+            else if (action == KeyEvent.ACTION_UP &&
+                    keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                mWADChooser.MovePrev();
+            }
+            else if (action == KeyEvent.ACTION_UP &&
+                    keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                mWADChooser.MoveNext();
+            }
+
+            return true;
+        }
 
         if ( action != KeyEvent.ACTION_DOWN && action != KeyEvent.ACTION_UP )
         {
@@ -744,35 +646,6 @@ public class MainActivity
         return (axisValue > axisValue2) ? axisValue : axisValue2;
     }
 
-    public void SetupUVCoords()
-    {
-        // The texture buffer
-        ByteBuffer bb = ByteBuffer.allocateDirect(uvs.length * 4);
-        bb.order(ByteOrder.nativeOrder());
-        uvBuffer = bb.asFloatBuffer();
-        uvBuffer.put(uvs);
-        uvBuffer.position(0);
-    }
-
-    public void SetupTriangle(int x, int y, int width, int height)
-    {
-        // We have to create the vertices of our triangle.
-        vertices = new float[]
-                {
-                        x, y, 0.0f,
-                        x, y + height, 0.0f,
-                        x + width, y + height, 0.0f,
-                        x + width, y, 0.0f,
-                };
-
-        // The vertex buffer.
-        ByteBuffer bb = ByteBuffer.allocateDirect(vertices.length * 4);
-        bb.order(ByteOrder.nativeOrder());
-        vertexBuffer = bb.asFloatBuffer();
-        vertexBuffer.put(vertices);
-        vertexBuffer.position(0);
-    }
-
     /**
      * Show the menu
      */
@@ -860,22 +733,13 @@ public class MainActivity
         mDoomHeight = h;
         mDoomBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
 
-        CreateFBO(fbo, mDoomWidth, mDoomHeight);
+        openGL.SetBitmap(mDoomBitmap);
+        openGL.CreateFBO(mDoomWidth, mDoomHeight);
     }
 
     @Override
     public void OnFatalError(final String text) {
-        MessageBox("Fatal Error", "Doom has terminated. " + "Reason: "
-                        + text);
-
-        try {
-            Thread.sleep(10000);
-        }
-        catch (InterruptedException ie){
-        }
-
-        // Must quit here or the LIB will crash
-        DoomTools.hardExit(-1);
+        Log.e(TAG, "ERROR: " + text);
     }
 
     @Override
