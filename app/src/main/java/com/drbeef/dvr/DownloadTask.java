@@ -24,9 +24,13 @@ class DownloadTask extends AsyncTask<Void, String, Void> {
 	
 	public boolean please_abort = false;
 
-	private String url = "https://www.dropbox.com/s/whngowjwpkwjht2/freedoom.zip?dl=1";
-	private String freedoomZip = DoomTools.GetDVRFolder() + "/freedoom.zip";
-	private String wadfile = DoomTools.GetDVRFolder() + "/freedoom.wad";
+	private String url = "https://github.com/freedoom/freedoom/releases/download/v0.10.1/freedoom-0.10.1.zip";
+	private String freedoomZip = DoomTools.GetDVRFolder() + "/freedoom-0.10.1.zip";
+
+	//OLD Freedom
+	//private String url = "https://www.dropbox.com/s/whngowjwpkwjht2/freedoom.zip?dl=1";
+	//private String freedoomZip = DoomTools.GetDVRFolder() + "/freedoom.zip";
+	//private String wadfile = DoomTools.GetDVRFolder() + "/freedoom.wad";
 
 	public DownloadTask set_context(Context context){
 		this.context = context;
@@ -147,7 +151,7 @@ class DownloadTask extends AsyncTask<Void, String, Void> {
     		.renameTo(new File(freedoomZip));
     	
     	// done
-    	publishProgress("download done" );
+    	publishProgress("download done");
     	
 		SystemClock.sleep(2000);
     	
@@ -157,7 +161,11 @@ class DownloadTask extends AsyncTask<Void, String, Void> {
 		Log.i("DownloadTask.java", "extracting WAD data");
 
 		ZipFile file = new ZipFile  (freedoomZip);
-		extract_file( file, "freedoom.wad", wadfile);
+		//extract_file( file, "freedoom-0.10.1\\COPYING", DoomTools.GetDVRFolder() + File.separator + "COPYING.txt");
+		//extract_file( file, "freedoom-0.10.1\\CREDITS", DoomTools.GetDVRFolder() + File.separator + "CREDITS.txt");
+		extract_file( file, "freedoom-0.10.1/README.html", DoomTools.GetDVRFolder() + File.separator + "README.html");
+		extract_file( file, "freedoom-0.10.1/freedoom1.wad", DoomTools.GetDVRFolder() + File.separator + "freedoom1.wad");
+		extract_file( file, "freedoom-0.10.1/freedoom2.wad", DoomTools.GetDVRFolder() + File.separator + "freedoom2.wad");
 
     	file.close();
     	
@@ -167,7 +175,7 @@ class DownloadTask extends AsyncTask<Void, String, Void> {
 		pd.getButton(ProgressDialog.BUTTON_POSITIVE).setText("Done");
 
 		SystemClock.sleep(1000);
-		
+
 	}
 
 	private void extract_file( ZipFile file, String entry_name, String output_name ) throws Exception{
@@ -175,51 +183,52 @@ class DownloadTask extends AsyncTask<Void, String, Void> {
 		Log.i( "DownloadTask.java", "extracting " + entry_name + " to " + output_name);
 
 		String short_name = new File(output_name).getName();
-		
+
 	    // create output directory
+		publishProgress("Extracting Freedoom Zip" );
 		new File(output_name).getParentFile().mkdirs();
-		
+
 		ZipEntry entry = file.getEntry(entry_name);
-		
-		if ( entry.isDirectory() ){	
+
+		if ( entry.isDirectory() ){
 			Log.i( "DownloadTask.java", entry_name + " is a directory");
 			new File(output_name).mkdir();
 			return;
 		}
-		
-				
+
+
        	InputStream is = null;
     	FileOutputStream  fos = null;
-    		    		
+
 		is = file.getInputStream(entry);
-		
+
     	fos = new FileOutputStream ( output_name+".part" );
 
     	byte[]  buffer = new byte [4096];
-    	
+
     	int totalcount =0;
-    	
+
     	long tprint = SystemClock.uptimeMillis();
-    	
+
     	while(true){
-    		
+
     		 if (please_abort)
-    			 throw new Exception("aborting") ;	  	    	
-	    	 
-    		
+    			 throw new Exception("aborting") ;
+
+
     		int count = is.read (buffer);
     		//Log.i( "DownloadTask.java", "extracted " + count + " bytes");
-    		
+
     	    if ( count<=0 ) break;
     	    fos.write (buffer, 0, count);
-    	    
+
     	    totalcount += count;
-    	    
+
     	    long tnow =  SystemClock.uptimeMillis();
     	    if ( (tnow-tprint)> 1000) {
-    	    	
+
     	    	float size_MB = totalcount * (1.0f/(1<<20));
-    	    	
+
     	    	publishProgress( String.format("%s : extracted %.1f MB",
     	    			short_name, size_MB));
 
@@ -229,17 +238,17 @@ class DownloadTask extends AsyncTask<Void, String, Void> {
 
     	is.close();
     	fos.close();
-    	    	
+
     	/// rename part file
-    	
+
     	new File(output_name+".part" )
     		.renameTo(new File(output_name));
-    	
+
     	// done
     	publishProgress( String.format("%s : done.",
     			short_name));
 	}
-	
+
 	@Override
 	protected Void doInBackground(Void... unused) {
 		

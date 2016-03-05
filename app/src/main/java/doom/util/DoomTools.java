@@ -35,7 +35,7 @@ public class DoomTools {
 
 	// Game files we can handle
 	public static final String[] DOOM_WADS =
-			{"freedoom.wad", "freedm.wad", "doom.wad", "doom2.wad"};
+			{"freedoom.wad", "freedoom1.wad", "freedoom2.wad", "freedm.wad", "doom.wad", "doom2.wad"};
 
 	// These are required for the game to run
 	public static final String REQUIRED_DOOM_WAD = "prboom.wad";  

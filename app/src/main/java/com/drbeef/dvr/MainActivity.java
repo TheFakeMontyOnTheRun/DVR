@@ -205,7 +205,7 @@ public class MainActivity
 
             // set dialog message
             alertDialogBuilder
-                    .setMessage("Would you like to download the free FREEDOOM WAD (8MB)?\n\nIf you own or purchase the full game of Doom/Doom2 (or any other wad)you can click \'Cancel\' and copy the WAD file to the folder:\n\n{phonememory}/DVR")
+                    .setMessage("Would you like to download the free Freedoom WADs (17.5MB)?\n\nIf you own or purchase the full game of Doom/Doom2 (or any other wad)you can click \'Cancel\' and copy the WAD file to the folder:\n\n{phonememory}/DVR")
                     .setCancelable(false)
                     .setPositiveButton("Download", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -275,6 +275,8 @@ public class MainActivity
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, splashTexture[0]);
         openGL.CopyBitmapToTexture(bmp, splashTexture[0]);
+
+        bmp.recycle();
     }
 
     @Override
@@ -322,7 +324,7 @@ public class MainActivity
     public void onDrawEye(Eye eye) {
         if (!mShowingSpashScreen && mWADChooser.choosingWAD())
         {
-            mWADChooser.onDrawEye(eye);
+            mWADChooser.onDrawEye(eye, this);
         }
         else if (mDVRInitialised || mShowingSpashScreen) {
 
@@ -483,6 +485,8 @@ public class MainActivity
             mPlayer.stop();
             mPlayer.release();
             mShowingSpashScreen = false;
+
+            mWADChooser.Initialise();
         }
     }
 

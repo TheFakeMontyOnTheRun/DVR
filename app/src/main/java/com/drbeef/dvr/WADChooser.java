@@ -1,17 +1,25 @@
 package com.drbeef.dvr;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.util.Pair;
 
 import com.google.vrtoolkit.cardboard.Eye;
 
 import java.io.File;
+import java.io.InputStream;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import doom.util.DoomTools;
 import doom.util.Natives;
@@ -22,12 +30,22 @@ import doom.util.Natives;
 public class WADChooser {
 
 	OpenGL openGL = null;
-
 	List<String> wads = new ArrayList<String>();
+	Map<String, String> wadThumbnails = new HashMap<String, String>();
+
 	private int selectedWAD = 0;
 
 	WADChooser(OpenGL openGL) {
 		this.openGL = openGL;
+	}
+
+	public void Initialise()
+	{
+		wadThumbnails.put(new String("doom.wad"), new String("d1.png"));
+		wadThumbnails.put(new String("doom2.wad"), new String("d2.png"));
+		wadThumbnails.put(new String("freedoom.wad"), new String("fd.png"));
+		wadThumbnails.put(new String("freedoom1.wad"), new String("fd1.png"));
+		wadThumbnails.put(new String("freedoom2.wad"), new String("fd2.png"));
 
 		File[] files = new File(DoomTools.GetDVRFolder()).listFiles();
 
@@ -71,13 +89,31 @@ public class WADChooser {
 			selectedWAD = wads.size()-1;
 	}
 
-	void DrawWADName()
+	void DrawWADName(Context ctx)
 	{
 // Create an empty, mutable bitmap
 		Bitmap bitmap = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_4444);
+
 // get a canvas to paint over the bitmap
 		Canvas canvas = new Canvas(bitmap);
 		bitmap.eraseColor(0);
+
+		Paint paint = new Paint();
+
+		if (wadThumbnails.containsKey(GetChosenWAD().toLowerCase())) {
+
+			try {
+				AssetManager assets = ctx.getAssets();
+				InputStream in = assets.open("thumbnails/" + wadThumbnails.get(GetChosenWAD().toLowerCase()));
+				Bitmap thumbnail = BitmapFactory.decodeStream(in);
+				in.close();
+
+				canvas.drawBitmap(thumbnail, null, new Rect(0, 0, 256, 200), paint);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
 
 // get a background image from resources
 // note the image format must match the bitmap format
@@ -86,21 +122,19 @@ public class WADChooser {
 //		background.draw(canvas); // draw the background to our bitmap
 
 // Draw the text
-		Paint textPaint = new Paint();
-		textPaint.setTextSize(20);
+		paint.setTextSize(20);
 
-		textPaint.setAntiAlias(true);
-		textPaint.setARGB(0xff, 0xff, 0x20, 0x00);
+		paint.setAntiAlias(true);
+		paint.setARGB(0xff, 0xff, 0x20, 0x00);
 // draw the text centered
-		canvas.drawText("Choose WAD:", 16, 60, textPaint);
-		canvas.drawText("<-  " + GetChosenWAD() + "  ->", 16, 112, textPaint);
+		canvas.drawText("<-  " + GetChosenWAD() + "  ->", 16, 220, paint);
 
 		openGL.CopyBitmapToTexture(bitmap, openGL.fbo.ColorTexture[0]);
 	}
 
-	public void onDrawEye(Eye eye) {
+	public void onDrawEye(Eye eye, Context ctx) {
 
-		DrawWADName();
+		DrawWADName(ctx);
 
 		GLES20.glEnable(GLES20.GL_SCISSOR_TEST);
 		GLES20.glScissor(eye.getViewport().x, eye.getViewport().y,
