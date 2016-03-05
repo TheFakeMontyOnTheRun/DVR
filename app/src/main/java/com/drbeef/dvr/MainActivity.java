@@ -29,6 +29,7 @@ import com.google.vrtoolkit.cardboard.Viewport;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -176,6 +177,19 @@ public class MainActivity
         copy_asset("DVR.cfg", DoomTools.GetDVRFolder() + File.separator);
         copy_asset("prboom.wad", DoomTools.GetDVRFolder() + File.separator);
         copy_asset("extraparams.txt", DoomTools.GetDVRFolder() + File.separator);
+        copy_asset("sounds.zip", DoomTools.GetDVRFolder() + File.separator);
+
+        try {
+            File folder = new File(DoomTools.GetDVRFolder() + File.separator + "sound" + File.separator);
+            if(!folder.exists())
+                if ( !folder.mkdirs() )
+                    throw new IOException("Unable to create local folder " + folder);
+            DoomTools.unzip(new FileInputStream(DoomTools.GetDVRFolder() + File.separator + "sounds.zip"),
+                    folder);
+        }
+        catch (IOException f)
+        {
+        }
 
         //See if user is trying to use command line params
         BufferedReader br;
@@ -252,6 +266,7 @@ public class MainActivity
          Log.i(TAG, "onSurfaceCreated");
 
         openGL.onSurfaceCreated(config);
+        openGL.SetupUVCoords();
 
         //Start intro music
         mPlayer = MediaPlayer.create(this, R.raw.m010912339);
@@ -295,11 +310,6 @@ public class MainActivity
         if (!mDVRInitialised) {
             if (!mSurfaceChanged)
                 return;
-
-            openGL.SetupUVCoords();
-
-            //Reset our orientation
-            cardboardView.resetHeadTracker();
 
             if (!mShowingSpashScreen) {
                 final String[] argv;

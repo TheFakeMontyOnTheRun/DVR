@@ -115,18 +115,11 @@ public class WADChooser {
 
 		}
 
-// get a background image from resources
-// note the image format must match the bitmap format
-//		Drawable background = context.getResources().getDrawable(R.drawable.background);
-//		background.setBounds(0, 0, 256, 256);
-//		background.draw(canvas); // draw the background to our bitmap
-
 // Draw the text
 		paint.setTextSize(20);
 
 		paint.setAntiAlias(true);
 		paint.setARGB(0xff, 0xff, 0x20, 0x00);
-// draw the text centered
 		canvas.drawText("<-  " + GetChosenWAD() + "  ->", 16, 220, paint);
 
 		openGL.CopyBitmapToTexture(bitmap, openGL.fbo.ColorTexture[0]);
@@ -168,7 +161,7 @@ public class WADChooser {
 		// Object first appears directly in front of user.
 		Matrix.setIdentityM(openGL.modelScreen, 0);
 		Matrix.translateM(openGL.modelScreen, 0, 0, 0, -openGL.screenDistance);
-		Matrix.scaleM(openGL.modelScreen, 0, openGL.screenScale, openGL.screenScale, 1.0f);
+		Matrix.scaleM(openGL.modelScreen, 0, openGL.wadChooserScale, openGL.wadChooserScale, 1.0f);
 		Matrix.multiplyMM(openGL.modelView, 0, openGL.view, 0, openGL.modelScreen, 0);
 		Matrix.multiplyMM(openGL.modelViewProjection, 0, perspective, 0, openGL.modelView, 0);
 		GLES20.glVertexAttribPointer(openGL.positionParam, 3, GLES20.GL_FLOAT, false, 0, openGL.screenVertices);

@@ -178,38 +178,6 @@ public class DoomTools {
 		return key;
 	}
 
-	public static void downloadFile (String url, File dest, String type, File folder, boolean force)	throws Exception 
-	{
-		Log.d(TAG, "Download " + url + " -> " + dest + " type: " + type + " folder=" + folder + " force:" + force);
-
-		if ( ! dest.exists() || force) 
-		{
-			if ( force ) 
-				Log.d(TAG, "Forcing download!");
-			
-	    	WebDownload wd = new WebDownload(url);
-	    	wd.doGet(new FileOutputStream(dest), type.equalsIgnoreCase("gzip"));
-	    	
-	    	// If ZIP file unzip into folder
-	    	if ( type.equalsIgnoreCase("zip")) {
-	        	if ( folder == null)
-	        		throw new Exception("Invalid destination folder for ZIP " + dest);
-	        	
-	        	if ( ! folder.mkdirs() )
-	        		throw new IOException("Unable to create local folder " + folder);
-	        	
-	        	unzip(new FileInputStream(dest), folder);
-	        	
-	        	// cleanup
-	        	dest.delete();
-	    	}
-		}
-		else {
-			Log.d(TAG, "Not fetching " + dest + " already exists.");
-		}
-	}
-
-
 	static public boolean wadExists (int idx) {
 		final String path = GetDVRFolder() + File.separator + DOOM_WADS[idx];
 		return new File(path).exists();
@@ -267,8 +235,6 @@ public class DoomTools {
     	while ( (ze = zip.getNextEntry()) != null ) {
     		final String path = dest.getAbsolutePath() 
     			+ File.separator + ze.getName();
-    		
-    		//System.out.println(path);
     		
     		FileOutputStream fout = new FileOutputStream(path);
     		byte[] bytes = new byte[1024];

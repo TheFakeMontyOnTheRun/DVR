@@ -149,6 +149,7 @@ public class OpenGL {
 
 	public float screenDistance = 8f;
 	public float screenScale = 4f;
+	public float wadChooserScale = 2.5f;
 
 	public static final String vs_Image =
 			"uniform mat4 u_MVPMatrix;" +
