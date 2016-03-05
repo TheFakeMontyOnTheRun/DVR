@@ -294,6 +294,7 @@ public class MainActivity
         bmp.recycle();
     }
 
+    long prevState = 0;
     @Override
     public void onNewFrame(HeadTransform headTransform) {
 
@@ -323,10 +324,17 @@ public class MainActivity
         }
 
         if (mDVRInitialised) {
-            if (Natives.gameState() == 0)
+            long newState = Natives.gameState();
+            if (newState == 0)
                 Natives.DoomStartFrame(pitch, yaw, roll);
             else
                 Natives.DoomStartFrame(0, 0, 0);
+
+            if (newState != prevState)
+            {
+                prevState = newState;
+                cardboardView.resetHeadTracker();
+            }
         }
     }
 
@@ -480,8 +488,6 @@ public class MainActivity
                 Natives.keyEvent(Natives.EV_KEYDOWN, DoomTools.KEY_RCTRL);
                 Natives.keyEvent(Natives.EV_KEYDOWN, DoomTools.KEY_ENTER);
             }
-
-            cardboardView.resetHeadTracker();
 
             dismissSplashScreen();
 
