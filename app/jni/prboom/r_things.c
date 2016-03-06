@@ -41,6 +41,7 @@
 #include "r_fps.h"
 #include "v_video.h"
 #include "lprintf.h"
+#include <android/log.h>
 
 #define MINZ        (FRACUNIT*4)
 #define BASEYCENTER 100
@@ -85,6 +86,8 @@ int numsprites;
 
 static spriteframe_t sprtemp[MAX_SPRITE_FRAMES];
 static int maxframe;
+
+extern int current_eye;
 
 //
 // R_InstallSpriteLump
@@ -725,14 +728,16 @@ static void R_DrawPSprite (pspdef_t *psp, int lightlevel)
     fixed_t       tx;
     tx = psp->sx-160*FRACUNIT;
 
+    int r_stereo_offset = (current_eye == 0) ? 35 : -35;
+
     tx -= patch->leftoffset<<FRACBITS;
-    x1 = (centerxfrac + FixedMul (tx,pspritescale))>>FRACBITS;
+    x1 = ((centerxfrac + FixedMul (tx,pspritescale))>>FRACBITS) + r_stereo_offset;
 
     tx += patch->width<<FRACBITS;
-    x2 = ((centerxfrac + FixedMul (tx, pspritescale) ) >>FRACBITS) - 1;
+    x2 = (((centerxfrac + FixedMul (tx, pspritescale) ) >>FRACBITS) - 1) + r_stereo_offset;
 
     width = patch->width;
-    topoffset = patch->topoffset<<FRACBITS;
+    topoffset = (patch->topoffset - 30)<<FRACBITS;
     R_UnlockPatchNum(lump+firstspritelump);
   }
 

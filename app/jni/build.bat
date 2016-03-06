@@ -11,6 +11,6 @@ rename libs.zip libs.jar
 
 REM Create an archive of the source
 cd ..\src\main\assets\source
-REM del D-VRSource.zip
-REM 7z a -r -x!.git* -x!*.o -x!*.d -x!obj -x!*.bin -x!app\build -x!app\libs -x!*.jar -x!*.so -x!*.log -x!*.jks -x!*.apk D-VRSource.zip ..\..\..\..\..\*
+REM del DVRSource.zip
+REM 7z a -r -x!.git* -x!*.o -x!*.d -x!obj -x!*.bin -x!app\build -x!app\libs -x!*.jar -x!*.so -x!*.log -x!*.jks -x!*.apk DVRSource.zip ..\..\..\..\..\*
 cd ..\..\..\..\jni

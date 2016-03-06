@@ -558,7 +558,7 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
             ng = (int)(g*t+roundUpG);
             nb = (int)(b*t+roundUpB);
             Palettes32[((p*256+i)*VID_NUMCOLORWEIGHTS)+w] = (
-              (nr<<16) | (ng<<8) | nb
+                    (nr<<16) | (ng<<8) | nb
             );
           }
         }

@@ -148,8 +148,7 @@ public class OpenGL {
 	public float[] modelView;
 
 	public float screenDistance = 8f;
-	public float screenScale = 4f;
-	public float wadChooserScale = 2.5f;
+	public float screenScale = 3f;
 
 	public static final String vs_Image =
 			"uniform mat4 u_MVPMatrix;" +
@@ -241,10 +240,10 @@ public class OpenGL {
 	};
 
 	public static final float[] SCREEN_COORDS = new float[] {
-			-1.3f, -1.0f, 1.0f,
-			-1.3f, 1.0f, 1.0f,
-			1.3f, 1.0f, 1.0f,
-			1.3f, -1.0f, 1.0f
+			-1.3f, -1.0f, 0.0f,
+			-1.3f, 1.0f, 0.0f,
+			1.3f, 1.0f, 0.0f,
+			1.3f, -1.0f, 0.0f
 	};
 
 	public FloatBuffer vertexBuffer;

@@ -179,7 +179,7 @@ void D_PostEvent(event_t *ev)
 
 static void D_Wipe(int eye)
 {
-  /*
+
   boolean done;
   int wipestart = I_GetTime () - 1;
 
@@ -200,7 +200,7 @@ static void D_Wipe(int eye)
       I_FinishUpdate(eye);             // page flip or blit buffer
     }
   while (!done);
-   */
+
 
   M_Drawer();                   // menu is drawn even on top of wipes
   I_FinishUpdate(eye);             // page flip or blit buffer
@@ -215,6 +215,7 @@ static void D_Wipe(int eye)
 gamestate_t    wipegamestate = GS_DEMOSCREEN;
 extern boolean setsizeneeded;
 extern int     showMessages;
+int current_eye;
 
 void D_Display (int eye)
 {
@@ -224,6 +225,7 @@ void D_Display (int eye)
   static gamestate_t oldgamestate = -1;
   boolean wipe;
   boolean viewactive = false, isborder = false;
+  current_eye = eye;
 
   if (nodrawers)                    // for comparative timing / profiling
     return;
@@ -323,11 +325,11 @@ void D_Display (int eye)
   // normal update
 //  if (!wipe || (V_GetMode() == VID_MODEGL))
     I_FinishUpdate (eye);              // page flip or blit buffer
-//  else {
+/*  else {
     // wipe update
-//    wipe_EndScreen();
-//    D_Wipe(eye);
-//  }
+    wipe_EndScreen();
+    D_Wipe(eye);
+  }*/
 
   if (eye == 1) {
     I_EndDisplay();

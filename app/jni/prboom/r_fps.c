@@ -63,7 +63,7 @@ tic_vars_t tic_vars;
 
 view_vars_t original_view_vars;
 
-fixed_t r_stereo_offset = 0x40000;
+fixed_t r_stereo_offset = 0x30000;
 
 extern int realtic_clock_rate;
 void D_Display(void);

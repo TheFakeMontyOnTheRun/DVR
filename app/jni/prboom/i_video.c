@@ -37,6 +37,7 @@
 #endif
 
 #include <stdlib.h>
+#include <android/log.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -454,24 +455,48 @@ static int newpal = 0;
 
 void I_FinishUpdate (int eye)
 {
+//  __android_log_print(ANDROID_LOG_INFO, "I_FinishUpdate", "got this far!");
+
   if (I_SkipFrame()) return;
 
   // screen size
   int size = SCREENWIDTH * SCREENHEIGHT;
 
   // ARGB pixels
-  int pixels[size], i;
+  static int *pixels = 0;
 
+  if (V_GetMode() == VID_MODE32) {
+    /*for (i = 0; i < size; i++) {
+      byte r = screens[0].data[i * 4];
+      byte g = screens[0].data[i * 4 + 1];
+      byte b = screens[0].data[i * 4 + 2];
+      //alpha is ignored
+      byte a = screens[0].data[i * 4 + 3];
 
-  for ( i = 0 ; i < size ; i ++) {
-	byte b = screens[0].data[i];
+      pixels[i] = (0xFF << 24)
+                  | (b << 16)
+                  | (g << 8)
+                  | r;
+    }*/
+    //memcpy(pixels, screens[0].data, size * sizeof(int));
 
-	XColor color = colours[b];
-
-	pixels[i] = (0xFF << 24)
-		| (color.red << 16)
-		| (color.green << 8)
-		| color.blue;
+    //We can literally just pass the pointer to the screen buffer
+    pixels = (int*)screens[0].data;
+  }
+  else if (V_GetMode() == VID_MODE8) {
+    if (!pixels)
+    {
+      pixels = (int*)malloc(size * sizeof(int) + 1);
+    }
+    int i;
+    for (i = 0; i < size; i++) {
+      byte b = screens[0].data[i];
+      XColor color = colours[b];
+      pixels[i] = (0xFF << 24)
+                  | (color.red << 16)
+                  | (color.green << 8)
+                  | color.blue;
+    }
   }
 
   // Send pixels to java
@@ -656,11 +681,11 @@ void I_CalculateRes(unsigned int width, unsigned int height)
   } else { */
     SCREENWIDTH = (width+15) & ~15;
     SCREENHEIGHT = height;
-    if (!(SCREENWIDTH % 1024)) {
-      SCREENPITCH = SCREENWIDTH*V_GetPixelDepth()+32;
-    } else {
+//    if (!(SCREENWIDTH % 1024)) {
+//      SCREENPITCH = SCREENWIDTH*V_GetPixelDepth()+32;
+//    } else {
       SCREENPITCH = SCREENWIDTH*V_GetPixelDepth();
-    }
+//    }
 //  }
 }
 
@@ -671,11 +696,11 @@ void I_SetRes(void)
 {
   int i;
 
+  I_CalculateRes(SCREENWIDTH, SCREENHEIGHT);
+
   // Tell Java graphics have inited
   jni_printf("I_SetRes: Creating %dx%d image.", SCREENWIDTH, SCREENHEIGHT);
   jni_init_graphics(SCREENWIDTH, SCREENHEIGHT);
-
-  I_CalculateRes(SCREENWIDTH, SCREENHEIGHT);
 
   // set first three to standard values
   for (i=0; i<3; i++) {

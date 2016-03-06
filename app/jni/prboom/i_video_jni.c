@@ -460,11 +460,16 @@ void I_UpdateNoBlit (void)
 void I_FinishUpdate (int eye)
 {
 	// Get pixels
-	int i;
 	int size = X_width * X_height;
 
 	// ARGB pixels
-	int pixels[size];
+	// ARGB pixels
+	static int *pixels = 0;
+	if (!pixels)
+	{
+		pixels = (int*)malloc(size * sizeof(int) + 1);
+	}
+	int i;
 
 	//printf("I_FinishUpdate\n");
 

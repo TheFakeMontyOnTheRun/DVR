@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.util.Pair;
 
 import com.google.vrtoolkit.cardboard.Eye;
 
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import doom.util.DoomTools;
-import doom.util.Natives;
 
 /**
  * Created by Simon on 04/03/2016.
@@ -120,7 +118,7 @@ public class WADChooser {
 
 		paint.setAntiAlias(true);
 		paint.setARGB(0xff, 0xff, 0x20, 0x00);
-		canvas.drawText("<-  " + GetChosenWAD() + "  ->", 16, 220, paint);
+		canvas.drawText("<-  " + GetChosenWAD() + "  ->", 24, 220, paint);
 
 		openGL.CopyBitmapToTexture(bitmap, openGL.fbo.ColorTexture[0]);
 	}
@@ -161,7 +159,7 @@ public class WADChooser {
 		// Object first appears directly in front of user.
 		Matrix.setIdentityM(openGL.modelScreen, 0);
 		Matrix.translateM(openGL.modelScreen, 0, 0, 0, -openGL.screenDistance);
-		Matrix.scaleM(openGL.modelScreen, 0, openGL.wadChooserScale, openGL.wadChooserScale, 1.0f);
+		Matrix.scaleM(openGL.modelScreen, 0, openGL.screenScale, openGL.screenScale, 1.0f);
 		Matrix.multiplyMM(openGL.modelView, 0, openGL.view, 0, openGL.modelScreen, 0);
 		Matrix.multiplyMM(openGL.modelViewProjection, 0, perspective, 0, openGL.modelView, 0);
 		GLES20.glVertexAttribPointer(openGL.positionParam, 3, GLES20.GL_FLOAT, false, 0, openGL.screenVertices);

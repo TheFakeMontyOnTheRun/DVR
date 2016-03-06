@@ -8,9 +8,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
-import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
-import android.opengl.GLUtils;
 import android.opengl.Matrix;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -36,11 +34,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
@@ -333,7 +327,10 @@ public class MainActivity
             if (newState != prevState)
             {
                 prevState = newState;
-                cardboardView.resetHeadTracker();
+
+                //Reset head tracker in big screen mode
+                if (newState != 0)
+                    cardboardView.resetHeadTracker();
             }
         }
     }
@@ -383,14 +380,17 @@ public class MainActivity
                 // for calculating screen position.
                 float[] perspective = eye.getPerspective(0.1f, 100.0f);
 
-                float scale = openGL.screenScale;
-                if (mShowingSpashScreen)
-                    scale /= 2;
-
                 // Object first appears directly in front of user.
                 Matrix.setIdentityM(openGL.modelScreen, 0);
                 Matrix.translateM(openGL.modelScreen, 0, 0, 0, -openGL.screenDistance);
-                Matrix.scaleM(openGL.modelScreen, 0, scale, scale, 1.0f);
+                Matrix.scaleM(openGL.modelScreen, 0, openGL.screenScale, openGL.screenScale, 1.0f);
+
+                // Set the position of the screen
+                if (mShowingSpashScreen) {
+                    float mAngle = 360.0f * (float)((System.currentTimeMillis() % 2000) / 2000.0f);
+                    Matrix.rotateM(openGL.modelScreen, 0, mAngle, 0.0f, 1.0f, 0.0f);
+                }
+
                 Matrix.multiplyMM(openGL.modelView, 0, openGL.view, 0, openGL.modelScreen, 0);
                 Matrix.multiplyMM(openGL.modelViewProjection, 0, perspective, 0, openGL.modelView, 0);
                 GLES20.glVertexAttribPointer(openGL.positionParam, 3, GLES20.GL_FLOAT, false, 0, openGL.screenVertices);
@@ -729,8 +729,7 @@ public class MainActivity
      */
     @Override
     public void OnImageUpdate(int[] pixels, int eye) {
-        mDoomBitmap.setPixels(pixels, 0, mDoomWidth, 0, 0, mDoomWidth,
-                mDoomHeight);
+        mDoomBitmap.setPixels(pixels, 0, mDoomWidth, 0, 0, mDoomWidth, mDoomHeight);
     }
 
     /**
