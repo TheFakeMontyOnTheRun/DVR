@@ -150,10 +150,8 @@ public class AudioManager
 		if(mPaused)
 			return;
 		// Sound folder
-		File folder = DoomTools.getSoundFolder(); //DoomTools.DOOM_WADS[mWadIdx]);
-		//File sound = new File(folder +  File.separator + key + ".mid");
-		File sound = new File(folder + File.separator + "prboom-music-XXXXXX.mid");
-		
+		File sound = new File(DoomTools.GetDVRFolder() +  File.separator + key + ".mp3");
+
 		if ( !sound.exists()) {
 			Log.e(TAG, "Unable to find music " + sound);
 			return;
@@ -167,10 +165,6 @@ public class AudioManager
 		Log.d(TAG, "Starting music " + sound + " loop=" + loop);
 		music = new AudioClip(ctx, Uri.fromFile( sound ));
 		
-		// Too anoying!
-//		if ( loop != 0 ) 
-//			music.loop();
-//		else
 		music.setVolume(100);
 		if (loop != 0)
 			music.loop();

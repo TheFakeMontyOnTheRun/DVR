@@ -70,13 +70,13 @@
  * prboom4android.jni.Natives.OnStartMusic (String name , int loop)
  */
 #define CB_CLASS_SM_CB  "OnStartMusic"
-#define CB_CLASS_SM_SIG  "(Ljava/lang/String;I)V"
+#define CB_CLASS_SM_SIG  "([BI)V"
 
 /**
  * prboom4android.jni.Natives.OnStopMusic (String name )
  */
 #define CB_CLASS_STOPM_CB  "OnStopMusic"
-#define CB_CLASS_STOPM_SIG  "(Ljava/lang/String;)V"
+#define CB_CLASS_STOPM_SIG  "([B)V"
 
 /**
  * prboom4android.jni.Natives.OnSetMusicVolume (int volume)

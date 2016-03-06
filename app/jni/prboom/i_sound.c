@@ -91,6 +91,9 @@ int detect_voices = 0; // God knows
 static boolean sound_inited = false;
 static boolean first_sound_init = true;
 
+extern char *doomWADDir;
+
+
 // Needed for calling the actual sound output.
 static int SAMPLECOUNT=   512;
 #define MAX_CHANNELS    32
@@ -847,9 +850,11 @@ int writeSoundFile(const char * name, const unsigned char * buffer, size_t len)
 	uint16_t speed;
 	char *data;
 
-	strcpy(fileName, "/sdcard/doom/sound/");
-	strcat(fileName, name);
-	strcat(fileName, ".wav");
+    sprintf(fileName, "%s%s%s%s", doomWADDir, "/sound/", name, ".wav");
+    //strcpy(fileName, doomWADDir);
+	//strcpy(fileName, "/sound/");
+	//strcat(fileName, name);
+	//strcat(fileName, ".wav");
 
 	file = fopen(fileName, "r");
 	if(!file)

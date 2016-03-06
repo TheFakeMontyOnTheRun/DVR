@@ -171,19 +171,10 @@ public class MainActivity
         copy_asset("DVR.cfg", DoomTools.GetDVRFolder() + File.separator);
         copy_asset("prboom.wad", DoomTools.GetDVRFolder() + File.separator);
         copy_asset("extraparams.txt", DoomTools.GetDVRFolder() + File.separator);
-        copy_asset("sounds.zip", DoomTools.GetDVRFolder() + File.separator);
 
-        try {
-            File folder = new File(DoomTools.GetDVRFolder() + File.separator + "sound" + File.separator);
-            if(!folder.exists())
-                if ( !folder.mkdirs() )
-                    throw new IOException("Unable to create local folder " + folder);
-            DoomTools.unzip(new FileInputStream(DoomTools.GetDVRFolder() + File.separator + "sounds.zip"),
-                    folder);
-        }
-        catch (IOException f)
-        {
-        }
+        File folder = new File(DoomTools.GetDVRFolder() + File.separator + "sound" + File.separator);
+        if(!folder.exists())
+            folder.mkdirs();
 
         //See if user is trying to use command line params
         BufferedReader br;

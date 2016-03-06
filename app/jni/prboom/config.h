@@ -63,8 +63,8 @@
 #define HAVE_MMAP 0
 
 /* Define if you want network game support */
-/* #undef HAVE_NET */
-#define HAVE_NET	1
+#undef HAVE_NET
+//#define HAVE_NET	1
 
 /* Define to 1 if you have the <sched.h> header file. */
 //#define HAVE_SCHED_H 0
@@ -174,8 +174,8 @@
 /* #undef USE_GLU_MIPMAP */
 
 /* Define if you want to use the SDL net lib */
-/* #undef USE_SDL_NET */
-#define USE_SDL_NET 1
+#undef USE_SDL_NET
+//#define USE_SDL_NET 1
 
 /* Version number of package */
 #define VERSION "2.5.0"

@@ -46,6 +46,7 @@
 #include "m_random.h"
 #include "w_wad.h"
 #include "lprintf.h"
+#include <android/log.h>
 
 // when to clip out sounds
 // Does not fit the large outdoor areas.
@@ -464,7 +465,7 @@ void S_StartMusic(int m_id)
 }
 
 // JNI Callback
-//void jni_start_music (const char * name, int loop);
+void jni_start_music (const char * name, int loop);
 
 void S_ChangeMusic(int musicnum, int looping)
 {
@@ -533,7 +534,8 @@ void S_ChangeMusic(int musicnum, int looping)
   // play it
   //printf("S_ChangeMusic Playing %s handle: %d, looping: %d\n", music->name, music->handle, looping);
 
-  //jni_start_music  (music->name, looping);
+  __android_log_print(ANDROID_LOG_ERROR, "DVR", "Starting Music = %s", music->name);
+  jni_start_music  (music->name, looping);
 
   I_PlaySong(music->handle, looping);
 

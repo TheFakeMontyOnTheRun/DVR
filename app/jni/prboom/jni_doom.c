@@ -501,7 +501,6 @@ void jni_info_msg (const char * msg, int type)
 	 * Attach to the curr thread otherwise we get JNI WARNING:
 	 * threadid=3 using env from threadid=15 which aborts the VM
 	 */
-/*
 	JNIEnv *env;
 
 	if ( !g_VM) {
@@ -521,14 +520,13 @@ void jni_info_msg (const char * msg, int type)
 			, jSendInfoMessage
 			, (*env)->NewStringUTF(env, msg)
 			, (jint) type);
-*/
 }
 /**
  * Fires when a background song is requested
  */
 void jni_start_music (const char * name, int loop)
 {
-/*	if (!name || strlen(name) == 0)
+	if (!name || strlen(name) == 0)
 		return;
 
 	JNIEnv *env;
@@ -549,7 +547,7 @@ void jni_start_music (const char * name, int loop)
 				, (jint) loop );
 	}
 
-	(*env)->DeleteLocalRef(env,jSound);*/
+	(*env)->DeleteLocalRef(env,jSound);
 }
 
 /**
@@ -557,7 +555,7 @@ void jni_start_music (const char * name, int loop)
  */
 void jni_stop_music (const char * name)
 {
-/*	if (!name || strlen(name) == 0)
+	if (!name || strlen(name) == 0)
 		return;
 
 	JNIEnv *env;
@@ -578,14 +576,14 @@ void jni_stop_music (const char * name)
 				);
 	}
 
-	(*env)->DeleteLocalRef(env,jSound);*/
+	(*env)->DeleteLocalRef(env,jSound);
 }
 
 /**
  * Set bg msic vol callback
  */
 void jni_set_music_volume (int vol) {
-/*
+
 	JNIEnv *env;
 	if (((*g_VM)->GetEnv(g_VM, (void**) &env, JNI_VERSION_1_4))<0)
 	{
@@ -596,7 +594,7 @@ void jni_set_music_volume (int vol) {
 		(*env)->CallStaticVoidMethod(env, jNativesCls
 				, jSetMusicVolume
 				, (jint) vol);
-	}*/
+	}
 }
 
 

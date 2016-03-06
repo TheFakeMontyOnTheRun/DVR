@@ -21,8 +21,8 @@ public class Natives
 		void OnFatalError(String text);
 		void OnQuit (int code);
 		void OnStartSound(String name, int vol);
-		void OnStartMusic (String name, int loop);
-		void OnStopMusic (String name);
+		void OnStartMusic(String name, int loop);
+		void OnStopMusic(String name);
 		void OnSetMusicVolume (int volume);
 		void OnInfoMessage(String msg, int displayType);
 	}
@@ -144,9 +144,9 @@ public class Natives
 	 * @param loop
 	 */
 	@SuppressWarnings("unused")
-	private static void OnStartMusic(String name, int loop) {
+	private static void OnStartMusic(byte[] name, int loop) {
 		if ( listener != null)
-			listener.OnStartMusic(name, loop);
+			listener.OnStartMusic(new String(name), loop);
 	}
 
 	/**
@@ -154,9 +154,9 @@ public class Natives
 	 * @param name
 	 */
 	@SuppressWarnings("unused")
-	private static void OnStopMusic(String name) {
+	private static void OnStopMusic(byte[] name) {
 		if ( listener != null)
-			listener.OnStopMusic(name);
+			listener.OnStopMusic(new String(name));
 	}
 	
 	
