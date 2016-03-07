@@ -364,20 +364,13 @@ void jni_send_str( const char * text, int level) {
 		(*g_VM)->AttachCurrentThread(g_VM, &env, NULL);
 	}
 
-	int iSize = strlen(text);
-	jbyteArray jstr = (*env)-> NewByteArray(env, iSize);
-
-	(*env)->SetByteArrayRegion(env, jstr, 0, iSize, (jbyte *) text);
-
 	// Call doom.jni.Natives.OnMessage(String)
 	if (jSendStr) {
 	    (*env)->CallStaticVoidMethod(env, jNativesCls
-	    		, jSendStr
-	    		, jstr
+	    	, jSendStr
+	    	, (*env)->NewStringUTF(env, text)
 			, (jint) level );
 	}
-
-	(*env)->DeleteLocalRef(env, jstr);
 }
 
 /**

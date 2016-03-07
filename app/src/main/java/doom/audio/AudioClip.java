@@ -23,7 +23,6 @@ public class AudioClip
 		name = ctx.getResources().getResourceName(resID);
 		
 		mPlayer = MediaPlayer.create(ctx, resID);
-		//mPlayer.setVolume(1000, 1000);
 		mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
 
 			@Override
@@ -76,7 +75,9 @@ public class AudioClip
 			mPlaying = true;
 			
 			//Log.d(TAG, "Play " + name + " vol=" + vol);
-			mPlayer.setVolume( (float)Math.log10(vol), (float)Math.log(vol)); 
+			float log1=1.0f - (float)(Math.log(101-vol)/Math.log(101));
+			mPlayer.setVolume(log1, log1);
+
 			mPlayer.start();
 		}
 	}
@@ -119,7 +120,8 @@ public class AudioClip
 	 */
 	public void setVolume (int vol) {
 		if ( mPlayer != null) {
-			mPlayer.setVolume((float)Math.log10(vol), (float)Math.log10(vol));
+			float log1=1.0f - (float)(Math.log(101-vol)/Math.log(101));
+			mPlayer.setVolume(log1, log1);
 		}
 	}
 }

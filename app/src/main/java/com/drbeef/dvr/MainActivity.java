@@ -27,7 +27,6 @@ import com.google.vrtoolkit.cardboard.Viewport;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -176,6 +175,9 @@ public class MainActivity
         if(!folder.exists())
             folder.mkdirs();
 
+        //Clean up sound folder
+        DoomTools.deleteSounds();
+
         //See if user is trying to use command line params
         BufferedReader br;
         try {
@@ -300,7 +302,7 @@ public class MainActivity
             if (!mShowingSpashScreen) {
                 final String[] argv;
                 String args = new String();
-                args = "doom -iwad " + mWADChooser.GetChosenWAD() + " " + commandLineParams;
+                args = "doom -iwad " + mWADChooser.GetSelectedWADName() + " " + commandLineParams;
                 argv = args.split(" ");
                 String dvr= DoomTools.GetDVRFolder();
                 Natives.DoomInit(argv, dvr);
@@ -374,11 +376,12 @@ public class MainActivity
                 // Object first appears directly in front of user.
                 Matrix.setIdentityM(openGL.modelScreen, 0);
                 Matrix.translateM(openGL.modelScreen, 0, 0, 0, -openGL.screenDistance);
-                Matrix.scaleM(openGL.modelScreen, 0, openGL.screenScale, openGL.screenScale, 1.0f);
+                Matrix.scaleM(openGL.modelScreen, 0, openGL.screenScale*1.5f, openGL.screenScale*1.5f, 1.0f);
 
                 // Set the position of the screen
                 if (mShowingSpashScreen) {
-                    float mAngle = 360.0f * (float)((System.currentTimeMillis() % 2000) / 2000.0f);
+                    float mAngle = 180.0f * (float)((System.currentTimeMillis() % 2000) / 2000.0f);
+                    if (mAngle > 90.0f) mAngle += 180.0f;
                     Matrix.rotateM(openGL.modelScreen, 0, mAngle, 0.0f, 1.0f, 0.0f);
                 }
 
@@ -493,7 +496,7 @@ public class MainActivity
             mPlayer.release();
             mShowingSpashScreen = false;
 
-            mWADChooser.Initialise();
+            mWADChooser.Initialise(this.getAssets());
         }
     }
 
@@ -501,6 +504,12 @@ public class MainActivity
     {
         int keyCode = event.getKeyCode();
         int action = event.getAction();
+
+        //Following buttons must not be handled here
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP ||
+                keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
+                )
+            return false;
 
         if (!mShowingSpashScreen &&
                 mWADChooser.choosingWAD())
@@ -562,13 +571,6 @@ public class MainActivity
             }
         }
 
-        //Following buttons must not be handled here
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP ||
-                keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
-                keyCode == KeyEvent.KEYCODE_BUTTON_THUMBL
-                )
-            return false;
-
         if (mDVRInitialised) {
             if (action == KeyEvent.ACTION_DOWN) {
                 Natives.keyEvent(Natives.EV_KEYDOWN,
@@ -603,14 +605,6 @@ public class MainActivity
     // 2 - Samsung gamepad that uses different axes for right stick
     int gamepadType = 0;
 
-    int lTrigAction = KeyEvent.ACTION_UP;
-    int rTrigAction = KeyEvent.ACTION_UP;
-
-    boolean wDown = false;
-    boolean aDown = false;
-    boolean sDown = false;
-    boolean dDown = false;
-
     @Override
     public boolean onGenericMotionEvent(MotionEvent event) {
         int source = event.getSource();
@@ -619,9 +613,6 @@ public class MainActivity
         {
             if (event.getAction() == MotionEvent.ACTION_MOVE)
             {
-                float x = getCenteredAxis(event, MotionEvent.AXIS_X);
-                float y = -getCenteredAxis(event, MotionEvent.AXIS_Y);
-
                 float z = getCenteredAxis(event, MotionEvent.AXIS_Z);
                 float rz = -getCenteredAxis(event, MotionEvent.AXIS_RZ);
                 //For the samsung game pad (uses different axes for the second stick)
@@ -732,7 +723,7 @@ public class MainActivity
     }
 
     @Override
-    public void OnInfoMessage(final String msg, final int type) {
+    public void OnInfoMessage(String msg, final int type) {
         Log.i(TAG, "**Doom Message:  " + msg);
     }
 

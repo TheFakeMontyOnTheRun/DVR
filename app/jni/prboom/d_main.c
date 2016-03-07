@@ -1590,7 +1590,7 @@ void D_DoomMainSetup(char *wadDir)
 
   //jff 9/3/98 use logical output routine
   lprintf(LO_INFO,"S_Init: Setting up sound.\n");
-  S_Init(snd_SfxVolume /* *8 */, snd_MusicVolume /* *8*/ );
+  S_Init(snd_SfxVolume, snd_MusicVolume);
 
   //jff 9/3/98 use logical output routine
   lprintf(LO_INFO,"HU_Init: Setting up heads up display.\n");

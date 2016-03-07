@@ -41,7 +41,6 @@ public class AudioManager
 
 	private AudioManager(Context ctx) {
 		mContext = ctx;
-		preloadSounds(ctx);
 	}
 	
 	/**
@@ -63,7 +62,7 @@ public class AudioManager
 		}
 		else {
 			// load clip from disk
-			File folder = DoomTools.getSoundFolder(); //DoomTools.DOOM_WADS[mWadIdx]);
+			File folder = DoomTools.GetSoundFolder(); //DoomTools.DOOM_WADS[mWadIdx]);
 			File sound = new File(folder.getAbsolutePath() + File.separator + key);
 			
 			if ( ! sound.exists()) {
@@ -100,47 +99,7 @@ public class AudioManager
 			mClipCount++;
 		}
 	}
-	
 
-	/**
-	 * PreLoad the most used sounds into a hash map
-	 * @param ctx
-	 * @return
-	 */
-	public void preloadSounds(Context ctx)
-	{
-		// These are some common sound keys pre-loaded for speed
-		String [] names = new String[] {"DSPISTOL.wav"	// pistol
-				, "DSDOROPN.wav", "DSDORCLS.wav" 		// doors open/close
-				, "DSPSTOP.wav", "DSSWTCHN.wav", "DSSWTCHX.wav"
-				, "DSITEMUP.wav", "DSPOSACT.wav"
-				, "DSPOPAIN.wav", "DSPODTH1.wav"
-				, "DSSHOTGN.wav" };
-		
-		// Sound folder
-		File folder = DoomTools.getSoundFolder();
-		
-		if ( !folder.exists()) {
-			Log.e(TAG, "Error: Sound folder " + folder + " not found.");
-			return;
-		}
-		
-		// WAVs
-		File[] files =  new File[names.length]; 
-		
-		for (int i = 0; i < files.length; i++ ) { 
-			files[i] = new File(folder +  File.separator +  names[i]);
-			
-			if ( files[i].exists()) {
-				//Log.d(TAG "PreLoading sound " + files[i].getName() + " uri=" + Uri.fromFile(files[i]));
-				mSounds.put(files[i].getName(), new AudioClip(ctx, Uri.fromFile(files[i])));
-			}
-			else
-				System.err.println("AudioMgr:" + files[i] + " not found");
-			
-		}
-	}
-	
 	/**
 	 * Start background music
 	 * @param ctx
@@ -149,8 +108,8 @@ public class AudioManager
 	public void startMusic (Context ctx , String key, int loop) {
 		if(mPaused)
 			return;
-		// Sound folder
-		File sound = new File(DoomTools.GetDVRFolder() +  File.separator + key + ".mp3");
+		// Sound file
+		File sound = new File(key);
 
 		if ( !sound.exists()) {
 			Log.e(TAG, "Unable to find music " + sound);
@@ -176,9 +135,8 @@ public class AudioManager
 	 * @param key
 	 */
 	public void stopMusic (String key) {
-		// Sound folder
-		File folder = DoomTools.getSoundFolder(); //DoomTools.DOOM_WADS[mWadIdx]);
-		Uri sound = Uri.fromFile(new File(folder +  File.separator + "d1" + key + ".mp3"));
+		File file = new File(DoomTools.GetDVRFolder() +  File.separator + key + ".mid");
+		Uri sound = Uri.fromFile(file);
 		
 		if ( music != null  ) {
 			if ( !sound.equals(Uri.parse(music.getName()))) {

@@ -467,6 +467,8 @@ void S_StartMusic(int m_id)
 // JNI Callback
 void jni_start_music (const char * name, int loop);
 
+extern char* music_tmp;
+
 void S_ChangeMusic(int musicnum, int looping)
 {
   musicinfo_t *music;
@@ -534,10 +536,10 @@ void S_ChangeMusic(int musicnum, int looping)
   // play it
   //printf("S_ChangeMusic Playing %s handle: %d, looping: %d\n", music->name, music->handle, looping);
 
-  __android_log_print(ANDROID_LOG_ERROR, "DVR", "Starting Music = %s", music->name);
-  jni_start_music  (music->name, looping);
+  __android_log_print(ANDROID_LOG_INFO, "DVR", "Starting Music = %s", music->name);
+  jni_start_music  (music_tmp, looping);
 
-  I_PlaySong(music->handle, looping);
+  //I_PlaySong(music->handle, looping);
 
   mus_playing = music;
 }

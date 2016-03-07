@@ -1030,7 +1030,7 @@ int quitsounds2[8] =
 
 static void M_QuitResponse(int ch)
 {
-  if (ch != 'y')
+  if (ch != 'y' && ch != 0x0d)
     return;
   if ((!netgame || demoplayback) // killough 12/98
       && !nosfxparm && snd_card) // avoid delay if no sound card
@@ -4205,7 +4205,7 @@ boolean M_Responder (event_t* ev) {
 
   if (messageToPrint) {
     if (messageNeedsInput == true &&
-  !(ch == ' ' || ch == 'n' || ch == 'y' || ch == key_escape)) // phares
+  !(ch == ' ' || ch == 'n' || ch == 'y' || ch == key_escape || ch == 0x0d)) // phares
       return false;
 
     menuactive = messageLastMenuActive;

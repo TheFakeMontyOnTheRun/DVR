@@ -638,27 +638,11 @@ void I_ShutdownMusic(void)
 
 void I_InitMusic(void)
 {
-#ifdef HAVE_MIXER
-  if (!music_tmp) {
-#ifndef _WIN32
-    music_tmp = strdup("/tmp/prboom-music-XXXXXX");
-    {
-      int fd = mkstemp(music_tmp);
-      if (fd<0) {
-        lprintf(LO_ERROR, "I_InitMusic: failed to create music temp file %s", music_tmp);
-        free(music_tmp); return;
-      } else
-        close(fd);
-    }
-#else /* !_WIN32 */
-    music_tmp = strdup("doom.tmp");
-#endif
-    atexit(I_ShutdownMusic);
-  }
-#endif
 #ifdef USE_ANDROID
   if (!music_tmp) {
-    music_tmp = strdup("/sdcard/doom/sound/prboom-music-XXXXXX.mid");
+    char musFilename[256];
+    sprintf(musFilename, "%s%s", doomWADDir, "/sound/prboom-music-XXXXXX");
+    music_tmp = strdup(musFilename);
     {
       int fd = mkstemp(music_tmp);
       if (fd<0) {
@@ -733,43 +717,6 @@ void I_UnRegisterSong(int handle)
 
 int I_RegisterSong(const void *data, size_t len)
 {
-
-#ifdef HAVE_MIXER
-  MIDI *mididata;
-  FILE *midfile;
-
-  if ( len < 32 )
-    return 0; // the data should at least as big as the MUS header
-  if ( music_tmp == NULL )
-    return 0;
-  midfile = fopen(music_tmp, "wb");
-  if ( midfile == NULL ) {
-    lprintf(LO_ERROR,"Couldn't write MIDI to %s\n", music_tmp);
-    return 0;
-  }
-  /* Convert MUS chunk to MIDI? */
-  if ( memcmp(data, "MUS", 3) == 0 )
-  {
-    UBYTE *mid;
-    int midlen;
-
-    mididata = malloc(sizeof(MIDI));
-    mmus2mid(data, mididata, 89, 0);
-    MIDIToMidi(mididata,&mid,&midlen);
-    M_WriteFile(music_tmp,mid,midlen);
-    free(mid);
-    free_mididata(mididata);
-    free(mididata);
-  } else {
-    fwrite(data, len, 1, midfile);
-  }
-  fclose(midfile);
-
-  music[0] = Mix_LoadMUS(music_tmp);
-  if ( music[0] == NULL ) {
-    lprintf(LO_ERROR,"Couldn't load MIDI from %s: %s\n", music_tmp, Mix_GetError());
-  }
-#endif
 #ifdef USE_ANDROID
   MIDI *mididata;
   FILE *midfile;
@@ -851,10 +798,6 @@ int writeSoundFile(const char * name, const unsigned char * buffer, size_t len)
 	char *data;
 
     sprintf(fileName, "%s%s%s%s", doomWADDir, "/sound/", name, ".wav");
-    //strcpy(fileName, doomWADDir);
-	//strcpy(fileName, "/sound/");
-	//strcat(fileName, name);
-	//strcat(fileName, ".wav");
 
 	file = fopen(fileName, "r");
 	if(!file)

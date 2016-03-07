@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
@@ -30,6 +31,19 @@ public class WADChooser {
 	OpenGL openGL = null;
 	List<String> wads = new ArrayList<String>();
 	Map<String, String> wadThumbnails = new HashMap<String, String>();
+	Typeface type;
+
+	enum Transition
+	{
+		ready,
+		move_left,
+		moving_left,
+		move_right,
+		moving_right
+	};
+
+	Transition mCurrentTransition = Transition.ready;
+	long mTransitionStart = -1;
 
 	private int selectedWAD = 0;
 
@@ -37,13 +51,15 @@ public class WADChooser {
 		this.openGL = openGL;
 	}
 
-	public void Initialise()
+	public void Initialise(AssetManager assets)
 	{
 		wadThumbnails.put(new String("doom.wad"), new String("d1.png"));
 		wadThumbnails.put(new String("doom2.wad"), new String("d2.png"));
 		wadThumbnails.put(new String("freedoom.wad"), new String("fd.png"));
 		wadThumbnails.put(new String("freedoom1.wad"), new String("fd1.png"));
 		wadThumbnails.put(new String("freedoom2.wad"), new String("fd2.png"));
+
+		type = Typeface.createFromAsset(assets, "fonts/DooM.ttf");
 
 		File[] files = new File(DoomTools.GetDVRFolder()).listFiles();
 
@@ -69,22 +85,24 @@ public class WADChooser {
 		mChoosingWAD = false;
 	}
 
-	public String GetChosenWAD() {
+	public String GetSelectedWADName() {
 		return wads.get(selectedWAD);
 	}
 
 	public void MoveNext()
 	{
-		selectedWAD++;
-		if (selectedWAD == wads.size())
-			selectedWAD = 0;
+		if (mCurrentTransition == Transition.ready) {
+			mCurrentTransition = Transition.move_right;
+			mTransitionStart = System.currentTimeMillis();
+		}
 	}
 
 	public void MovePrev()
 	{
-		selectedWAD--;
-		if (selectedWAD < 0)
-			selectedWAD = wads.size()-1;
+		if (mCurrentTransition == Transition.ready) {
+			mCurrentTransition = Transition.move_left;
+			mTransitionStart = System.currentTimeMillis();
+		}
 	}
 
 	void DrawWADName(Context ctx)
@@ -97,33 +115,68 @@ public class WADChooser {
 		bitmap.eraseColor(0);
 
 		Paint paint = new Paint();
+		paint.setTextSize(20);
+		paint.setTypeface(type);
+		paint.setAntiAlias(true);
+		paint.setARGB(0xff, 0xff, 0x20, 0x00);
 
-		if (wadThumbnails.containsKey(GetChosenWAD().toLowerCase())) {
+		if (wadThumbnails.containsKey(GetSelectedWADName().toLowerCase())) {
 
 			try {
 				AssetManager assets = ctx.getAssets();
-				InputStream in = assets.open("thumbnails/" + wadThumbnails.get(GetChosenWAD().toLowerCase()));
+				InputStream in = assets.open("thumbnails/" + wadThumbnails.get(GetSelectedWADName().toLowerCase()));
 				Bitmap thumbnail = BitmapFactory.decodeStream(in);
 				in.close();
 
-				canvas.drawBitmap(thumbnail, null, new Rect(0, 0, 256, 200), paint);
+				canvas.drawBitmap(thumbnail, null, new Rect(36, 36, 218, 214), paint);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 		}
+		else
+		{
+			canvas.drawText("no thumbnail", 42, 114, paint);
+		}
 
 // Draw the text
-		paint.setTextSize(20);
+		if (mCurrentTransition == Transition.ready) {
+			canvas.drawText("Choose Wad", 32, 24, paint);
+			canvas.drawText(GetSelectedWADName(), 32, 256, paint);
 
-		paint.setAntiAlias(true);
-		paint.setARGB(0xff, 0xff, 0x20, 0x00);
-		canvas.drawText("<-  " + GetChosenWAD() + "  ->", 24, 220, paint);
+			//Draw arrows
+			paint.setTextSize(36);
+			paint.setARGB(0xff, 0x20, 0x20, 0xff);
+			canvas.drawText("<", 0, 116, paint);
+			canvas.drawText(">", 228, 116, paint);
+		}
 
 		openGL.CopyBitmapToTexture(bitmap, openGL.fbo.ColorTexture[0]);
 	}
 
 	public void onDrawEye(Eye eye, Context ctx) {
+
+		if (System.currentTimeMillis() - mTransitionStart > 250) {
+			if (mCurrentTransition == Transition.move_right) {
+				selectedWAD++;
+				if (selectedWAD == wads.size())
+					selectedWAD = 0;
+				mCurrentTransition = Transition.moving_right;
+			}
+			if (mCurrentTransition == Transition.move_left) {
+				selectedWAD--;
+				if (selectedWAD < 0)
+					selectedWAD = wads.size() - 1;
+				mCurrentTransition = Transition.moving_left;
+			}
+		}
+
+		if (System.currentTimeMillis() - mTransitionStart > 500)
+		{
+			mTransitionStart = -1;
+			mCurrentTransition = Transition.ready;
+		}
+
 
 		DrawWADName(ctx);
 
@@ -160,6 +213,18 @@ public class WADChooser {
 		Matrix.setIdentityM(openGL.modelScreen, 0);
 		Matrix.translateM(openGL.modelScreen, 0, 0, 0, -openGL.screenDistance);
 		Matrix.scaleM(openGL.modelScreen, 0, openGL.screenScale, openGL.screenScale, 1.0f);
+
+		if (mTransitionStart != -1) {
+			long transVal = System.currentTimeMillis() - mTransitionStart;
+			if (mCurrentTransition == Transition.moving_left ||
+					mCurrentTransition == Transition.move_left)
+				transVal = 500 - transVal;
+			float mAngle = 180.0f * (float) (((float)transVal) / 500.0f);
+			if (mAngle > 90.0f)
+				mAngle += 180.0f;
+			Matrix.rotateM(openGL.modelScreen, 0, mAngle, 0.0f, 1.0f, 0.0f);
+		}
+
 		Matrix.multiplyMM(openGL.modelView, 0, openGL.view, 0, openGL.modelScreen, 0);
 		Matrix.multiplyMM(openGL.modelViewProjection, 0, perspective, 0, openGL.modelView, 0);
 		GLES20.glVertexAttribPointer(openGL.positionParam, 3, GLES20.GL_FLOAT, false, 0, openGL.screenVertices);

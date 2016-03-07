@@ -1,7 +1,6 @@
 package doom.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +9,6 @@ import java.util.zip.ZipInputStream;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -212,7 +210,7 @@ public class DoomTools {
     /**
      * Get the sound folder name for a game file 
      */
-    public static File getSoundFolder() { 
+    public static File GetSoundFolder() {
     	return new File(GetDVRFolder() + File.separator + "sound");
     }
     
@@ -253,9 +251,9 @@ public class DoomTools {
 	/**
 	 * Clean sounds
 	 */
-	private static void deleteSounds() //int wadIdx) 
+	public static void deleteSounds() //int wadIdx)
 	{
-		File folder = getSoundFolder(); //DoomTools.DOOM_WADS[wadIdx]);
+		File folder = GetSoundFolder();
 		
 		if ( !folder.exists()) {
 			Log.e(TAG, "Error: Sound folder " + folder + " not found.");
@@ -269,7 +267,5 @@ public class DoomTools {
 			if (files[i].exists() )
 				files[i].delete();
 		}
-		if ( folder.exists() ) folder.delete();
 	}
-
 }
