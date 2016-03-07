@@ -275,6 +275,19 @@ JNIEXPORT jint JNICALL Java_doom_util_Natives_gameState
 			demoplayback ? 1 : 0;
 }
 
+
+JNIEXPORT jint JNICALL Java_doom_util_Natives_isMapShowing
+		(JNIEnv * env, jclass cls)
+{
+	return (int) automapmode;
+}
+
+JNIEXPORT jint JNICALL Java_doom_util_Natives_isMenuShowing
+		(JNIEnv * env, jclass cls)
+{
+	return menuactive ? 1 : 0;
+}
+
 /**
  * Get java array length
  */

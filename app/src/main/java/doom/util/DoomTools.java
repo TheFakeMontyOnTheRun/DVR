@@ -97,16 +97,34 @@ public class DoomTools {
 		switch (key) {
 
 		case KeyEvent.KEYCODE_DPAD_LEFT:
-			return KEY_A;
+			if(Natives.isMapShowing() == 0 || Natives.isMenuShowing() != 0)
+				return KEY_A;
+			else
+				return 0xac;
 
 		case KeyEvent.KEYCODE_DPAD_RIGHT:
-			return KEY_D;
+			if(Natives.isMapShowing() == 0 || Natives.isMenuShowing() != 0)
+				return KEY_D;
+			else
+				return 0xae;
 
 		case KeyEvent.KEYCODE_DPAD_UP:
-			return KEY_W;
+			if(Natives.isMapShowing() == 0 || Natives.isMenuShowing() != 0)
+				return KEY_W;
+			else
+				return 0xad;
 
 		case KeyEvent.KEYCODE_DPAD_DOWN:
-			return KEY_S;
+			if(Natives.isMapShowing() == 0 || Natives.isMenuShowing() != 0)
+				return KEY_S;
+			else
+				return 0xaf;
+
+		case KeyEvent.KEYCODE_BUTTON_THUMBR:
+			return 0x69;
+
+		case KeyEvent.KEYCODE_BUTTON_THUMBL:
+			return 0x6f;
 
 		// Left
 		case 84: // SYM

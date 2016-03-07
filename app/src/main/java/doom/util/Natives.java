@@ -70,8 +70,10 @@ public class Natives
 	 */
 	public static native int motionEvent(int b, int x, int y);
 
-	//Returns whether menu or map is showing
+	//Little game state getters
 	public static native int gameState();
+	public static native int isMapShowing();
+	public static native int isMenuShowing();
 
 	/***********************************************************
 	 * C - Callbacks
