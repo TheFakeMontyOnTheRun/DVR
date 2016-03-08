@@ -2,6 +2,9 @@ package doom.audio;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.net.Uri;
@@ -16,16 +19,17 @@ import doom.util.DoomTools;
 public class AudioManager 
 {
 	static final String TAG = "AudioMgr";
-	public static final int MAX_CLIPS = 50;
+	public static final int MAX_CLIPS = 20;
 	
 	static private AudioManager am ;
 
 	// Game sound (WAVs)
-	private volatile HashMap<String, AudioClip> mSounds = new HashMap<String, AudioClip>();
+	private volatile HashMap<String, List<AudioClip>> mSounds = new HashMap<String, List<AudioClip>>();
 	private Context mContext;
 	private int mClipCount = 0;
 	private boolean mPaused = false;
-	
+	private int mMusicVolume = 0;
+
 	// BG music
 	private AudioClip music;
 	
@@ -55,12 +59,35 @@ public class AudioManager
 		// The sound key as stored in the FS -> DS[NAME-UCASE].wav
 		//String key = "DS" + name.toUpperCase() + ".wav";
 		String key = name + ".wav";
-		
+
+		AudioClip clip = null;
 		if ( mSounds.containsKey(key)) {
 			//Log.d(TAG, "Playing " + key + " from cache  vol:" + vol);
-			mSounds.get(key).play();
+			List<AudioClip> clipList = mSounds.get(key);
+
+			for (AudioClip c: clipList) {
+				if (!c.isPlaying())
+				{
+					clip = c;
+					break;
+				}
+			}
+
+			if (clip == null &&
+					clipList.size() >= 2)
+			{
+				//Limit to 2 of the same sound
+				return;
+			}
 		}
-		else {
+		else
+		{
+			List<AudioClip> clipList = new LinkedList<AudioClip>();
+			mSounds.put(key, clipList);
+		}
+
+		if (clip == null)
+		{
 			// load clip from disk
 			File folder = DoomTools.GetSoundFolder(); //DoomTools.DOOM_WADS[mWadIdx]);
 			File sound = new File(folder.getAbsolutePath() + File.separator + key);
@@ -74,29 +101,38 @@ public class AudioManager
 					return;
 				}
 			}
-			
-			// If the sound table is full remove a random entry
-			if ( mClipCount > MAX_CLIPS) {
-				// Remove a last key
-				int idx = mSounds.size() - 1; //(int)(Math.random() * (mSounds.size() - 1));
-				
-				//Log.d(TAG, "Removing cached sound " + idx 
-				//		+ " HashMap size=" + mSounds.size());
-				
-				String k = (String)mSounds.keySet().toArray()[idx];
-				AudioClip clip = mSounds.remove(k);
-				clip.release();
-				clip = null;
-				mClipCount--;
-			}
-			
-			//Log.d(TAG, "Play & Cache " + key + " u:" + Uri.fromFile(sound));
 
-			AudioClip clip = new AudioClip(mContext, Uri.fromFile(sound));
-			clip.play(vol);
-			
-			mSounds.put(key, clip);
+			AudioClip newClip = new AudioClip(mContext, Uri.fromFile(sound));
+			newClip.play(vol);
+
+			List<AudioClip> clipList = mSounds.get(key);
+			clipList.add(newClip);
 			mClipCount++;
+		}
+		else
+		{
+			clip.play(vol);
+		}
+
+		// If the sound table is full remove a random entry
+		boolean firstLoop = true;
+		while ( mClipCount > MAX_CLIPS) {
+			for (Map.Entry<String, List<AudioClip>> entry : mSounds.entrySet()) {
+				if (entry.getValue().size() > 1 || !firstLoop) {
+					for (AudioClip c : entry.getValue()) {
+						if (!c.isPlaying()) {
+							if (entry.getValue().remove(c)) {
+								c.release();
+								c = null;
+								mClipCount--;
+								//Done, move to next list
+								break;
+							}
+						}
+					}
+				}
+			}
+			firstLoop = false;
 		}
 	}
 
@@ -124,7 +160,7 @@ public class AudioManager
 		Log.d(TAG, "Starting music " + sound + " loop=" + loop);
 		music = new AudioClip(ctx, Uri.fromFile( sound ));
 		
-		music.setVolume(100);
+		music.setVolume(mMusicVolume);
 		if (loop != 0)
 			music.loop();
 		music.play();
@@ -135,22 +171,17 @@ public class AudioManager
 	 * @param key
 	 */
 	public void stopMusic (String key) {
-		File file = new File(DoomTools.GetDVRFolder() +  File.separator + key + ".mid");
-		Uri sound = Uri.fromFile(file);
-		
-		if ( music != null  ) {
-			if ( !sound.equals(Uri.parse(music.getName()))) {
-				Log.w(TAG, "Stop music uri "  + sound  + " different than " + music.getName());
-			}
-			music.stop();
-			music.release();
-			music = null;
-		}
+		music.stop();
+		music.release();
+		music = null;
 	}
 
 	public void setMusicVolume (int vol) {
-		if ( music != null)
-			music.setVolume(vol);
+		//Store
+		mMusicVolume = vol;
+		if ( music != null) {
+			music.setVolume(mMusicVolume);
+		}
 		else
 			Log.e(TAG, "setMusicVolume " + vol + " called with NULL music player");
 	}

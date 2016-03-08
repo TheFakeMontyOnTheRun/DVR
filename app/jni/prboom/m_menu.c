@@ -1028,6 +1028,8 @@ int quitsounds2[8] =
   sfx_sgtatk
 };
 
+extern void jni_quit(int code);
+
 static void M_QuitResponse(int ch)
 {
   if (ch != 'y' && ch != 0x0d)
@@ -1051,7 +1053,8 @@ static void M_QuitResponse(int ch)
       i--;
     }
   }
-  exit(0); // killough
+
+  jni_quit(0);
 }
 
 void M_QuitDOOM(int choice)

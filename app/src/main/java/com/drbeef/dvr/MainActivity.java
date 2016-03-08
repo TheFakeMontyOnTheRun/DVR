@@ -307,6 +307,12 @@ public class MainActivity
                 String dvr= DoomTools.GetDVRFolder();
                 Natives.DoomInit(argv, dvr);
                 mDVRInitialised = true;
+
+                if (mPlayer != null) {
+                    mPlayer.stop();
+                    mPlayer.release();
+                    mPlayer = null;
+                }
             }
         }
 
@@ -492,10 +498,7 @@ public class MainActivity
     private void dismissSplashScreen()
     {
         if (mShowingSpashScreen) {
-            mPlayer.stop();
-            mPlayer.release();
             mShowingSpashScreen = false;
-
             mWADChooser.Initialise(this.getAssets());
         }
     }
@@ -659,10 +662,11 @@ public class MainActivity
     @Override
     public void OnQuit(int code) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(250);
         }
         catch (InterruptedException ie){
         }
+
         System.exit(0);
     }
 

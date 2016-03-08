@@ -120,7 +120,6 @@ public class Natives
 
 	/**
 	 * Fires when Doom Quits
-	 * TODO: No yet implemented in the JNI lib
 	 * @param code
 	 */
 	@SuppressWarnings("unused")

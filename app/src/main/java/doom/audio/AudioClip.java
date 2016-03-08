@@ -9,7 +9,7 @@ import android.net.Uri;
  * @author Owner
  *
  */
-public class AudioClip 
+public class AudioClip
 {
 	static final String TAG = "AudioClip";
 	
@@ -52,36 +52,38 @@ public class AudioClip
 			
 		});
 	}
-	
+
+	public synchronized boolean isPlaying() {
+		return mPlaying;
+	}
+
+	//For music
 	public synchronized void play () {
-		if (mPlaying) { 
+		if (mPlaying) {
 			mPlayer.seekTo(0);
 			return;
 		}
-		
+
 		if (mPlayer != null ) {
 			mPlaying = true;
 			mPlayer.start();
 		}
 	}
-	
+
+	//For SFX
 	public synchronized void play (int vol) {
-		if (mPlaying) {
-			mPlayer.seekTo(0);
-//			return;
-		}
-		
+		mPlayer.seekTo(0);
+
 		if (mPlayer != null ) {
 			mPlaying = true;
 			
 			//Log.d(TAG, "Play " + name + " vol=" + vol);
-			float log1=1.0f - (float)(Math.log(101-vol)/Math.log(101));
-			mPlayer.setVolume(log1, log1);
-
+			setVolume(vol);
 			mPlayer.start();
+
 		}
 	}
-	
+
 	
 	public synchronized void stop() {
 		try {
@@ -120,6 +122,8 @@ public class AudioClip
 	 */
 	public void setVolume (int vol) {
 		if ( mPlayer != null) {
+			if (vol > 100)
+				vol = 100;
 			float log1=1.0f - (float)(Math.log(101-vol)/Math.log(101));
 			mPlayer.setVolume(log1, log1);
 		}

@@ -84,6 +84,12 @@
 #define CB_CLASS_SETMV_CB  "OnSetMusicVolume"
 #define CB_CLASS_SETMV_SIG  "(I)V"
 
+/**
+ * prboom4android.jni.Natives.OnQuit (int code)
+ */
+#define CB_CLASS_QUIT_CB  "OnQuit"
+#define CB_CLASS_QUIT_SIG  "(I)V"
+
 /* debug macros */
 #define DEBUG_PREFIX printf("JNI__DEBUG ");
 #define DEBUG0(X) if (debug_jni) {DEBUG_PREFIX printf(X);}

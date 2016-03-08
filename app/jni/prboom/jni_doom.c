@@ -23,6 +23,7 @@ jmethodID jStartMusic = 0;
 jmethodID jStopMusic = 0;
 jmethodID jInitGraphics = 0;
 jmethodID jSendStr = 0;
+jmethodID jQuit = 0;
 
 // Java image pixels: int ARGB
 jintArray jImage = 0;
@@ -84,6 +85,15 @@ int loadJNIMethods(JNIEnv * env)
 
 	if ( jSetMusicVolume == 0 ) {
 		jni_printf("Unable to find method SetMusicVolume sig: %s ", CB_CLASS_SETMV_SIG);
+		return -1;
+	}
+
+	jQuit = (*env)->GetStaticMethodID(env, jNativesCls
+			, CB_CLASS_QUIT_CB
+			, CB_CLASS_QUIT_SIG);
+
+	if ( jQuit == 0 ) {
+		jni_printf("Unable to find method OnQuit sig: %s ", CB_CLASS_QUIT_SIG);
 		return -1;
 	}
 
@@ -600,6 +610,24 @@ void jni_set_music_volume (int vol) {
 		(*env)->CallStaticVoidMethod(env, jNativesCls
 				, jSetMusicVolume
 				, (jint) vol);
+	}
+}
+
+/**
+ * Set bg msic vol callback
+ */
+void jni_quit (int code) {
+
+	JNIEnv *env;
+	if (((*g_VM)->GetEnv(g_VM, (void**) &env, JNI_VERSION_1_4))<0)
+	{
+		(*g_VM)->AttachCurrentThread(g_VM, &env, NULL);
+	}
+
+	if (jQuit) {
+		(*env)->CallStaticVoidMethod(env, jNativesCls
+				, jQuit
+				, (jint) code);
 	}
 }
 
