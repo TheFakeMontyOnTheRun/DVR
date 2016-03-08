@@ -405,7 +405,12 @@ public class MainActivity
 
                 int pitchOffset = (int)(-(eulerAngles[0]/M_PI)*(eye.getViewport().height));
 
-                openGL.SetupTriangle(x, y, w, h);
+                int widthScaler = 0;
+                float f = -(eulerAngles[0]/M_PI);
+                if (f > 0.125f)
+                    widthScaler = (int)(((f - 0.125f)/2.0f) * eye.getViewport().width);
+
+                openGL.SetupTriangle(x+widthScaler, y, w-widthScaler*2, h);
 
                 // Calculate the projection and view transformation
                 Matrix.orthoM(openGL.view, 0, 0, eye.getViewport().width, 0, eye.getViewport().height, 0, 50);
@@ -662,7 +667,7 @@ public class MainActivity
     @Override
     public void OnQuit(int code) {
         try {
-            Thread.sleep(250);
+            Thread.sleep(500);
         }
         catch (InterruptedException ie){
         }

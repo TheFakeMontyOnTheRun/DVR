@@ -19,7 +19,7 @@ import doom.util.DoomTools;
 public class AudioManager 
 {
 	static final String TAG = "AudioMgr";
-	public static final int MAX_CLIPS = 20;
+	public static final int MAX_CLIPS = 25;
 	
 	static private AudioManager am ;
 
