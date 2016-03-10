@@ -43,7 +43,8 @@ public class OpenGL {
 		modelView = new float[16];
 
 		//Create the FBOs
-		fbo = new DVRFBO();
+		fbo[0] = new DVRFBO();
+		fbo[1] = new DVRFBO();
 	}
 
 	public void onSurfaceCreated(EGLConfig config) {
@@ -176,10 +177,10 @@ public class OpenGL {
 		return shader;
 	}
 	//FBO render eye buffer
-	public DVRFBO fbo;
+	public DVRFBO fbo[] = new DVRFBO[2];
 
 
-	boolean CreateFBO( int width, int height)
+	boolean CreateFBO(DVRFBO fbo, int width, int height)
 	{
 		Log.d("DVR", "CreateFBO");
 		// Create the color buffer texture.
@@ -217,7 +218,7 @@ public class OpenGL {
 		return true;
 	}
 
-	void DestroyFBO( )
+	void DestroyFBO(DVRFBO fbo)
 	{
 		GLES20.glDeleteFramebuffers( 1, fbo.FrameBuffer, 0 );
 		fbo.FrameBuffer[0] = 0;

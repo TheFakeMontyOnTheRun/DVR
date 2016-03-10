@@ -46,7 +46,11 @@ public class AudioManager
 	private AudioManager(Context ctx) {
 		mContext = ctx;
 	}
-	
+
+	static public float getLogVolume(int volume) {
+		return 1.0f - (float)(Math.log(101-volume)/Math.log(101));
+	}
+
 	/**
 	 * Start a sound by name & volume
 	 * @param name example "pistol" when firing the gun

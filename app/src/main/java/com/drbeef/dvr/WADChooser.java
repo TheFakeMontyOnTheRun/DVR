@@ -151,7 +151,7 @@ public class WADChooser {
 			canvas.drawText(">", 228, 116, paint);
 		}
 
-		openGL.CopyBitmapToTexture(bitmap, openGL.fbo.ColorTexture[0]);
+		openGL.CopyBitmapToTexture(bitmap, openGL.fbo[0].ColorTexture[0]);
 	}
 
 	public void onDrawEye(Eye eye, Context ctx) {
@@ -240,7 +240,7 @@ public class WADChooser {
 		IntBuffer activeTex0 = IntBuffer.allocate(2);
 		GLES20.glGetIntegerv(GLES20.GL_TEXTURE_BINDING_2D, activeTex0);
 
-		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, openGL.fbo.ColorTexture[0]);
+		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, openGL.fbo[0].ColorTexture[0]);
 
 		// Set the sampler texture unit to our fbo's color texture
 		GLES20.glUniform1i(openGL.samplerParam, 0);

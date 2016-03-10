@@ -12,7 +12,9 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.InputDevice;
@@ -20,9 +22,11 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.google.vrtoolkit.cardboard.CardboardActivity;
+import com.google.vrtoolkit.cardboard.CardboardDeviceParams;
 import com.google.vrtoolkit.cardboard.CardboardView;
 import com.google.vrtoolkit.cardboard.Eye;
 import com.google.vrtoolkit.cardboard.HeadTransform;
+import com.google.vrtoolkit.cardboard.ScreenParams;
 import com.google.vrtoolkit.cardboard.Viewport;
 
 import java.io.BufferedReader;
@@ -48,10 +52,7 @@ public class MainActivity
 {
     private static final String TAG = "DVR";
 
-    //Head orientation
-    private float[] eulerAngles = new float[3];
-
-    OpenGL openGL = null;
+   OpenGL openGL = null;
 
     // Audio Cache Manager
     private AudioManager mAudioMgr;
@@ -61,6 +62,12 @@ public class MainActivity
     private int mDoomWidth;
     // height of mBitmap
     private int mDoomHeight;
+
+    //Head orientation
+    private float[] eulerAngles = new float[3];
+    private float hmdYaw;
+    private float hmdPitch;
+    private float hmdRoll;
 
     //-1 means start button isn't pressed
     private long startButtonDownCounter = -1;
@@ -83,9 +90,12 @@ public class MainActivity
     //Can't rebuild eye buffers until surface changed flag recorded
     public static boolean mSurfaceChanged = false;
 
+    float lensCentreOffset = -1.0f;
+
     private boolean mShowingSpashScreen = true;
     private int[] splashTexture = new int[1];
     private MediaPlayer mPlayer;
+    private int mPlayerVolume = 100;
 
 
     static {
@@ -286,9 +296,9 @@ public class MainActivity
     public void onNewFrame(HeadTransform headTransform) {
 
         headTransform.getEulerAngles(eulerAngles, 0);
-        float yaw = eulerAngles[1] / (M_PI / 180.0f);
-        float pitch = -eulerAngles[0] / (M_PI / 180.0f);
-        float roll = -eulerAngles[2] / (M_PI / 180.0f);
+        hmdYaw = eulerAngles[1] / (M_PI / 180.0f);
+        hmdPitch = -eulerAngles[0] / (M_PI / 180.0f);
+        hmdRoll = -eulerAngles[2] / (M_PI / 180.0f);
 
         if (!mShowingSpashScreen && mWADChooser.choosingWAD())
         {
@@ -306,20 +316,32 @@ public class MainActivity
                 argv = args.split(" ");
                 String dvr= DoomTools.GetDVRFolder();
                 Natives.DoomInit(argv, dvr);
+
                 mDVRInitialised = true;
 
-                if (mPlayer != null) {
-                    mPlayer.stop();
-                    mPlayer.release();
-                    mPlayer = null;
-                }
             }
         }
 
         if (mDVRInitialised) {
+            //Fade out intro music
+            if (mPlayer != null) {
+                mPlayerVolume--;
+                if (mPlayerVolume == 0) {
+                    mPlayer.stop();
+                    mPlayer.release();
+                    mPlayer = null;
+                }
+                else
+                {
+                    float log1 = AudioManager.getLogVolume(mPlayerVolume);
+                    mPlayer.setVolume(log1, log1);
+                }
+            }
+
+
             long newState = Natives.gameState();
             if (newState == 0)
-                Natives.DoomStartFrame(pitch, yaw, roll);
+                Natives.DoomStartFrame(hmdPitch, hmdYaw, hmdRoll);
             else
                 Natives.DoomStartFrame(0, 0, 0);
 
@@ -332,28 +354,41 @@ public class MainActivity
                     cardboardView.resetHeadTracker();
             }
         }
+
+        if (mDVRInitialised) {
+            //Get all the DOOM drawing done here, minimise time between eye calls
+            Natives.DoomDrawEye(0);
+            openGL.CopyBitmapToTexture(mDoomBitmap, openGL.fbo[0].ColorTexture[0]);
+            Natives.DoomDrawEye(1);
+            openGL.CopyBitmapToTexture(mDoomBitmap, openGL.fbo[1].ColorTexture[0]);
+        }
     }
 
     @Override
     public void onDrawEye(Eye eye) {
+
+        if (lensCentreOffset == -1.0f) {
+            //Now calculate the auto lens centre correction
+            CardboardDeviceParams device = cardboardView.getHeadMountedDisplay().getCardboardDeviceParams();
+            ScreenParams scr = cardboardView.getScreenParams();
+            Display display = getWindowManager().getDefaultDisplay();
+            DisplayMetrics met = new DisplayMetrics();
+            display.getMetrics(met);
+            float dpmil = (met.xdpi / 25.4f);
+            float qscreen = (scr.getWidthMeters() * 1000.0f) / 4.0f;
+            float halflens = (device.getInterLensDistance() * 1000.0f) / 2.0f;
+            //Multiply by small fudge factor (25%)
+            lensCentreOffset = ((halflens - qscreen) * dpmil) * 1.25f;
+            //Viewport size is not the same as screen resolution, so convert
+            lensCentreOffset = (lensCentreOffset / (scr.getWidth() / 2.0f)) * eye.getViewport().width;
+        }
+
+
         if (!mShowingSpashScreen && mWADChooser.choosingWAD())
         {
             mWADChooser.onDrawEye(eye, this);
         }
         else if (mDVRInitialised || mShowingSpashScreen) {
-
-            if (mShowingSpashScreen) {
-                GLES20.glEnable(GLES20.GL_SCISSOR_TEST);
-                GLES20.glScissor(eye.getViewport().x, eye.getViewport().y,
-                        eye.getViewport().width, eye.getViewport().height);
-                GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-                GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
-            } else  {
-                Natives.DoomDrawEye(eye.getType() - 1);
-
-                //Now we'll have a populated bitmap, copy to the fbo colour buffer
-                openGL.CopyBitmapToTexture(mDoomBitmap, openGL.fbo.ColorTexture[0]);
-            }
 
             GLES20.glViewport(eye.getViewport().x,
                     eye.getViewport().y,
@@ -367,7 +402,7 @@ public class MainActivity
                     eye.getViewport().y,
                     eye.getViewport().width,
                     eye.getViewport().height);
-            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
             GLES20.glUseProgram(openGL.sp_Image);
 
@@ -397,37 +432,40 @@ public class MainActivity
 
             } else {
 
-                // Create the triangles for orthographic projection (if required)
-                int w = (int) (eye.getViewport().width * 0.82f);
-                int h = (int) (eye.getViewport().height * 0.7f);
-                int x = (int) ((eye.getType() == Eye.Type.LEFT) ? 0 : (eye.getViewport().width - w));
-                int y = (int) (eye.getViewport().height * 0.15f);
+                float widthScaler = 0.76f;
+                float heightScaler = 0.64f;
+
+                // Create the triangles for orthographic projection
+                int w = (int) (eye.getViewport().width * widthScaler);
+                int h = (int) (eye.getViewport().height * heightScaler);
+                int x = (int) (eye.getViewport().width * ((1.0f-widthScaler)/2.0f));;
+                int y = (int) (eye.getViewport().height * ((1.0f-heightScaler)/2.0f));
 
                 int pitchOffset = (int)(-(eulerAngles[0]/M_PI)*(eye.getViewport().height));
 
-                int widthScaler = 0;
+                int pitchWidthScaler = 0;
                 float f = -(eulerAngles[0]/M_PI);
                 if (f > 0.125f)
-                    widthScaler = (int)(((f - 0.125f)/2.0f) * eye.getViewport().width);
+                    pitchWidthScaler = (int)(((f - 0.125f)/2.0f) * eye.getViewport().width);
 
-                openGL.SetupTriangle(x+widthScaler, y, w-widthScaler*2, h);
+                int l = (int)lensCentreOffset;
+                if (eye.getType() == Eye.Type.LEFT)
+                    l = -l;
+                openGL.SetupTriangle(x + pitchWidthScaler, y, w - pitchWidthScaler * 2, h);
 
                 // Calculate the projection and view transformation
                 Matrix.orthoM(openGL.view, 0, 0, eye.getViewport().width, 0, eye.getViewport().height, 0, 50);
                 //Translate so origin is centre of image
-                if (eye.getType() == Eye.Type.LEFT)
-                    Matrix.translateM(openGL.view, 0, w / 2, eye.getViewport().height / 2, 0);
-                else
-                    Matrix.translateM(openGL.view, 0, eye.getViewport().width - w / 2, eye.getViewport().height / 2, 0);
+                Matrix.translateM(openGL.view, 0, eye.getViewport().width / 2, eye.getViewport().height / 2, 0);
                 //rotate for head roll
-                Matrix.rotateM(openGL.view, 0, (int) (-(eulerAngles[2] / M_PI) * 180.f), 0, 0, 1);
+                Matrix.rotateM(openGL.view, 0, (int) hmdRoll, 0, 0, 1);
                 //translate back to where it was before
-                if (eye.getType() == Eye.Type.LEFT)
-                    Matrix.translateM(openGL.view, 0, -w / 2, -eye.getViewport().height / 2, 0);
-                else
-                    Matrix.translateM(openGL.view, 0, w / 2 - eye.getViewport().width, -eye.getViewport().height / 2, 0);
-                //Now apply head pitch transformation
+                Matrix.translateM(openGL.view, 0, (float)(Math.cos(eulerAngles[2]) * l) - eye.getViewport().width / 2,
+                        (float)(Math.sin(eulerAngles[2]) * l) - eye.getViewport().height / 2, 0);
+
+                //Now apply head hmdPitch transformation
                 Matrix.translateM(openGL.view, 0, 0, pitchOffset, 0);
+                //Matrix.translateM(openGL.view, 0, l, 0, 0);
                 Matrix.multiplyMM(openGL.modelViewProjection, 0, openGL.view, 0, openGL.camera, 0);
 
                 // Prepare the triangle coordinate data
@@ -449,7 +487,7 @@ public class MainActivity
                 GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, splashTexture[0]);
             }
             else  {
-                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, openGL.fbo.ColorTexture[0]);
+                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, openGL.fbo[eye.getType()-1].ColorTexture[0]);
             }
 
             // Set the sampler texture unit to our fbo's color texture
@@ -477,9 +515,9 @@ public class MainActivity
 
         if (!mShowingSpashScreen && mWADChooser.choosingWAD())
         {
-            if (eulerAngles[1] / (M_PI / 180.0f) > 15.0f)
+            if (hmdYaw > 15.0f)
                 mWADChooser.MoveNext();
-            else if (eulerAngles[1] / (M_PI / 180.0f) < -15.0f)
+            else if (hmdYaw < -15.0f)
                 mWADChooser.MovePrev();
             else
                 mWADChooser.SelectWAD();
@@ -524,9 +562,9 @@ public class MainActivity
         {
             if (action == KeyEvent.ACTION_UP &&
                     keyCode == KeyEvent.KEYCODE_BUTTON_A) {
-                if (eulerAngles[1] / (M_PI / 180.0f) > 10.0f)
+                if (hmdYaw > 15.0f)
                     mWADChooser.MoveNext();
-                else if (eulerAngles[1] / (M_PI / 180.0f) < -10.0f)
+                else if (hmdYaw < -15.0f)
                     mWADChooser.MovePrev();
                 else
                     mWADChooser.SelectWAD();
@@ -612,6 +650,8 @@ public class MainActivity
     // 1 - Generic BT gamepad
     // 2 - Samsung gamepad that uses different axes for right stick
     int gamepadType = 0;
+    int lTrigAction = KeyEvent.ACTION_UP;
+    int rTrigAction = KeyEvent.ACTION_UP;
 
     @Override
     public boolean onGenericMotionEvent(MotionEvent event) {
@@ -646,6 +686,26 @@ public class MainActivity
                     case 2:
                         Natives.motionEvent(0, (int)(rx * 30), 0);
                         break;
+                }
+
+                //Fire weapon using shoulder trigger
+                float axisRTrigger = max(event.getAxisValue(MotionEvent.AXIS_RTRIGGER),
+                        event.getAxisValue(MotionEvent.AXIS_GAS));
+                int newRTrig = axisRTrigger > 0.6 ? KeyEvent.ACTION_DOWN : KeyEvent.ACTION_UP;
+                if (rTrigAction != newRTrig)
+                {
+                    Natives.keyEvent(newRTrig, DoomTools.KEY_RCTRL);
+                    rTrigAction = newRTrig;
+                }
+
+                //Run using L shoulder
+                float axisLTrigger = max(event.getAxisValue(MotionEvent.AXIS_LTRIGGER),
+                        event.getAxisValue(MotionEvent.AXIS_BRAKE));
+                int newLTrig = axisLTrigger > 0.6 ? KeyEvent.ACTION_DOWN : KeyEvent.ACTION_UP;
+                if (lTrigAction != newLTrig)
+                {
+                    Natives.keyEvent(newLTrig, DoomTools.KEY_RSHIFT);
+                    lTrigAction = newLTrig;
                 }
             }
         }
@@ -744,7 +804,8 @@ public class MainActivity
         mDoomBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
 
         openGL.SetBitmap(mDoomBitmap);
-        openGL.CreateFBO(mDoomWidth, mDoomHeight);
+        openGL.CreateFBO(openGL.fbo[0], mDoomWidth, mDoomHeight);
+        openGL.CreateFBO(openGL.fbo[1], mDoomWidth, mDoomHeight);
     }
 
     @Override

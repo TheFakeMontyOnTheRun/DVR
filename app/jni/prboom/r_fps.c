@@ -63,7 +63,7 @@ tic_vars_t tic_vars;
 
 view_vars_t original_view_vars;
 
-fixed_t r_stereo_offset = 0x30000;
+fixed_t r_stereo_offset = 0x38000;
 
 extern int realtic_clock_rate;
 void D_Display(void);
@@ -121,7 +121,7 @@ void R_InterpolateView (player_t *player, fixed_t frac, int eye)
 
   //More we roll, less we stereo
   float mult = 1.0f;
-  mult -= fabs(hmdRoll)/22.5f;
+  mult -= fabs(hmdRoll)/30.0f;
   if (mult < 0.0f)
     mult = 0.0f;
 

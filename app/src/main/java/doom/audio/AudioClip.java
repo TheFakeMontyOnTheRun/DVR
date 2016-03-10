@@ -124,7 +124,7 @@ public class AudioClip
 		if ( mPlayer != null) {
 			if (vol > 100)
 				vol = 100;
-			float log1=1.0f - (float)(Math.log(101-vol)/Math.log(101));
+			float log1 = AudioManager.getLogVolume(vol);
 			mPlayer.setVolume(log1, log1);
 		}
 	}
