@@ -275,6 +275,7 @@ JNIEXPORT jint JNICALL Java_doom_util_Natives_setVideoMode
 extern  gamestate_t  gamestate;
 extern boolean menuactive;
 extern boolean demoplayback;
+extern player_t *viewplayer;
 
 JNIEXPORT jint JNICALL Java_doom_util_Natives_gameState
 		(JNIEnv * env, jclass cls)
@@ -282,7 +283,8 @@ JNIEXPORT jint JNICALL Java_doom_util_Natives_gameState
 	return (int)gamestate +
 			(int) automapmode +
 			menuactive ? 1 : 0 +
-			demoplayback ? 1 : 0;
+			demoplayback ? 1 : 0 +
+			viewplayer ? (viewplayer->health > 0 ? 0 : 1) : 1;
 }
 
 

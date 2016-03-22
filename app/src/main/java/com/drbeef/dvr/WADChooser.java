@@ -211,8 +211,8 @@ public class WADChooser {
 
 		// Object first appears directly in front of user.
 		Matrix.setIdentityM(openGL.modelScreen, 0);
-		Matrix.translateM(openGL.modelScreen, 0, 0, 0, -openGL.screenDistance);
-		Matrix.scaleM(openGL.modelScreen, 0, openGL.screenScale, openGL.screenScale, 1.0f);
+		Matrix.translateM(openGL.modelScreen, 0, 0, 0, openGL.screenDistance);
+		Matrix.scaleM(openGL.modelScreen, 0, openGL.screenScale * 1.3f, openGL.screenScale, 1.0f);
 
 		if (mTransitionStart != -1) {
 			long transVal = System.currentTimeMillis() - mTransitionStart;

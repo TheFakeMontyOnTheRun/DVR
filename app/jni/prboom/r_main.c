@@ -180,12 +180,22 @@ PUREFUNC int R_PointOnSegSide(fixed_t x, fixed_t y, const seg_t *line)
 
 #include <math.h>
 
-angle_t R_PointToAngle(fixed_t x, fixed_t y)
+angle_t R_PointToAngle(fixed_t x, fixed_t y, int usePlayer)
 {
   static fixed_t oldx, oldy;
   static angle_t oldresult;
 
-  x -= viewx; y -= viewy;
+  if (usePlayer == 0)
+  {
+    x -= viewx; y -= viewy;
+  }
+  else
+  {
+    //SB- use player position rather than view position (as these will have stereo offset included
+    //and can mean different sprites for each eye!)
+    x -= viewplayer->mo->x;
+    y -= viewplayer->mo->y;
+  }
 
   if ( /* !render_precise && */
       // e6y: here is where "slime trails" can SOMETIMES occur

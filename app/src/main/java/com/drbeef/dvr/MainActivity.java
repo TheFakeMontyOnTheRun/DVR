@@ -52,7 +52,7 @@ public class MainActivity
 {
     private static final String TAG = "DVR";
 
-   OpenGL openGL = null;
+    OpenGL openGL = null;
 
     // Audio Cache Manager
     private AudioManager mAudioMgr;
@@ -300,6 +300,9 @@ public class MainActivity
         hmdPitch = -eulerAngles[0] / (M_PI / 180.0f);
         hmdRoll = -eulerAngles[2] / (M_PI / 180.0f);
 
+        //Store head view
+        headTransform.getHeadView(openGL.headView, 0);
+
         if (!mShowingSpashScreen && mWADChooser.choosingWAD())
         {
             return;
@@ -367,110 +370,73 @@ public class MainActivity
     @Override
     public void onDrawEye(Eye eye) {
 
-        if (lensCentreOffset == -1.0f) {
-            //Now calculate the auto lens centre correction
-            CardboardDeviceParams device = cardboardView.getHeadMountedDisplay().getCardboardDeviceParams();
-            ScreenParams scr = cardboardView.getScreenParams();
-            Display display = getWindowManager().getDefaultDisplay();
-            DisplayMetrics met = new DisplayMetrics();
-            display.getMetrics(met);
-            float dpmil = (met.xdpi / 25.4f);
-            float qscreen = (scr.getWidthMeters() * 1000.0f) / 4.0f;
-            float halflens = (device.getInterLensDistance() * 1000.0f) / 2.0f;
-            //Multiply by small fudge factor (25%)
-            lensCentreOffset = ((halflens - qscreen) * dpmil) * 1.25f;
-            //Viewport size is not the same as screen resolution, so convert
-            lensCentreOffset = (lensCentreOffset / (scr.getWidth() / 2.0f)) * eye.getViewport().width;
-        }
-
-
         if (!mShowingSpashScreen && mWADChooser.choosingWAD())
         {
             mWADChooser.onDrawEye(eye, this);
         }
         else if (mDVRInitialised || mShowingSpashScreen) {
 
-            GLES20.glViewport(eye.getViewport().x,
-                    eye.getViewport().y,
-                    eye.getViewport().width,
-                    eye.getViewport().height);
+            GLES20.glViewport(eye.getViewport().x, eye.getViewport().y,
+                    eye.getViewport().width, eye.getViewport().height);
 
             //Clear the viewport
             GLES20.glEnable(GLES20.GL_SCISSOR_TEST);
             GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-            GLES20.glScissor(eye.getViewport().x,
-                    eye.getViewport().y,
-                    eye.getViewport().width,
-                    eye.getViewport().height);
+            GLES20.glScissor(eye.getViewport().x, eye.getViewport().y,
+                    eye.getViewport().width, eye.getViewport().height);
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
             GLES20.glUseProgram(openGL.sp_Image);
 
-            if (Natives.gameState() != 0 || mShowingSpashScreen) {
-                // Apply the eye transformation to the camera.
-                Matrix.multiplyMM(openGL.view, 0, eye.getEyeView(), 0, openGL.camera, 0);
+            float modelScreen[] = new float[16];
+            Matrix.setIdentityM(modelScreen, 0);
 
-                // Build the ModelView and ModelViewProjection matrices
-                // for calculating screen position.
-                float[] perspective = eye.getPerspective(0.1f, 100.0f);
+            // Set the position of the screen
+            if (mShowingSpashScreen)
+            {
+                Matrix.translateM(modelScreen, 0, 0, 0, openGL.splashScreenDistance);
+                Matrix.scaleM(modelScreen, 0, openGL.screenScale, openGL.screenScale, 1.0f);
 
-                // Object first appears directly in front of user.
-                Matrix.setIdentityM(openGL.modelScreen, 0);
-                Matrix.translateM(openGL.modelScreen, 0, 0, 0, -openGL.screenDistance);
-                Matrix.scaleM(openGL.modelScreen, 0, openGL.screenScale*1.5f, openGL.screenScale*1.5f, 1.0f);
-
-                // Set the position of the screen
-                if (mShowingSpashScreen) {
-                    float mAngle = 180.0f * (float)((System.currentTimeMillis() % 2000) / 2000.0f);
-                    if (mAngle > 90.0f) mAngle += 180.0f;
-                    Matrix.rotateM(openGL.modelScreen, 0, mAngle, 0.0f, 1.0f, 0.0f);
-                }
-
-                Matrix.multiplyMM(openGL.modelView, 0, openGL.view, 0, openGL.modelScreen, 0);
-                Matrix.multiplyMM(openGL.modelViewProjection, 0, perspective, 0, openGL.modelView, 0);
-                GLES20.glVertexAttribPointer(openGL.positionParam, 3, GLES20.GL_FLOAT, false, 0, openGL.screenVertices);
-
-            } else {
-
-                float widthScaler = 0.76f;
-                float heightScaler = 0.64f;
-
-                // Create the triangles for orthographic projection
-                int w = (int) (eye.getViewport().width * widthScaler);
-                int h = (int) (eye.getViewport().height * heightScaler);
-                int x = (int) (eye.getViewport().width * ((1.0f-widthScaler)/2.0f));;
-                int y = (int) (eye.getViewport().height * ((1.0f-heightScaler)/2.0f));
-
-                int pitchOffset = (int)(-(eulerAngles[0]/M_PI)*(eye.getViewport().height));
-
-                int pitchWidthScaler = 0;
-                float f = -(eulerAngles[0]/M_PI);
-                if (f > 0.125f)
-                    pitchWidthScaler = (int)(((f - 0.125f)/2.0f) * eye.getViewport().width);
-
-                int l = (int)lensCentreOffset;
-                if (eye.getType() == Eye.Type.LEFT)
-                    l = -l;
-                openGL.SetupTriangle(x + pitchWidthScaler, y, w - pitchWidthScaler * 2, h);
-
-                // Calculate the projection and view transformation
-                Matrix.orthoM(openGL.view, 0, 0, eye.getViewport().width, 0, eye.getViewport().height, 0, 50);
-                //Translate so origin is centre of image
-                Matrix.translateM(openGL.view, 0, eye.getViewport().width / 2, eye.getViewport().height / 2, 0);
-                //rotate for head roll
-                Matrix.rotateM(openGL.view, 0, (int) hmdRoll, 0, 0, 1);
-                //translate back to where it was before
-                Matrix.translateM(openGL.view, 0, (float)(Math.cos(eulerAngles[2]) * l) - eye.getViewport().width / 2,
-                        (float)(Math.sin(eulerAngles[2]) * l) - eye.getViewport().height / 2, 0);
-
-                //Now apply head hmdPitch transformation
-                Matrix.translateM(openGL.view, 0, 0, pitchOffset, 0);
-                //Matrix.translateM(openGL.view, 0, l, 0, 0);
-                Matrix.multiplyMM(openGL.modelViewProjection, 0, openGL.view, 0, openGL.camera, 0);
-
-                // Prepare the triangle coordinate data
-                GLES20.glVertexAttribPointer(openGL.positionParam, 3, GLES20.GL_FLOAT, false, 0, openGL.vertexBuffer);
+                float mAngle = 180.0f * (float)((System.currentTimeMillis() % 2000) / 2000.0f);
+                if (mAngle > 90.0f) mAngle += 180.0f;
+                Matrix.rotateM(modelScreen, 0, mAngle, 0.0f, 1.0f, 0.0f);
             }
+            else if (Natives.gameState() != 0)
+            {
+                //Drawing Virtual Screen
+                Matrix.translateM(modelScreen, 0, 0, 0, openGL.screenDistance);
+                //Make virtual screen wider than high
+                Matrix.scaleM(modelScreen, 0, openGL.screenScale*1.3f, openGL.screenScale, 1.0f);
+            }
+            else
+            {
+                float screenDist = openGL.gameScreenDistance;
+                float f = (hmdPitch / 90.0f);
+                if (f > 0.125f)
+                    screenDist *= (1.0f + (f - 0.125f) * 2.0f);
+
+                //In Game - ensure screen is always "in-front" of us, whatever direction we are facing
+                Matrix.translateM(modelScreen, 0, (float)(Math.sin(M_PI * (hmdYaw / 180f))) * screenDist, 0,
+                        (float)(Math.cos(M_PI * (hmdYaw / 180f))) * screenDist);
+                Matrix.rotateM(modelScreen, 0, hmdYaw, 0.0f, 1.0f, 0.0f);
+                Matrix.scaleM(modelScreen, 0, openGL.screenScale, openGL.screenScale, openGL.screenScale);
+            }
+
+            // Build the ModelView and ModelViewProjection matrices
+            // for calculating screen position.
+            float[] perspective = eye.getPerspective(0.1f, 100.0f);
+
+            if (Natives.gameState() != 0 || mShowingSpashScreen) {
+                Matrix.multiplyMM(openGL.view, 0, eye.getEyeView(), 0, openGL.camera, 0);
+            }
+            else {
+                //centre eye view - no stereo depth required
+                Matrix.multiplyMM(openGL.view, 0, openGL.headView, 0, openGL.camera, 0);
+            }
+
+            Matrix.multiplyMM(openGL.modelView, 0, openGL.view, 0, modelScreen, 0);
+            Matrix.multiplyMM(openGL.modelViewProjection, 0, perspective, 0, openGL.modelView, 0);
+            GLES20.glVertexAttribPointer(openGL.positionParam, 3, GLES20.GL_FLOAT, false, 0, openGL.screenVertices);
 
             // Prepare the texturecoordinates
             GLES20.glVertexAttribPointer(openGL.texCoordParam, 2, GLES20.GL_FLOAT, false, 0, openGL.uvBuffer);
@@ -487,6 +453,7 @@ public class MainActivity
                 GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, splashTexture[0]);
             }
             else  {
+                //Actually Draw Doom
                 GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, openGL.fbo[eye.getType()-1].ColorTexture[0]);
             }
 
@@ -851,19 +818,5 @@ public class MainActivity
     public void OnSetMusicVolume(int volume) {
         if (mAudioMgr != null)
             mAudioMgr.setMusicVolume(volume);
-    }
-
-    /**
-     * Send a key event to the native layer
-     *
-     * @param type
-     * @param sym
-     */
-    private void sendNativeKeyEvent(int type, int sym) {
-        try {
-            Natives.keyEvent(type, sym);
-        } catch (UnsatisfiedLinkError e) {
-            Log.e(TAG, e.toString());
-        }
     }
 }

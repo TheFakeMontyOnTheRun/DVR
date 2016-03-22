@@ -40,6 +40,7 @@ public class OpenGL {
 		camera = new float[16];
 		view = new float[16];
 		modelViewProjection = new float[16];
+		headView = new float[16];
 		modelView = new float[16];
 
 		//Create the FBOs
@@ -144,11 +145,14 @@ public class OpenGL {
 
 	public float[] modelScreen;
 	public float[] camera;
+	public float[] headView;
 	public float[] view;
 	public float[] modelViewProjection;
 	public float[] modelView;
 
-	public float screenDistance = 8f;
+	public float screenDistance = -8f;
+	public float splashScreenDistance = -12f;
+	public float gameScreenDistance = -3.45f;
 	public float screenScale = 3f;
 
 	public static final String vs_Image =
@@ -241,10 +245,10 @@ public class OpenGL {
 	};
 
 	public static final float[] SCREEN_COORDS = new float[] {
-			-1.3f, -1.0f, 0.0f,
-			-1.3f, 1.0f, 0.0f,
-			1.3f, 1.0f, 0.0f,
-			1.3f, -1.0f, 0.0f
+			-1.0f, -1.0f, 0.0f,
+			-1.0f, 1.0f, 0.0f,
+			1.0f, 1.0f, 0.0f,
+			1.0f, -1.0f, 0.0f
 	};
 
 	public FloatBuffer vertexBuffer;
