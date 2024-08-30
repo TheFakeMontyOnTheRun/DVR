@@ -1,3 +1,0 @@
-/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/x86/CMakeFiles/dvr.dir
-/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/x86/CMakeFiles/edit_cache.dir
-/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/x86/CMakeFiles/rebuild_cache.dir
