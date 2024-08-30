@@ -1,0 +1,382 @@
+[
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/am_map.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/am_map.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/am_map.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/m_cheat.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/m_cheat.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/m_cheat.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_lights.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_lights.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_lights.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_user.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_user.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_user.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/sounds.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/sounds.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/sounds.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/hu_lib.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/hu_lib.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/hu_lib.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/md5.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/md5.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/md5.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_map.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_map.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_map.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/r_bsp.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/r_bsp.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/r_bsp.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/s_sound.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/s_sound.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/s_sound.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/d_deh.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/d_deh.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/d_deh.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/hu_stuff.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/hu_stuff.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/hu_stuff.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/m_menu.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/m_menu.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/m_menu.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_maputl.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_maputl.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_maputl.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/r_data.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/r_data.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/r_data.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/st_lib.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/st_lib.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/st_lib.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/d_items.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/d_items.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/d_items.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/m_misc.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/m_misc.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/m_misc.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_mobj.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_mobj.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_mobj.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/r_demo.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/r_demo.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/r_demo.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/st_stuff.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/st_stuff.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/st_stuff.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/d_main.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/d_main.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/d_main.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/info.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/info.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/info.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_plats.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_plats.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_plats.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/r_draw.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/r_draw.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/r_draw.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/tables.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/tables.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/tables.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/doomdef.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/doomdef.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/doomdef.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/m_random.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/m_random.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/m_random.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_pspr.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_pspr.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_pspr.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/r_filter.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/r_filter.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/r_filter.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/version.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/version.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/version.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/doomstat.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/doomstat.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/doomstat.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_ceilng.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_ceilng.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_ceilng.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_saveg.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_saveg.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_saveg.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/r_fps.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/r_fps.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/r_fps.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/v_video.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/v_video.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/v_video.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_checksum.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_checksum.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_checksum.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_setup.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_setup.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_setup.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/r_main.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/r_main.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/r_main.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/wi_stuff.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/wi_stuff.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/wi_stuff.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/dstrings.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/dstrings.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/dstrings.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_doors.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_doors.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_doors.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_sight.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_sight.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_sight.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/r_patch.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/r_patch.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/r_patch.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/w_memcache.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/w_memcache.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/w_memcache.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/f_finale.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/f_finale.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/f_finale.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_enemy.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_enemy.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_enemy.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_spec.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_spec.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_spec.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/r_plane.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/r_plane.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/r_plane.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/w_mmap.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/w_mmap.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/w_mmap.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/f_wipe.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/f_wipe.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/f_wipe.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/lprintf.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/lprintf.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/lprintf.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_floor.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_floor.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_floor.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_switch.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_switch.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_switch.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/r_segs.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/r_segs.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/r_segs.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/w_wad.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/w_wad.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/w_wad.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/g_game.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/g_game.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/g_game.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/m_argv.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/m_argv.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/m_argv.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_genlin.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_genlin.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_genlin.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_telept.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_telept.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_telept.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/r_sky.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/r_sky.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/r_sky.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/z_bmalloc.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/z_bmalloc.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/z_bmalloc.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/m_bbox.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/m_bbox.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/m_bbox.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_inter.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_inter.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_inter.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/p_tick.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/p_tick.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/p_tick.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/r_things.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/r_things.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/r_things.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/z_zone.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/z_zone.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/z_zone.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/d_client.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/d_client.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/d_client.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/i_video.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/i_video.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/i_video.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/i_network.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/i_network.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/i_network.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/i_system.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/i_system.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/i_system.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/i_main.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/i_main.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/i_main.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/i_sound.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/i_sound.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/i_sound.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/jni_doom.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/jni_doom.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/jni_doom.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/mmus2mid.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/mmus2mid.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/mmus2mid.c"
+},
+{
+  "directory": "/Users/monty/git/DVR/app/.cxx/Debug/j3x1r6u3/armeabi-v7a",
+  "command": "/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi22 --sysroot=/Users/monty/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Ddvr_EXPORTS -I/Users/monty/git/DVR/app/src/main/cpp/prboom/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET -fno-limit-debug-info  -fPIC -std=gnu90 -o CMakeFiles/dvr.dir/prboom/pcm2wav.c.o -c /Users/monty/git/DVR/app/src/main/cpp/prboom/pcm2wav.c",
+  "file": "/Users/monty/git/DVR/app/src/main/cpp/prboom/pcm2wav.c"
+}
+]
