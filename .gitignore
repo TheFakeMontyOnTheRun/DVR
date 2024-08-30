@@ -62,3 +62,4 @@ gen/*
 app/build/*
 build/intermediates/*
 app/libs/libs.jar
+app/.cxx
