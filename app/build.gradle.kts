@@ -41,7 +41,7 @@ android {
     }
 }
 
-tasks.register<Copy>( "copyAssets") {
+tasks.register<Copy>("copyAssets") {
     from(file("../../base.pfs"))
     into(file("src/main/assets"))
 }

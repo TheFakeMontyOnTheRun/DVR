@@ -19,7 +19,7 @@ extern "C" {
  * Signature: ([Ljava/lang/String;)I
  */
 JNIEXPORT jint JNICALL Java_doom_util_Natives_DoomInit
-  (JNIEnv *, jclass, jobjectArray, jstring);
+        (JNIEnv *, jclass, jobjectArray, jstring);
 
 /*
  * Class:     doom_util_Natives
@@ -51,7 +51,7 @@ JNIEXPORT jint JNICALL Java_doom_util_Natives_DoomEndFrame
  * Signature: (II)I
  */
 JNIEXPORT jint JNICALL Java_doom_util_Natives_keyEvent
-  (JNIEnv *, jclass, jint, jint);
+        (JNIEnv *, jclass, jint, jint);
 
 /*
  * Class:     doom_util_Natives
@@ -59,7 +59,7 @@ JNIEXPORT jint JNICALL Java_doom_util_Natives_keyEvent
  * Signature: (III)I
  */
 JNIEXPORT jint JNICALL Java_doom_util_Natives_motionEvent
-  (JNIEnv *, jclass, jint, jint, jint);
+        (JNIEnv *, jclass, jint, jint, jint);
 
 /*
  * Class:     doom_util_Natives
@@ -67,7 +67,7 @@ JNIEXPORT jint JNICALL Java_doom_util_Natives_motionEvent
  * Signature: (II)I
  */
 JNIEXPORT jint JNICALL Java_doom_util_Natives_setVideoMode
-  (JNIEnv *, jclass, jint, jint);
+        (JNIEnv *, jclass, jint, jint);
 
 #ifdef __cplusplus
 }

@@ -3,7 +3,6 @@ package com.drbeef.dvr;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.ActivityInfo;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,22 +11,17 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
+import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.InputDevice;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.google.vrtoolkit.cardboard.CardboardActivity;
-import com.google.vrtoolkit.cardboard.CardboardDeviceParams;
 import com.google.vrtoolkit.cardboard.CardboardView;
 import com.google.vrtoolkit.cardboard.Eye;
 import com.google.vrtoolkit.cardboard.HeadTransform;
-import com.google.vrtoolkit.cardboard.ScreenParams;
 import com.google.vrtoolkit.cardboard.Viewport;
 
 import java.io.BufferedReader;
@@ -49,8 +43,7 @@ import doom.util.Natives;
 
 public class MainActivity
         extends CardboardActivity
-        implements CardboardView.StereoRenderer, Natives.EventListener
-{
+        implements CardboardView.StereoRenderer, Natives.EventListener {
     private static final String TAG = "DVR";
 
     OpenGL openGL = null;
@@ -83,7 +76,7 @@ public class MainActivity
 
     private CardboardView cardboardView;
 
-    private WADChooser  mWADChooser = null;
+    private WADChooser mWADChooser = null;
 
     public static boolean mDVRInitialised = false;
 
@@ -173,10 +166,10 @@ public class MainActivity
         copy_asset("extraparams.txt", DoomTools.GetDVRFolder(this) + File.separator);
 
         File folder = new File(DoomTools.GetDVRFolder(this) + File.separator + "sound" + File.separator);
-        if(!folder.exists())
+        if (!folder.exists())
             folder.mkdirs();
 
-            //Clean up sound folder
+        //Clean up sound folder
         DoomTools.deleteSounds(this);
 
         //See if user is trying to use command line params
@@ -184,8 +177,8 @@ public class MainActivity
         try {
             br = new BufferedReader(new FileReader(DoomTools.GetDVRFolder(this) + "extraparams.txt"));
             String s;
-            StringBuilder sb=new StringBuilder(0);
-            while ((s=br.readLine())!=null)
+            StringBuilder sb = new StringBuilder(0);
+            while ((s = br.readLine()) != null)
                 sb.append(s + " ");
             br.close();
 
@@ -213,8 +206,7 @@ public class MainActivity
     }
 
     @Override
-    public void onSurfaceChanged(int width, int height)
-    {
+    public void onSurfaceChanged(int width, int height) {
         Log.d(TAG, "onSurfaceChanged width = " + width + "  height = " + height);
         mSurfaceChanged = true;
     }
@@ -222,7 +214,7 @@ public class MainActivity
 
     @Override
     public void onSurfaceCreated(EGLConfig config) {
-         Log.i(TAG, "onSurfaceCreated");
+        Log.i(TAG, "onSurfaceCreated");
 
         openGL.onSurfaceCreated(config);
         openGL.SetupUVCoords();
@@ -254,6 +246,7 @@ public class MainActivity
     }
 
     long prevState = 0;
+
     @Override
     public void onNewFrame(HeadTransform headTransform) {
 
@@ -265,8 +258,7 @@ public class MainActivity
         //Store head view
         headTransform.getHeadView(openGL.headView, 0);
 
-        if (!mShowingSpashScreen && mWADChooser.choosingWAD())
-        {
+        if (!mShowingSpashScreen && mWADChooser.choosingWAD()) {
             return;
         }
 
@@ -278,7 +270,7 @@ public class MainActivity
                 final String[] argv;
                 String args = "doom -iwad " + mWADChooser.GetSelectedWADName() + " " + commandLineParams;
                 argv = args.split(" ");
-                String dvr= DoomTools.GetDVRFolder(this);
+                String dvr = DoomTools.GetDVRFolder(this);
                 Natives.DoomInit(argv, dvr);
 
                 mDVRInitialised = true;
@@ -294,9 +286,7 @@ public class MainActivity
                     mPlayer.stop();
                     mPlayer.release();
                     mPlayer = null;
-                }
-                else
-                {
+                } else {
                     float log1 = AudioManager.getLogVolume(mPlayerVolume);
                     mPlayer.setVolume(log1, log1);
                 }
@@ -309,8 +299,7 @@ public class MainActivity
             else
                 Natives.DoomStartFrame(0, 0, 0);
 
-            if (newState != prevState)
-            {
+            if (newState != prevState) {
                 prevState = newState;
 
                 //Reset head tracker in big screen mode
@@ -331,11 +320,9 @@ public class MainActivity
     @Override
     public void onDrawEye(Eye eye) {
 
-        if (!mShowingSpashScreen && mWADChooser.choosingWAD())
-        {
+        if (!mShowingSpashScreen && mWADChooser.choosingWAD()) {
             mWADChooser.onDrawEye(eye, this);
-        }
-        else if (mDVRInitialised || mShowingSpashScreen) {
+        } else if (mDVRInitialised || mShowingSpashScreen) {
 
             GLES20.glViewport(eye.getViewport().x, eye.getViewport().y,
                     eye.getViewport().width, eye.getViewport().height);
@@ -353,32 +340,27 @@ public class MainActivity
             Matrix.setIdentityM(modelScreen, 0);
 
             // Set the position of the screen
-            if (mShowingSpashScreen)
-            {
+            if (mShowingSpashScreen) {
                 Matrix.translateM(modelScreen, 0, 0, 0, openGL.splashScreenDistance);
                 Matrix.scaleM(modelScreen, 0, openGL.screenScale, openGL.screenScale, 1.0f);
 
-                float mAngle = 180.0f * (float)((System.currentTimeMillis() % 2000) / 2000.0f);
+                float mAngle = 180.0f * (float) ((System.currentTimeMillis() % 2000) / 2000.0f);
                 if (mAngle > 90.0f) mAngle += 180.0f;
                 Matrix.rotateM(modelScreen, 0, mAngle, 0.0f, 1.0f, 0.0f);
-            }
-            else if (Natives.gameState() != 0)
-            {
+            } else if (Natives.gameState() != 0) {
                 //Drawing Virtual Screen
                 Matrix.translateM(modelScreen, 0, 0, 0, openGL.screenDistance);
                 //Make virtual screen wider than high
-                Matrix.scaleM(modelScreen, 0, openGL.screenScale*1.3f, openGL.screenScale, 1.0f);
-            }
-            else
-            {
+                Matrix.scaleM(modelScreen, 0, openGL.screenScale * 1.3f, openGL.screenScale, 1.0f);
+            } else {
                 float screenDist = openGL.gameScreenDistance;
                 float f = (hmdPitch / 90.0f);
                 if (f > 0.125f)
                     screenDist *= (1.0f + (f - 0.125f) * 2.0f);
 
                 //In Game - ensure screen is always "in-front" of us, whatever direction we are facing
-                Matrix.translateM(modelScreen, 0, (float)(Math.sin(M_PI * (hmdYaw / 180f))) * screenDist, 0,
-                        (float)(Math.cos(M_PI * (hmdYaw / 180f))) * screenDist);
+                Matrix.translateM(modelScreen, 0, (float) (Math.sin(M_PI * (hmdYaw / 180f))) * screenDist, 0,
+                        (float) (Math.cos(M_PI * (hmdYaw / 180f))) * screenDist);
                 Matrix.rotateM(modelScreen, 0, hmdYaw, 0.0f, 1.0f, 0.0f);
                 Matrix.scaleM(modelScreen, 0, openGL.screenScale, openGL.screenScale, openGL.screenScale);
             }
@@ -389,8 +371,7 @@ public class MainActivity
 
             if (Natives.gameState() != 0 || mShowingSpashScreen) {
                 Matrix.multiplyMM(openGL.view, 0, eye.getEyeView(), 0, openGL.camera, 0);
-            }
-            else {
+            } else {
                 //centre eye view - no stereo depth required
                 Matrix.multiplyMM(openGL.view, 0, openGL.headView, 0, openGL.camera, 0);
             }
@@ -412,10 +393,9 @@ public class MainActivity
 
             if (mShowingSpashScreen) {
                 GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, splashTexture[0]);
-            }
-            else  {
+            } else {
                 //Actually Draw Doom
-                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, openGL.fbo[eye.getType()-1].ColorTexture[0]);
+                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, openGL.fbo[eye.getType() - 1].ColorTexture[0]);
             }
 
             // Set the sampler texture unit to our fbo's color texture
@@ -430,7 +410,7 @@ public class MainActivity
     @Override
     public void onFinishFrame(Viewport viewport) {
         if (mDVRInitialised) {
-             Natives.DoomEndFrame();
+            Natives.DoomEndFrame();
         }
     }
 
@@ -441,8 +421,7 @@ public class MainActivity
     public void onCardboardTrigger() {
         Log.i(TAG, "onCardboardTrigger");
 
-        if (!mShowingSpashScreen && mWADChooser.choosingWAD())
-        {
+        if (!mShowingSpashScreen && mWADChooser.choosingWAD()) {
             if (hmdYaw > 15.0f)
                 mWADChooser.MoveNext();
             else if (hmdYaw < -15.0f)
@@ -466,28 +445,26 @@ public class MainActivity
         }
     }
 
-    private void dismissSplashScreen()
-    {
+    private void dismissSplashScreen() {
         if (mShowingSpashScreen) {
             mShowingSpashScreen = false;
             mWADChooser.Initialise(this, this.getAssets());
         }
     }
 
-    @Override public boolean dispatchKeyEvent( KeyEvent event )
-    {
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
         int keyCode = event.getKeyCode();
         int action = event.getAction();
 
         //Following buttons must not be handled here
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP ||
                 keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
-                )
+        )
             return false;
 
         if (!mShowingSpashScreen &&
-                mWADChooser.choosingWAD())
-        {
+                mWADChooser.choosingWAD()) {
             if (action == KeyEvent.ACTION_UP &&
                     keyCode == KeyEvent.KEYCODE_BUTTON_A) {
                 if (hmdYaw > 15.0f)
@@ -496,12 +473,10 @@ public class MainActivity
                     mWADChooser.MovePrev();
                 else
                     mWADChooser.SelectWAD();
-            }
-            else if (action == KeyEvent.ACTION_UP &&
+            } else if (action == KeyEvent.ACTION_UP &&
                     keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
                 mWADChooser.MovePrev();
-            }
-            else if (action == KeyEvent.ACTION_UP &&
+            } else if (action == KeyEvent.ACTION_UP &&
                     keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
                 mWADChooser.MoveNext();
             }
@@ -509,36 +484,28 @@ public class MainActivity
             return true;
         }
 
-        if ( action != KeyEvent.ACTION_DOWN && action != KeyEvent.ACTION_UP )
-        {
-            return super.dispatchKeyEvent( event );
+        if (action != KeyEvent.ACTION_DOWN && action != KeyEvent.ACTION_UP) {
+            return super.dispatchKeyEvent(event);
         }
-        if ( action == KeyEvent.ACTION_UP )
-        {
+        if (action == KeyEvent.ACTION_UP) {
             dismissSplashScreen();
         }
 
         //Allow user to switch vr mode by holding the start button down
-        if (keyCode == KeyEvent.KEYCODE_BUTTON_START)
-        {
+        if (keyCode == KeyEvent.KEYCODE_BUTTON_START) {
             if (action == KeyEvent.ACTION_DOWN &&
-                    startButtonDownCounter == -1)
-            {
+                    startButtonDownCounter == -1) {
                 startButtonDownCounter = System.currentTimeMillis();
 
-            }
-            else if (action == KeyEvent.ACTION_UP)
-            {
+            } else if (action == KeyEvent.ACTION_UP) {
                 startButtonDownCounter = -1;
                 cardboardView.resetHeadTracker();
                 gameMenu();
             }
         }
 
-        if (startButtonDownCounter != -1)
-        {
-            if ((System.currentTimeMillis() - startButtonDownCounter) > 2000)
-            {
+        if (startButtonDownCounter != -1) {
+            if ((System.currentTimeMillis() - startButtonDownCounter) > 2000) {
                 startButtonDownCounter = -1;
                 //Now make sure dvr is aware!
 
@@ -549,9 +516,7 @@ public class MainActivity
             if (action == KeyEvent.ACTION_DOWN) {
                 Natives.keyEvent(Natives.EV_KEYDOWN,
                         DoomTools.keyCodeToKeySym(keyCode));
-            }
-            else
-            {
+            } else {
                 Natives.keyEvent(Natives.EV_KEYUP,
                         DoomTools.keyCodeToKeySym(keyCode));
             }
@@ -585,10 +550,8 @@ public class MainActivity
     public boolean onGenericMotionEvent(MotionEvent event) {
         int source = event.getSource();
         int action = event.getAction();
-        if ((source==InputDevice.SOURCE_JOYSTICK)||(event.getSource()==InputDevice.SOURCE_GAMEPAD))
-        {
-            if (event.getAction() == MotionEvent.ACTION_MOVE)
-            {
+        if ((source == InputDevice.SOURCE_JOYSTICK) || (event.getSource() == InputDevice.SOURCE_GAMEPAD)) {
+            if (event.getAction() == MotionEvent.ACTION_MOVE) {
                 float z = getCenteredAxis(event, MotionEvent.AXIS_Z);
                 float rz = -getCenteredAxis(event, MotionEvent.AXIS_RZ);
                 //For the samsung game pad (uses different axes for the second stick)
@@ -596,23 +559,21 @@ public class MainActivity
                 float ry = -getCenteredAxis(event, MotionEvent.AXIS_RY);
 
                 //let's figure it out
-                if (gamepadType == 0)
-                {
+                if (gamepadType == 0) {
                     if (z != 0.0f || rz != 0.0f)
                         gamepadType = 1;
                     else if (rx != 0.0f || ry != 0.0f)
                         gamepadType = 2;
                 }
 
-                switch (gamepadType)
-                {
+                switch (gamepadType) {
                     case 0:
                         break;
                     case 1:
-                        Natives.motionEvent(0, (int)(z * 30), 0);
+                        Natives.motionEvent(0, (int) (z * 30), 0);
                         break;
                     case 2:
-                        Natives.motionEvent(0, (int)(rx * 30), 0);
+                        Natives.motionEvent(0, (int) (rx * 30), 0);
                         break;
                 }
 
@@ -620,8 +581,7 @@ public class MainActivity
                 float axisRTrigger = max(event.getAxisValue(MotionEvent.AXIS_RTRIGGER),
                         event.getAxisValue(MotionEvent.AXIS_GAS));
                 int newRTrig = axisRTrigger > 0.6 ? KeyEvent.ACTION_DOWN : KeyEvent.ACTION_UP;
-                if (rTrigAction != newRTrig)
-                {
+                if (rTrigAction != newRTrig) {
                     Natives.keyEvent(newRTrig, DoomTools.KEY_RCTRL);
                     rTrigAction = newRTrig;
                 }
@@ -630,8 +590,7 @@ public class MainActivity
                 float axisLTrigger = max(event.getAxisValue(MotionEvent.AXIS_LTRIGGER),
                         event.getAxisValue(MotionEvent.AXIS_BRAKE));
                 int newLTrig = axisLTrigger > 0.6 ? KeyEvent.ACTION_DOWN : KeyEvent.ACTION_UP;
-                if (lTrigAction != newLTrig)
-                {
+                if (lTrigAction != newLTrig) {
                     Natives.keyEvent(newLTrig, DoomTools.KEY_RSHIFT);
                     lTrigAction = newLTrig;
                 }
@@ -656,14 +615,13 @@ public class MainActivity
     public void OnQuit(int code) {
         try {
             Thread.sleep(500);
-        }
-        catch (InterruptedException ie){
+        } catch (InterruptedException ie) {
         }
 
         System.exit(0);
     }
 
-    public static  void MessageBox (Context ctx, String title, String text) {
+    public static void MessageBox(Context ctx, String title, String text) {
         AlertDialog d = createAlertDialog(ctx
                 , title
                 , text);
@@ -678,11 +636,12 @@ public class MainActivity
 
     /**
      * Create an alert dialog
-     * @param ctx App context
+     *
+     * @param ctx     App context
      * @param message Message
      * @return
      */
-    static public AlertDialog createAlertDialog (Context ctx, String title, String message) {
+    static public AlertDialog createAlertDialog(Context ctx, String title, String message) {
         return new AlertDialog.Builder(ctx)
                 .setIcon(R.mipmap.ic_launcher)
                 .setTitle(title)

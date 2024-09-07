@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.4.1)
 
 set(CMAKE_C_STANDARD 90)
 
-include_directories( prboom/include )
+include_directories(prboom/include)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Ofast -ffast-math -DNORMALUNIX -DLINUX -DHAVE_CONFIG_H -DHAVE_NET")
 

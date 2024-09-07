@@ -3,7 +3,7 @@
     android:id="@+id/ui_layout"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent">
 
 
     <com.google.vrtoolkit.cardboard.CardboardView

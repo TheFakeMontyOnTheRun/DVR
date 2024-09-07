@@ -8,8 +8,7 @@ public class DVRFBO {
     public int height;
     public int width;
 
-    public DVRFBO()
-    {
+    public DVRFBO() {
         this.FrameBuffer = new int[1];
         this.FrameBuffer[0] = 0;
         this.DepthBuffer = new int[1];
