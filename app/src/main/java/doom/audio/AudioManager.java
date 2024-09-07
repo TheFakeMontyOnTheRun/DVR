@@ -93,7 +93,7 @@ public class AudioManager
 		if (clip == null)
 		{
 			// load clip from disk
-			File folder = DoomTools.GetSoundFolder(); //DoomTools.DOOM_WADS[mWadIdx]);
+			File folder = DoomTools.GetSoundFolder(this.mContext); //DoomTools.DOOM_WADS[mWadIdx]);
 			File sound = new File(folder.getAbsolutePath() + File.separator + key);
 			
 			if ( ! sound.exists()) {

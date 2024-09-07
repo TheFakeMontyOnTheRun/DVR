@@ -9,6 +9,7 @@ import java.util.zip.ZipInputStream;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -16,9 +17,9 @@ import android.view.KeyEvent;
 
 public class DoomTools {
 
-	static public String GetSDCARD()
+	static public String GetSDCARD(Context context)
 	{
-		return Environment.getExternalStorageDirectory().getPath();
+		return context.getFilesDir().getPath();
 	}
 
 	static public String GetWorkingFolder()
@@ -26,9 +27,9 @@ public class DoomTools {
 		return "DVR";
 	}
 
-	static public String GetDVRFolder()
+	static public String GetDVRFolder(Context context)
 	{
-		return GetSDCARD() + File.separator + GetWorkingFolder();
+		return GetSDCARD(context) + File.separator + GetWorkingFolder();
 	}
 
 	// Game files we can handle
@@ -193,85 +194,31 @@ public class DoomTools {
 		}
 		return key;
 	}
-
-	static public boolean wadExists (int idx) {
-		final String path = GetDVRFolder() + File.separator + DOOM_WADS[idx];
-		return new File(path).exists();
-	}
 	
-	static public boolean wadExists (String name) {
-		final String path = GetDVRFolder() + File.separator + name;
-		return new File(path).exists();
-	}
-	
-	static public boolean wadsExist() {
+	static public boolean wadsExist(Context context) {
 		for(int i = 0; i < DOOM_WADS.length; i++) {
-			File f = new File(GetDVRFolder() + File.separator + DOOM_WADS[i]);
+			File f = new File(GetDVRFolder(context) + File.separator + DOOM_WADS[i]);
 			if(f.exists())
 				return true;
 		}
 		return false;
 	}
-	
-	static public void hardExit ( int code) {
-		System.exit(code);
-	}
-
-    /**
-     * Sound present for a WAD?
-     */
-    public static boolean hasSound() { 
-    	Log.d(TAG, "Sound folder: " + GetDVRFolder() + File.separator + "sound");
-    	return new File(GetDVRFolder() + File.separator + "sound").exists();
-    }
     
     /**
      * Get the sound folder name for a game file 
      */
-    public static File GetSoundFolder() {
-    	return new File(GetDVRFolder() + File.separator + "sound");
+    public static File GetSoundFolder(Context context) {
+    	return new File(GetDVRFolder(context) + File.separator + "sound");
     }
-    
-    
-    /**
-     * Unzip utility
-     * @param is
-     * @param dest
-     * @throws IOException
-     */
-    public static void unzip (InputStream is, File dest) throws IOException
-    {
-    	if ( !dest.isDirectory()) 
-    		throw new IOException("Invalid Unzip destination " + dest );
-    	
-    	ZipInputStream zip = new ZipInputStream(is);
-    	
-    	ZipEntry ze;
-    	
-    	while ( (ze = zip.getNextEntry()) != null ) {
-    		final String path = dest.getAbsolutePath() 
-    			+ File.separator + ze.getName();
-    		
-    		FileOutputStream fout = new FileOutputStream(path);
-    		byte[] bytes = new byte[1024];
-    		
-            for (int c = zip.read(bytes); c != -1; c = zip.read(bytes)) {
-              fout.write(bytes,0, c);
-            }
-            zip.closeEntry();
-            fout.close();    		
-    	}
-    }
- 
 
     static final String TAG = "DoomTools";
     
 	/**
 	 * Clean sounds
 	 */
-	public static void deleteSounds() //int wadIdx)
+	public static void deleteSounds(Context context) //int wadIdx)
 	{
-		File folder = GetSoundFolder();
+		File folder = GetSoundFolder(context);
 		
 		if ( !folder.exists()) {
 			Log.e(TAG, "Error: Sound folder " + folder + " not found.");
@@ -279,9 +226,9 @@ public class DoomTools {
 		}
 		
 		File[] files = folder.listFiles();
-		
+
 		for (int i = 0; i < files.length; i++) {
-			
+
 			if (files[i].exists() )
 				files[i].delete();
 		}

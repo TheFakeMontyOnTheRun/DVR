@@ -20,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.InputDevice;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.vrtoolkit.cardboard.CardboardActivity;
 import com.google.vrtoolkit.cardboard.CardboardDeviceParams;
@@ -82,7 +83,6 @@ public class MainActivity
 
     private CardboardView cardboardView;
 
-    private DownloadTask mDownloadTask = null;
     private WADChooser  mWADChooser = null;
 
     public static boolean mDVRInitialised = false;
@@ -146,14 +146,6 @@ public class MainActivity
         }
     }
 
-    public void startDownload()
-    {
-        mDownloadTask = new DownloadTask();
-        mDownloadTask.set_context(MainActivity.this);
-        mDownloadTask.execute();
-    }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -164,7 +156,7 @@ public class MainActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        cardboardView = (CardboardView) findViewById(R.id.cardboard_view);
+        cardboardView = findViewById(R.id.cardboard_view);
         cardboardView.setEGLConfigChooser(5, 6, 5, 0, 16, 0);
         cardboardView.setLowLatencyModeEnabled(true);
         cardboardView.setRenderer(this);
@@ -176,21 +168,21 @@ public class MainActivity
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         //At the very least ensure we have a directory containing a config file
-        copy_asset("DVR.cfg", DoomTools.GetDVRFolder() + File.separator);
-        copy_asset("prboom.wad", DoomTools.GetDVRFolder() + File.separator);
-        copy_asset("extraparams.txt", DoomTools.GetDVRFolder() + File.separator);
+        copy_asset("DVR.cfg", DoomTools.GetDVRFolder(this) + File.separator);
+        copy_asset("prboom.wad", DoomTools.GetDVRFolder(this) + File.separator);
+        copy_asset("extraparams.txt", DoomTools.GetDVRFolder(this) + File.separator);
 
-        File folder = new File(DoomTools.GetDVRFolder() + File.separator + "sound" + File.separator);
+        File folder = new File(DoomTools.GetDVRFolder(this) + File.separator + "sound" + File.separator);
         if(!folder.exists())
             folder.mkdirs();
 
-        //Clean up sound folder
-        DoomTools.deleteSounds();
+            //Clean up sound folder
+        DoomTools.deleteSounds(this);
 
         //See if user is trying to use command line params
         BufferedReader br;
         try {
-            br = new BufferedReader(new FileReader(DoomTools.GetDVRFolder() + "extraparams.txt"));
+            br = new BufferedReader(new FileReader(DoomTools.GetDVRFolder(this) + "extraparams.txt"));
             String s;
             StringBuilder sb=new StringBuilder(0);
             while ((s=br.readLine())!=null)
@@ -204,35 +196,6 @@ public class MainActivity
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-
-        if (!DoomTools.wadsExist()) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                    this);
-
-            // set title
-            alertDialogBuilder.setTitle("No WAD files found");
-
-            // set dialog message
-            alertDialogBuilder
-                    .setMessage("Would you like to download the free Freedoom WADs (17.5MB)?\n\nIf you own or purchase the full game of Doom/Doom2 (or any other wad)you can click \'Cancel\' and copy the WAD file to the folder:\n\n{phonememory}/DVR")
-                    .setCancelable(false)
-                    .setPositiveButton("Download", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            MainActivity.this.startDownload();
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-
-            // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
-
-            // show it
-            alertDialog.show();
         }
 
         mWADChooser = new WADChooser(openGL);
@@ -313,10 +276,9 @@ public class MainActivity
 
             if (!mShowingSpashScreen) {
                 final String[] argv;
-                String args = new String();
-                args = "doom -iwad " + mWADChooser.GetSelectedWADName() + " " + commandLineParams;
+                String args = "doom -iwad " + mWADChooser.GetSelectedWADName() + " " + commandLineParams;
                 argv = args.split(" ");
-                String dvr= DoomTools.GetDVRFolder();
+                String dvr= DoomTools.GetDVRFolder(this);
                 Natives.DoomInit(argv, dvr);
 
                 mDVRInitialised = true;
@@ -508,7 +470,7 @@ public class MainActivity
     {
         if (mShowingSpashScreen) {
             mShowingSpashScreen = false;
-            mWADChooser.Initialise(this.getAssets());
+            mWADChooser.Initialise(this, this.getAssets());
         }
     }
 
@@ -726,19 +688,6 @@ public class MainActivity
                 .setTitle(title)
                 .setMessage(message)
                 .create();
-    }
-
-    void MessageBox(String title, String text) {
-        AlertDialog d = createAlertDialog(this
-                , title
-                , text);
-
-        d.setButton("Dismiss", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                /* User clicked OK so do some stuff */
-            }
-        });
-        d.show();
     }
 
     /**

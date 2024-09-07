@@ -51,7 +51,7 @@ public class WADChooser {
 		this.openGL = openGL;
 	}
 
-	public void Initialise(AssetManager assets)
+	public void Initialise(Context context, AssetManager assets)
 	{
 		wadThumbnails.put(new String("doom.wad"), new String("d1.png"));
 		wadThumbnails.put(new String("doom2.wad"), new String("d2.png"));
@@ -61,7 +61,7 @@ public class WADChooser {
 
 		type = Typeface.createFromAsset(assets, "fonts/DooM.ttf");
 
-		File[] files = new File(DoomTools.GetDVRFolder()).listFiles();
+		File[] files = new File(DoomTools.GetDVRFolder(context)).listFiles();
 
 		for (File file : files) {
 			if (file.isFile() &&
