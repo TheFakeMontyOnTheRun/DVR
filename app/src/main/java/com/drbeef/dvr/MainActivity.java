@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.IntBuffer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
@@ -163,6 +165,10 @@ public class MainActivity
         //At the very least ensure we have a directory containing a config file
         copy_asset("DVR.cfg", DoomTools.GetDVRFolder(this) + File.separator);
         copy_asset("prboom.wad", DoomTools.GetDVRFolder(this) + File.separator);
+        if (DoomTools.FORCE_USE_WAD_FROM_ASSETS) {
+            copy_asset("freedoom1.wad", DoomTools.GetDVRFolder(this) + File.separator);
+            copy_asset("freedoom2.wad", DoomTools.GetDVRFolder(this) + File.separator);
+        }
         copy_asset("extraparams.txt", DoomTools.GetDVRFolder(this) + File.separator);
 
         File folder = new File(DoomTools.GetDVRFolder(this) + File.separator + "sound" + File.separator);

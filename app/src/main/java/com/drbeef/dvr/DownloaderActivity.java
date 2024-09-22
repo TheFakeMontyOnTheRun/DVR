@@ -70,7 +70,7 @@ public class DownloaderActivity extends AppCompatActivity {
     }
 
     private void startGame(Context context) {
-        if (!DoomTools.wadsExist(context)) {
+        if (!DoomTools.FORCE_USE_WAD_FROM_ASSETS && !DoomTools.wadsExist(context)) {
             if (downloadId == -1) {
                 fetchAndExtractFreeDoom(context);
             }

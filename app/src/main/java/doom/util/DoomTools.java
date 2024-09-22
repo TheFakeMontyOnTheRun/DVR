@@ -10,6 +10,8 @@ import java.io.File;
 
 public class DoomTools {
 
+    public static final boolean FORCE_USE_WAD_FROM_ASSETS = true;
+
     static public String GetSDCARD(Context context) {
         return context.getFilesDir().getPath();
     }
