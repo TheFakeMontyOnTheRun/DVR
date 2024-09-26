@@ -84,8 +84,6 @@ public class DoomTools {
     /**
      * Convert an android key to a Doom ASCII
      *
-     * @param key
-     * @return
      */
     static public int keyCodeToKeySym(int key) {
         switch (key) {
@@ -189,8 +187,8 @@ public class DoomTools {
     }
 
     static public boolean wadsExist(Context context) {
-        for (int i = 0; i < DOOM_WADS.length; i++) {
-            File f = new File(GetDVRFolder(context) + File.separator + DOOM_WADS[i]);
+        for (String doomWad : DOOM_WADS) {
+            File f = new File(GetDVRFolder(context) + File.separator + doomWad);
             if (f.exists())
                 return true;
         }
@@ -220,10 +218,12 @@ public class DoomTools {
 
         File[] files = folder.listFiles();
 
-        for (int i = 0; i < files.length; i++) {
+        if (files != null) {
+            for (File file : files) {
 
-            if (files[i].exists())
-                files[i].delete();
+                if (file.exists())
+                    file.delete();
+            }
         }
     }
 }

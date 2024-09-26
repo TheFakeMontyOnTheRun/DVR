@@ -10,9 +10,8 @@ public class Natives {
 
     public static final int EV_KEYDOWN = 0;
     public static final int EV_KEYUP = 1;
-    public static final int EV_MOUSE = 2;
 
-    public static interface EventListener {
+    public interface EventListener {
         void OnMessage(String text);
 
         void OnInitGraphics(int w, int h);
@@ -42,8 +41,6 @@ public class Natives {
     /**
      * Native Main Doom Initialisation
      *
-     * @param argv
-     * @return
      */
     public static native int DoomInit(String[] argv, String wadDir);
 
@@ -76,7 +73,6 @@ public class Natives {
      * @param b Mouse button 1,2,4
      * @param x X coord
      * @param y Y coord
-     * @return
      */
     public static native int motionEvent(int b, int x, int y);
 
@@ -87,14 +83,13 @@ public class Natives {
 
     public static native int isMenuShowing();
 
-    /***********************************************************
-     * C - Callbacks
-     ***********************************************************/
+    /*
+      C - Callbacks
+     */
 
     /**
      * This fires on messages from the C layer
      *
-     * @param text
      */
     @SuppressWarnings("unused")
     private static void OnMessage(String text) {
@@ -124,7 +119,6 @@ public class Natives {
     /**
      * Fires when the C lib calls exit()
      *
-     * @param message
      */
     @SuppressWarnings("unused")
     private static void OnFatalError(String message) {
@@ -135,7 +129,6 @@ public class Natives {
     /**
      * Fires when Doom Quits
      *
-     * @param code
      */
     @SuppressWarnings("unused")
     private static void OnQuit(int code) {
@@ -147,7 +140,6 @@ public class Natives {
      * Fires when a sound is played in the C layer.
      *
      * @param name   Sound name (e.g pistol)
-     * @param volume (1-100)
      */
     @SuppressWarnings("unused")
     private static void OnStartSound(byte[] name, int vol) {
@@ -158,8 +150,6 @@ public class Natives {
     /**
      * Start background music callback
      *
-     * @param name
-     * @param loop
      */
     @SuppressWarnings("unused")
     private static void OnStartMusic(byte[] name, int loop) {
@@ -170,7 +160,6 @@ public class Natives {
     /**
      * Stop bg music
      *
-     * @param name
      */
     @SuppressWarnings("unused")
     private static void OnStopMusic(byte[] name) {

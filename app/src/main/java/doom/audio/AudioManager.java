@@ -24,8 +24,8 @@ public class AudioManager {
     static private AudioManager am;
 
     // Game sound (WAVs)
-    private volatile HashMap<String, List<AudioClip>> mSounds = new HashMap<String, List<AudioClip>>();
-    private Context mContext;
+    private final HashMap<String, List<AudioClip>> mSounds = new HashMap<>();
+    private final Context mContext;
     private int mClipCount = 0;
     private boolean mPaused = false;
     private int mMusicVolume = 0;
@@ -36,8 +36,6 @@ public class AudioManager {
     /**
      * get Instance
      *
-     * @param ctx
-     * @return
      */
     static public AudioManager getInstance(Context ctx) {
         if (am == null) return new AudioManager(ctx);
@@ -56,7 +54,6 @@ public class AudioManager {
      * Start a sound by name & volume
      *
      * @param name example "pistol" when firing the gun
-     * @param vol
      */
     public synchronized void startSound(String name, int vol) {
         if (mPaused)
@@ -70,10 +67,12 @@ public class AudioManager {
             //Log.d(TAG, "Playing " + key + " from cache  vol:" + vol);
             List<AudioClip> clipList = mSounds.get(key);
 
-            for (AudioClip c : clipList) {
-                if (!c.isPlaying()) {
-                    clip = c;
-                    break;
+            if (clipList != null) {
+                for (AudioClip c : clipList) {
+                    if (!c.isPlaying()) {
+                        clip = c;
+                        break;
+                    }
                 }
             }
 
@@ -83,7 +82,7 @@ public class AudioManager {
                 return;
             }
         } else {
-            List<AudioClip> clipList = new LinkedList<AudioClip>();
+            List<AudioClip> clipList = new LinkedList<>();
             mSounds.put(key, clipList);
         }
 
@@ -106,7 +105,9 @@ public class AudioManager {
             newClip.play(vol);
 
             List<AudioClip> clipList = mSounds.get(key);
-            clipList.add(newClip);
+            if (clipList != null) {
+                clipList.add(newClip);
+            }
             mClipCount++;
         } else {
             clip.play(vol);
@@ -121,7 +122,6 @@ public class AudioManager {
                         if (!c.isPlaying()) {
                             if (entry.getValue().remove(c)) {
                                 c.release();
-                                c = null;
                                 mClipCount--;
                                 //Done, move to next list
                                 break;
@@ -137,7 +137,6 @@ public class AudioManager {
     /**
      * Start background music
      *
-     * @param ctx
      * @param key music key (e.g intro, e1m1)
      */
     public void startMusic(Context ctx, String key, int loop) {
@@ -168,9 +167,8 @@ public class AudioManager {
     /**
      * Stop background music
      *
-     * @param key
      */
-    public void stopMusic(String key) {
+    public void stopMusic() {
         music.stop();
         music.release();
         music = null;
@@ -183,10 +181,6 @@ public class AudioManager {
             music.setVolume(mMusicVolume);
         } else
             Log.e(TAG, "setMusicVolume " + vol + " called with NULL music player");
-    }
-
-    public void pauseAudioMgr(boolean pause) {
-        mPaused = pause;
     }
 
 }

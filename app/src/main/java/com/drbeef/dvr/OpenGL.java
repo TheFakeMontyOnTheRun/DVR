@@ -13,8 +13,6 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
-import javax.microedition.khronos.egl.EGLConfig;
-
 public class OpenGL {
 
     private static final int GL_RGBA8 = 0x8058;
@@ -37,7 +35,7 @@ public class OpenGL {
         fbo[1] = new DVRFBO();
     }
 
-    public void onSurfaceCreated(EGLConfig config) {
+    public void onSurfaceCreated() {
         Log.i("DVR", "onSurfaceCreated");
 
         ByteBuffer bbVertices = ByteBuffer.allocateDirect(SCREEN_COORDS.length * 4);
@@ -136,10 +134,10 @@ public class OpenGL {
     public float[] modelViewProjection;
     public float[] modelView;
 
-    public float screenDistance = -8f;
-    public float splashScreenDistance = -12f;
-    public float gameScreenDistance = -3.45f;
-    public float screenScale = 3f;
+    public final float screenDistance = -8f;
+    public final float splashScreenDistance = -12f;
+    public final float gameScreenDistance = -3.45f;
+    public final float screenScale = 3f;
 
     public static final String vs_Image =
             "uniform mat4 u_MVPMatrix;" +
@@ -168,10 +166,10 @@ public class OpenGL {
     }
 
     //FBO render eye buffer
-    public DVRFBO fbo[] = new DVRFBO[2];
+    public final DVRFBO[] fbo = new DVRFBO[2];
 
 
-    boolean CreateFBO(DVRFBO fbo, int width, int height) {
+    void CreateFBO(DVRFBO fbo, int width, int height) {
         Log.d("DVR", "CreateFBO");
         // Create the color buffer texture.
         GLES20.glGenTextures(1, fbo.ColorTexture, 0);
@@ -198,30 +196,18 @@ public class OpenGL {
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
         if (renderFramebufferStatus != GLES20.GL_FRAMEBUFFER_COMPLETE) {
             Log.d("DVR", "Incomplete frame buffer object!!");
-            return false;
+            return;
         }
 
         fbo.width = width;
         fbo.height = height;
 
-        return true;
-    }
-
-    void DestroyFBO(DVRFBO fbo) {
-        GLES20.glDeleteFramebuffers(1, fbo.FrameBuffer, 0);
-        fbo.FrameBuffer[0] = 0;
-        GLES20.glDeleteRenderbuffers(1, fbo.DepthBuffer, 0);
-        fbo.DepthBuffer[0] = 0;
-        GLES20.glDeleteTextures(1, fbo.ColorTexture, 0);
-        fbo.ColorTexture[0] = 0;
-        fbo.width = 0;
-        fbo.height = 0;
     }
 
     // Geometric variables
-    public static float vertices[];
+    public static float[] vertices;
     public static final short[] indices = new short[]{0, 1, 2, 0, 2, 3};
-    public static final float uvs[] = new float[]{
+    public static final float[] uvs = new float[]{
             0.0f, 1.0f,
             0.0f, 0.0f,
             1.0f, 0.0f,

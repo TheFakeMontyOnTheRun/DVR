@@ -28,9 +28,9 @@ import doom.util.DoomTools;
  */
 public class WADChooser {
 
-    OpenGL openGL = null;
-    List<String> wads = new ArrayList<String>();
-    Map<String, String> wadThumbnails = new HashMap<String, String>();
+    final OpenGL openGL;
+    final List<String> wads = new ArrayList<>();
+    final Map<String, String> wadThumbnails = new HashMap<>();
     Typeface type;
 
     enum Transition {
@@ -40,8 +40,6 @@ public class WADChooser {
         move_right,
         moving_right
     }
-
-    ;
 
     Transition mCurrentTransition = Transition.ready;
     long mTransitionStart = -1;
@@ -53,21 +51,23 @@ public class WADChooser {
     }
 
     public void Initialise(Context context, AssetManager assets) {
-        wadThumbnails.put(new String("doom.wad"), new String("d1.png"));
-        wadThumbnails.put(new String("doom2.wad"), new String("d2.png"));
-        wadThumbnails.put(new String("freedoom.wad"), new String("fd.png"));
-        wadThumbnails.put(new String("freedoom1.wad"), new String("fd1.png"));
-        wadThumbnails.put(new String("freedoom2.wad"), new String("fd2.png"));
+        wadThumbnails.put("doom.wad", "d1.png");
+        wadThumbnails.put("doom2.wad", "d2.png");
+        wadThumbnails.put("freedoom.wad", "fd.png");
+        wadThumbnails.put("freedoom1.wad", "fd1.png");
+        wadThumbnails.put("freedoom2.wad", "fd2.png");
 
         type = Typeface.createFromAsset(assets, "fonts/DooM.ttf");
 
         File[] files = new File(DoomTools.GetDVRFolder(context)).listFiles();
 
-        for (File file : files) {
-            if (file.isFile() &&
-                    file.getName().toUpperCase().compareTo("PRBOOM.WAD") != 0 &&
-                    file.getName().toUpperCase().endsWith("WAD"))
-                wads.add(file.getName());
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() &&
+                        file.getName().toUpperCase().compareTo("PRBOOM.WAD") != 0 &&
+                        file.getName().toUpperCase().endsWith("WAD"))
+                    wads.add(file.getName());
+            }
         }
 
         //No point choosing a wad if there's only one!
@@ -193,7 +193,7 @@ public class WADChooser {
                 eye.getViewport().height);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        GLES20.glUseProgram(openGL.sp_Image);
+        GLES20.glUseProgram(OpenGL.sp_Image);
 
         // Apply the eye transformation to the camera.
         Matrix.multiplyMM(openGL.view, 0, eye.getEyeView(), 0, openGL.camera, 0);
@@ -212,7 +212,7 @@ public class WADChooser {
             if (mCurrentTransition == Transition.moving_left ||
                     mCurrentTransition == Transition.move_left)
                 transVal = 500 - transVal;
-            float mAngle = 180.0f * (float) (((float) transVal) / 500.0f);
+            float mAngle = 180.0f * (((float) transVal) / 500.0f);
             if (mAngle > 90.0f)
                 mAngle += 180.0f;
             Matrix.rotateM(openGL.modelScreen, 0, mAngle, 0.0f, 1.0f, 0.0f);

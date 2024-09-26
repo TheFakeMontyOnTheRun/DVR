@@ -10,45 +10,22 @@ import android.net.Uri;
  * @author Owner
  */
 public class AudioClip {
-    static final String TAG = "AudioClip";
 
     private MediaPlayer mPlayer;
-    private String name;
+    private final String name;
 
     private boolean mPlaying = false;
     private boolean mLoop = false;
-
-    public AudioClip(Context ctx, int resID) {
-        name = ctx.getResources().getResourceName(resID);
-
-        mPlayer = MediaPlayer.create(ctx, resID);
-        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mPlaying = false;
-                if (mLoop) {
-                    mp.start();
-                }
-            }
-
-        });
-    }
 
     public AudioClip(Context ctx, Uri uri) {
         name = uri.toString();
 
         mPlayer = MediaPlayer.create(ctx, uri);
-        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mPlaying = false;
-                if (mLoop) {
-                    mp.start();
-                }
+        mPlayer.setOnCompletionListener(mp -> {
+            mPlaying = false;
+            if (mLoop) {
+                mp.start();
             }
-
         });
     }
 
@@ -93,14 +70,12 @@ public class AudioClip {
             }
 
         } catch (Exception e) {
-            System.err.println("AduioClip::stop " + name + " " + e.toString());
+            System.err.println("AduioClip::stop " + name + " " + e);
         }
     }
 
     public synchronized void loop() {
         mLoop = true;
-        //mPlaying = true;
-        //mPlayer.start();
         mPlayer.setLooping(true);
     }
 
@@ -109,10 +84,6 @@ public class AudioClip {
             mPlayer.release();
             mPlayer = null;
         }
-    }
-
-    public String getName() {
-        return name;
     }
 
     /**

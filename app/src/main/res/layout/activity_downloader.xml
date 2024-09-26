@@ -14,6 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="Downloading and extracing FreeDOOM. Please wait."
+        android:text="@string/downloading_and_extracing_freedoom_please_wait"
         android:textColor="#FF0000" />
 </LinearLayout>

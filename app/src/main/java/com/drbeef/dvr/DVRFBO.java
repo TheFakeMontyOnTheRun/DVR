@@ -2,9 +2,9 @@ package com.drbeef.dvr;
 
 public class DVRFBO {
 
-    public int[] FrameBuffer;
-    public int[] DepthBuffer;
-    public int[] ColorTexture;
+    public final int[] FrameBuffer;
+    public final int[] DepthBuffer;
+    public final int[] ColorTexture;
     public int height;
     public int width;
 

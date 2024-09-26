@@ -1,8 +1,6 @@
 package com.drbeef.dvr;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +8,6 @@ import android.media.MediaPlayer;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -26,15 +23,12 @@ import com.google.vrtoolkit.cardboard.Viewport;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.IntBuffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
@@ -60,21 +54,19 @@ public class MainActivity
     private int mDoomHeight;
 
     //Head orientation
-    private float[] eulerAngles = new float[3];
+    private final float[] eulerAngles = new float[3];
     private float hmdYaw;
     private float hmdPitch;
-    private float hmdRoll;
 
     //-1 means start button isn't pressed
     private long startButtonDownCounter = -1;
     //Don't allow the trigger to fire more than once per 200ms
     private long triggerTimeout = 0;
 
-    private Vibrator vibrator;
-    private float M_PI = 3.14159265358979323846f;
+    private final float M_PI = 3.14159265358979323846f;
 
     //Read these from a file and pass through
-    String commandLineParams = new String("");
+    String commandLineParams = "";
 
     private CardboardView cardboardView;
 
@@ -85,10 +77,8 @@ public class MainActivity
     //Can't rebuild eye buffers until surface changed flag recorded
     public static boolean mSurfaceChanged = false;
 
-    float lensCentreOffset = -1.0f;
-
     private boolean mShowingSpashScreen = true;
-    private int[] splashTexture = new int[1];
+    private final int[] splashTexture = new int[1];
     private MediaPlayer mPlayer;
     private int mPlayerVolume = 100;
 
@@ -160,7 +150,6 @@ public class MainActivity
         openGL = new OpenGL();
         openGL.onCreate();
 
-        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         //At the very least ensure we have a directory containing a config file
         copy_asset("DVR.cfg", DoomTools.GetDVRFolder(this) + File.separator);
@@ -185,13 +174,10 @@ public class MainActivity
             String s;
             StringBuilder sb = new StringBuilder(0);
             while ((s = br.readLine()) != null)
-                sb.append(s + " ");
+                sb.append(s).append(" ");
             br.close();
 
-            commandLineParams = new String(sb.toString());
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            commandLineParams = sb.toString();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -222,7 +208,7 @@ public class MainActivity
     public void onSurfaceCreated(EGLConfig config) {
         Log.i(TAG, "onSurfaceCreated");
 
-        openGL.onSurfaceCreated(config);
+        openGL.onSurfaceCreated();
         openGL.SetupUVCoords();
 
         //Start intro music
@@ -248,7 +234,9 @@ public class MainActivity
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, splashTexture[0]);
         openGL.CopyBitmapToTexture(bmp, splashTexture[0]);
 
-        bmp.recycle();
+        if (bmp != null) {
+            bmp.recycle();
+        }
     }
 
     long prevState = 0;
@@ -259,7 +247,7 @@ public class MainActivity
         headTransform.getEulerAngles(eulerAngles, 0);
         hmdYaw = eulerAngles[1] / (M_PI / 180.0f);
         hmdPitch = -eulerAngles[0] / (M_PI / 180.0f);
-        hmdRoll = -eulerAngles[2] / (M_PI / 180.0f);
+        float hmdRoll = -eulerAngles[2] / (M_PI / 180.0f);
 
         //Store head view
         headTransform.getHeadView(openGL.headView, 0);
@@ -340,9 +328,9 @@ public class MainActivity
                     eye.getViewport().width, eye.getViewport().height);
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
-            GLES20.glUseProgram(openGL.sp_Image);
+            GLES20.glUseProgram(OpenGL.sp_Image);
 
-            float modelScreen[] = new float[16];
+            float[] modelScreen = new float[16];
             Matrix.setIdentityM(modelScreen, 0);
 
             // Set the position of the screen
@@ -350,7 +338,7 @@ public class MainActivity
                 Matrix.translateM(modelScreen, 0, 0, 0, openGL.splashScreenDistance);
                 Matrix.scaleM(modelScreen, 0, openGL.screenScale, openGL.screenScale, 1.0f);
 
-                float mAngle = 180.0f * (float) ((System.currentTimeMillis() % 2000) / 2000.0f);
+                float mAngle = 180.0f * ((System.currentTimeMillis() % 2000) / 2000.0f);
                 if (mAngle > 90.0f) mAngle += 180.0f;
                 Matrix.rotateM(modelScreen, 0, mAngle, 0.0f, 1.0f, 0.0f);
             } else if (Natives.gameState() != 0) {
@@ -555,7 +543,6 @@ public class MainActivity
     @Override
     public boolean onGenericMotionEvent(MotionEvent event) {
         int source = event.getSource();
-        int action = event.getAction();
         if ((source == InputDevice.SOURCE_JOYSTICK) || (event.getSource() == InputDevice.SOURCE_GAMEPAD)) {
             if (event.getAction() == MotionEvent.ACTION_MOVE) {
                 float z = getCenteredAxis(event, MotionEvent.AXIS_Z);
@@ -606,7 +593,7 @@ public class MainActivity
     }
 
     private float max(float axisValue, float axisValue2) {
-        return (axisValue > axisValue2) ? axisValue : axisValue2;
+        return Math.max(axisValue, axisValue2);
     }
 
     /**
@@ -621,38 +608,10 @@ public class MainActivity
     public void OnQuit(int code) {
         try {
             Thread.sleep(500);
-        } catch (InterruptedException ie) {
+        } catch (InterruptedException ignored) {
         }
 
         System.exit(0);
-    }
-
-    public static void MessageBox(Context ctx, String title, String text) {
-        AlertDialog d = createAlertDialog(ctx
-                , title
-                , text);
-
-        d.setButton("Dismiss", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                /* User clicked OK so do some stuff */
-            }
-        });
-        d.show();
-    }
-
-    /**
-     * Create an alert dialog
-     *
-     * @param ctx     App context
-     * @param message Message
-     * @return
-     */
-    static public AlertDialog createAlertDialog(Context ctx, String title, String message) {
-        return new AlertDialog.Builder(ctx)
-                .setIcon(R.mipmap.ic_launcher)
-                .setTitle(title)
-                .setMessage(message)
-                .create();
     }
 
     /**
@@ -701,11 +660,10 @@ public class MainActivity
         }
 
         try {
-            if (mAudioMgr != null)
-                mAudioMgr.startSound(name, vol);
+            mAudioMgr.startSound(name, vol);
 
         } catch (Exception e) {
-            Log.e(TAG, "OnStartSound: " + e.toString());
+            Log.e(TAG, "OnStartSound: " + e);
         }
     }
 
@@ -724,7 +682,7 @@ public class MainActivity
     @Override
     public void OnStopMusic(String name) {
         if (mAudioMgr != null)
-            mAudioMgr.stopMusic(name);
+            mAudioMgr.stopMusic();
     }
 
     @Override
